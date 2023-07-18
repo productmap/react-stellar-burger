@@ -4,4 +4,10 @@
   height: 100vh;
   background-color: #131316;
   color: #f2f2f3;
+  width: 100%;
+}
+
+.content {
+  display: flex;
+  flex-flow: row nowrap;
 }
