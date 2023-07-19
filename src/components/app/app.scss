@@ -5,9 +5,11 @@
   background-color: #131316;
   color: #f2f2f3;
   width: 100%;
+  align-items: center;
 }
 
 .content {
   display: flex;
   flex-flow: row nowrap;
+  justify-content: center;
 }
