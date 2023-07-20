@@ -1,0 +1,18 @@
+.ingredients-group {
+  margin: 0;
+  display: flex;
+  flex-flow: row wrap;
+
+  &__header{
+    display: inline-flex;
+    width: 100%;
+    margin: 0;
+  }
+  &__list{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    width: 100%;
+    row-gap: 32px;
+  }
+}

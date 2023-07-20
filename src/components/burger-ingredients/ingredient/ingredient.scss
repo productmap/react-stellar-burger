@@ -1,0 +1,18 @@
+.ingredient {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 272px;
+  flex-flow: column nowrap;
+
+  &__price {
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  &__description {
+    text-align: center;
+  }
+}

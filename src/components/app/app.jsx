@@ -6,7 +6,7 @@ import { useState } from "react";
 import { ingredientPropType } from "../../utils/prop-types";
 
 function App() {
-  const [cart] = useState([
+  const [cart, setCart] = useState([
     "60666c42cc7b410027a1a9b1",
     "60666c42cc7b410027a1a9b9",
     "60666c42cc7b410027a1a9b4",

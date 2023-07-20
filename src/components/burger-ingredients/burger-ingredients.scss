@@ -1,0 +1,9 @@
+.burger-ingredients {
+  display: flex;
+  flex-flow: row wrap;
+  row-gap: 24px;
+  column-gap: 32px;
+  max-width: 600px;
+  max-height: calc(100vh - 368px);
+  overflow-y: scroll;
+}
