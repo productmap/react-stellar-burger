@@ -3,11 +3,18 @@ import {
   Button,
   ConstructorElement,
   CurrencyIcon,
-  DragIcon
+  DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import "./burger-constructor.scss";
+import PropTypes from "prop-types";
+import { ingredientPropType } from "../../utils/prop-types";
 
-const BurgerConstructor = ({ingredients, cart}) => {
+const BurgerConstructor = ({ ingredients, cart }) => {
+  BurgerConstructor.propTypes = {
+    cart: PropTypes.arrayOf(PropTypes.string).isRequired,
+    ingredients: PropTypes.arrayOf(ingredientPropType).isRequired,
+  };
+
   const bun = ingredients.find((el) => el.type === "bun");
 
   return (
@@ -29,8 +36,11 @@ const BurgerConstructor = ({ingredients, cart}) => {
             );
             if (pos) {
               return (
-                <li className="burger-constructor__pos pr-1" key={pos._id + idx}>
-                  <DragIcon type="primary"/>
+                <li
+                  className="burger-constructor__pos pr-1"
+                  key={pos._id + idx}
+                >
+                  <DragIcon type="primary" />
                   <ConstructorElement
                     isLocked={false}
                     text={pos.name}
@@ -40,7 +50,7 @@ const BurgerConstructor = ({ingredients, cart}) => {
                 </li>
               );
             }
-            return null
+            return null;
           })}
         </ul>
         <li className="burger-constructor__pos pr-4">
@@ -55,7 +65,7 @@ const BurgerConstructor = ({ingredients, cart}) => {
       </ul>
       <div className="burger-constructor__total">
         <p className="text text_type_digits-medium">
-          610 <CurrencyIcon type="primary"/>
+          610 <CurrencyIcon type="primary" />
         </p>
         <Button htmlType="button" type="primary" size="large" extraClass="mr-4">
           Оформить заказ

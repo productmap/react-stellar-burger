@@ -1,17 +1,22 @@
 import React from "react";
 import "./burger-ingredients.scss";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Ingredient } from "./ingredient/ingredient";
 import { IngredientsGroup } from "./ingredients-group/ingredients-group";
+import { ingredientPropType } from "../../utils/prop-types";
+import PropTypes from "prop-types";
 
 const BurgerIngredients = ({ ingredients }) => {
-  const [current, setCurrent] = React.useState("one");
+  BurgerIngredients.propTypes = {
+    ingredients: PropTypes.arrayOf(ingredientPropType).isRequired,
+  };
 
   const ingredientsGroups = {
     bun: "Булки",
     sauce: "Соусы",
     main: "Начинки",
   };
+
+  const [current, setCurrent] = React.useState("bun");
 
   return (
     <>

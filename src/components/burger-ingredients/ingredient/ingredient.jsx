@@ -1,8 +1,14 @@
 import './ingredient.scss'
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import React from "react";
+import {ingredientPropType} from "../../../utils/prop-types";
 
 export const Ingredient = ({ ingredient }) => {
+
+  Ingredient.propTypes = {
+    ingredient: ingredientPropType.isRequired,
+  };
+
   return (
     <div className="ingredient">
       <img src={ingredient.image} alt={ingredient.name} />

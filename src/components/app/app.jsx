@@ -1,12 +1,19 @@
-import "./app.scss";
-import { data } from "../../utils/data";
-import AppHeader from "../app-header/app-header";
-import Constructor from "../constructor/constructor";
 import { useState } from "react";
+import AppHeader from "../app-header/app-header";
+import BurgerIngredients from "../burger-ingredients/burger-ingredients";
+import BurgerConstructor from "../burger-constructor/burger-constructor";
 import { ingredientPropType } from "../../utils/prop-types";
+import { data } from "../../utils/data";
+import "./app.scss";
 
-function App() {
-  const [cart, setCart] = useState([
+export default function App() {
+  const [ingredients] = useState(data);
+
+  ingredients.propTypes = {
+    ingredientPropType,
+  };
+
+  const [cart] = useState([
     "60666c42cc7b410027a1a9b1",
     "60666c42cc7b410027a1a9b9",
     "60666c42cc7b410027a1a9b4",
@@ -18,18 +25,17 @@ function App() {
     "60666c42cc7b410027a1a9b1",
   ]);
 
-  const [ingredients] = useState(data);
-
-  ingredients.propTypes = {
-    ingredientPropType,
-  };
-
   return (
     <div className="app">
       <AppHeader />
-      <Constructor ingredients={ingredients} cart={cart} />
+      <main className="constructor pb-10">
+        <section className="constructor__column">
+          <BurgerIngredients ingredients={ingredients} />
+        </section>
+        <section className="constructor__column pt-25">
+          <BurgerConstructor ingredients={ingredients} cart={cart} />
+        </section>
+      </main>
     </div>
   );
 }
-
-export default App;
