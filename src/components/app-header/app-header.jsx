@@ -5,18 +5,18 @@ import {
   Logo,
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import "./app-header.scss";
+import styles from "./app-header.module.scss";
 
 export default function AppHeader() {
   return (
-    <header className="header">
-      <nav className="header__nav pt-6 pb-4">
+    <header className={styles.header}>
+      <nav className={`${styles.header__left} pt-6 pb-4`}>
         <div>
           <Button
             htmlType="button"
             type="secondary"
             size="medium"
-            extraClass="pr-5 pl-5 mr-2 text_color_primary header__button"
+            extraClass={`${styles.header__button} pr-5 pl-5 mr-2 text_color_primary`}
           >
             <BurgerIcon type="primary" />
             Конструктор
@@ -25,21 +25,21 @@ export default function AppHeader() {
             htmlType="button"
             type="secondary"
             size="medium"
-            extraClass="pr-5 pl-5 text_color_inactive header__button"
+            extraClass={`${styles.header__button} pr-5 pl-5 text_color_inactive`}
           >
             <ListIcon type="secondary" />
             Лента заказов
           </Button>
         </div>
 
-        <Logo className="header__logo" extraClass="header__logo" />
+        <Logo className={styles.header__center} />
 
-        <div className="header__nav-right">
+        <div className={styles.header__right}>
           <Button
             htmlType="button"
             type="secondary"
             size="medium"
-            extraClass="pr-5 pl-5 text_color_inactive header__button"
+            extraClass={`${styles.header__button} pr-5 pl-5 text_color_inactive`}
           >
             <ProfileIcon type="secondary" />
             Личный кабинет

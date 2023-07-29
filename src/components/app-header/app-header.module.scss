@@ -1,0 +1,29 @@
+.header {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  background-color: #1c1c21;
+
+  &__left {
+    display: inline-grid;
+    justify-content: space-between;
+    align-items: center;
+    grid-template-columns: 1fr max-content 1fr;
+    width: 100%;
+    max-width: 1280px;
+  }
+
+  &__center {
+    margin: auto;
+  }
+
+  &__right {
+    justify-self: flex-end;
+  }
+
+  &__button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+}
