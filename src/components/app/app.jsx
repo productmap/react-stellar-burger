@@ -1,41 +1,61 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
-import { ingredientPropType } from "../../utils/prop-types";
-import { data } from "../../utils/data";
 import "./app.scss";
 
 export default function App() {
-  const [ingredients] = useState(data);
+  const [state, setState] = useState({
+    isLoading: false,
+    hasError: false,
+  });
+  const url = "https://norma.nomoreparties.space/api/ingredients";
+  const [cart, setCart] = useState([]);
+  const [ingredients, setIngredients] = useState([]);
 
-  ingredients.propTypes = {
-    ingredientPropType,
+  useEffect(() => {
+    Ingredients();
+  }, []);
+
+  const Ingredients = () => {
+    setState({ hasError: false, isLoading: true });
+    fetch(url)
+      .then((res) => res.json())
+      .then((data) => {
+        setState({ hasError: false, isLoading: false });
+        setIngredients(data.data);
+        setCart([
+          "643d69a5c3f7b9001cfa093c",
+          "643d69a5c3f7b9001cfa0944",
+          "643d69a5c3f7b9001cfa093f",
+          "643d69a5c3f7b9001cfa0947",
+          "643d69a5c3f7b9001cfa0946",
+          "643d69a5c3f7b9001cfa0946",
+        ]);
+      })
+      .catch((error) => {
+        console.log(`Ошибка: ${error}`);
+        setState({ hasError: true, isLoading: false });
+      });
   };
-
-  const [cart] = useState([
-    "60666c42cc7b410027a1a9b1",
-    "60666c42cc7b410027a1a9b9",
-    "60666c42cc7b410027a1a9b4",
-    "60666c42cc7b410027a1a9bc",
-    "60666c42cc7b410027a1a9bb",
-    "60666c42cc7b410027a1a9bb",
-    "60666c42cc7b410027a1a9b1",
-    "60666c42cc7b410027a1a9b1",
-    "60666c42cc7b410027a1a9b1",
-  ]);
 
   return (
     <div className="app">
-      <AppHeader />
-      <main className="constructor pb-10">
-        <section className="constructor__column">
-          <BurgerIngredients ingredients={ingredients} />
-        </section>
-        <section className="constructor__column pt-25">
-          <BurgerConstructor ingredients={ingredients} cart={cart} />
-        </section>
-      </main>
+      {state.isLoading && "Загрузка..."}
+      {state.hasError && "Произошла ошибка"}
+      {!state.isLoading && !state.hasError && ingredients.length && (
+        <>
+          <AppHeader />
+          <main className="constructor pb-10">
+            <section className="constructor__column">
+              <BurgerIngredients ingredients={ingredients} />
+            </section>
+            <section className="constructor__column pt-25">
+              <BurgerConstructor ingredients={ingredients} cart={cart} />
+            </section>
+          </main>
+        </>
+      )}
     </div>
   );
 }
