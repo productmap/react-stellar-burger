@@ -1,20 +1,49 @@
-import './ingredient.scss'
-import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import React from "react";
-import {ingredientPropType} from "../../../utils/prop-types";
+import React, {useCallback, useState} from "react";
+import {
+  Counter,
+  CurrencyIcon,
+} from "@ya.praktikum/react-developer-burger-ui-components";
+import { ingredientPropType } from "../../../utils/prop-types";
+import styles from "./ingredient.module.scss";
+import Modal from "../../modal/modal";
+import IngredientDetails from "../ingredient-details/ingredient-details";
+import PropTypes from "prop-types";
 
-export const Ingredient = ({ ingredient }) => {
+// Ingredient.propTypes = {
+//   ingredient: ingredientPropType.isRequired,
+//   isModalOpen: PropTypes.bool.isRequired,
+//   setIsModalOpen: PropTypes.bool.isRequired
+// };
 
-  Ingredient.propTypes = {
-    ingredient: ingredientPropType.isRequired,
-  };
+export function Ingredient({ ingredient }) {
+  const [modalOpen, setModalOpen] = useState(false);
+  const handleModalClose = useCallback(() => setModalOpen(false), []);
 
   return (
-    <div className="ingredient">
+    <div
+      className={styles.ingredient}
+      onClick={() => {
+        setModalOpen(true);
+      }}
+    >
       <img src={ingredient.image} alt={ingredient.name} />
-      <p className="ingredient__price pt-2 pb-3 text text_type_digits-default">{ingredient.price} <CurrencyIcon type="primary"/></p>
-      <span className="ingredient__description">{ingredient.name}</span>
+      <p
+        className={`${styles.ingredient__price} pt-2 pb-3 text text_type_digits-default`}
+      >
+        {ingredient.price} <CurrencyIcon type="primary" />
+      </p>
+      <span className={styles.ingredient__description}>{ingredient.name}</span>
       <Counter count={1} size="default" extraClass="m-1" />
+      {modalOpen && (
+        <Modal
+          header="Детали ингредиента"
+          setModalOpen={setModalOpen}
+          modalOpen={modalOpen}
+          modalClose={handleModalClose}
+        >
+          <IngredientDetails ingredient={ingredient} />
+        </Modal>
+      )}
     </div>
   );
-};
+}

@@ -1,10 +1,10 @@
 import React from "react";
-import ReactDOM from 'react-dom/client';
-import "./index.scss";
+import ReactDOM from "react-dom/client";
 import App from "./components/app/app";
 import reportWebVitals from "./reportWebVitals";
+import "./index.scss";
 
-const container = document.getElementById('app');
+const container = document.getElementById("root");
 const root = ReactDOM.createRoot(container);
 root.render(<App />);
 

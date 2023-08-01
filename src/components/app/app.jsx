@@ -12,6 +12,7 @@ export default function App() {
   const url = "https://norma.nomoreparties.space/api/ingredients";
   const [cart, setCart] = useState([]);
   const [ingredients, setIngredients] = useState([]);
+  // const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     Ingredients();
@@ -48,10 +49,20 @@ export default function App() {
           <AppHeader />
           <main className="constructor pb-10">
             <section className="constructor__column">
-              <BurgerIngredients ingredients={ingredients} />
+              <BurgerIngredients
+                ingredients={ingredients}
+                // isModalOpen={isModalOpen}
+                // setIsModalOpen={setIsModalOpen}
+              />
             </section>
             <section className="constructor__column pt-25">
-              <BurgerConstructor ingredients={ingredients} cart={cart} />
+              <BurgerConstructor
+                ingredients={ingredients}
+                cart={cart}
+                // modalClose={() => {
+                //   setIsModalOpen(false);
+                // }}
+              />
             </section>
           </main>
         </>

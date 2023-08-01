@@ -5,22 +5,29 @@ import {
   CurrencyIcon,
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import "./burger-constructor.scss";
+import Modal from "../modal/modal";
+import OrderDetails from "../order-details/order-details";
+import {ingredientPropType} from "../../utils/prop-types";
 import PropTypes from "prop-types";
-import { ingredientPropType } from "../../utils/prop-types";
+import styles from "./burger-constructor.module.scss";
 
-const BurgerConstructor = ({ ingredients, cart }) => {
-  BurgerConstructor.propTypes = {
-    cart: PropTypes.arrayOf(PropTypes.string).isRequired,
-    ingredients: PropTypes.arrayOf(ingredientPropType).isRequired,
-  };
+BurgerConstructor.propTypes = {
+  cart: PropTypes.arrayOf(PropTypes.string).isRequired,
+  ingredients: PropTypes.arrayOf(ingredientPropType).isRequired,
+};
 
+export default function BurgerConstructor({ingredients, cart, setIsModalOpen}) {
   const bun = ingredients.find((el) => el.type === "bun");
+
+  function handlerOrderDetails(){
+    setIsModalOpen(true);
+    <Modal setModalOpen={setIsModalOpen} children={<OrderDetails/>} header={'fff'}/>
+  }
 
   return (
     <>
-      <ul className="burger-constructor__list">
-        <li className="burger-constructor__pos pr-4">
+      <ul className={styles.constructor__list}>
+        <li className={`${styles.constructor__pos} pr-4`}>
           <ConstructorElement
             type="top"
             isLocked={true}
@@ -29,7 +36,7 @@ const BurgerConstructor = ({ ingredients, cart }) => {
             thumbnail={bun.image}
           />
         </li>
-        <ul className="burger-constructor__ingediaent-list custom-scroll">
+        <ul className={`${styles.constructor__ingredients} custom-scroll`}>
           {cart.map((ingredient, idx) => {
             const pos = ingredients.find(
               (el) => el._id === ingredient && el.type !== "bun"
@@ -37,10 +44,10 @@ const BurgerConstructor = ({ ingredients, cart }) => {
             if (pos) {
               return (
                 <li
-                  className="burger-constructor__pos pr-1"
+                  className={`${styles.constructor__pos} pr-1`}
                   key={pos._id + idx}
                 >
-                  <DragIcon type="primary" />
+                  <DragIcon type="primary"/>
                   <ConstructorElement
                     isLocked={false}
                     text={pos.name}
@@ -53,7 +60,7 @@ const BurgerConstructor = ({ ingredients, cart }) => {
             return null;
           })}
         </ul>
-        <li className="burger-constructor__pos pr-4">
+        <li className={`${styles.constructor__pos} pr-4`}>
           <ConstructorElement
             type="bottom"
             isLocked={true}
@@ -63,15 +70,21 @@ const BurgerConstructor = ({ ingredients, cart }) => {
           />
         </li>
       </ul>
-      <div className="burger-constructor__total">
-        <p className="text text_type_digits-medium">
-          610 <CurrencyIcon type="primary" />
+      <div className={styles.constructor__total}>
+        <p className={`text text_type_digits-medium`}>
+          610 <CurrencyIcon type="primary"/>
         </p>
-        <Button htmlType="button" type="primary" size="large" extraClass="mr-4">
+        <Button
+          htmlType="button"
+          type="primary"
+          size="large"
+          extraClass="mr-4"
+          onClick={handlerOrderDetails}
+        >
           Оформить заказ
         </Button>
+
       </div>
     </>
   );
-};
-export default BurgerConstructor;
+}

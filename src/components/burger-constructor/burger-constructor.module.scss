@@ -1,4 +1,4 @@
-.burger-constructor {
+.constructor {
   max-width: 600px;
 
   &__list {
@@ -10,7 +10,7 @@
     gap: 16px;
   }
 
-  &__ingediaent-list {
+  &__ingredients {
     display: flex;
     max-height: calc(100vh - 568px);
     padding: 0;
