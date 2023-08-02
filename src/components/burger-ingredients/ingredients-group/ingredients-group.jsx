@@ -8,14 +8,14 @@ IngredientsGroup.propTypes = {
   groupKey: PropTypes.string.isRequired,
   groupName: PropTypes.string.isRequired,
   ingredients: PropTypes.arrayOf(ingredientPropType).isRequired,
+  showDetails: PropTypes.func.isRequired,
 };
 
 export function IngredientsGroup({
   groupKey,
   groupName,
   ingredients,
-  // isModalOpen,
-  // setIsModalOpen,
+  showDetails,
 }) {
   return (
     <div className={`${styles.group} pb-10`}>
@@ -27,8 +27,7 @@ export function IngredientsGroup({
               <Ingredient
                 ingredient={ingredient}
                 key={ingredient._id}
-                // isModalOpen={isModalOpen}
-                // setIsModalOpen={setIsModalOpen}
+                showDetails={showDetails}
               />
             );
           return null;

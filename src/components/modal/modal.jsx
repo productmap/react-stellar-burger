@@ -5,47 +5,40 @@ import PropTypes from "prop-types";
 import { createPortal } from "react-dom";
 
 Modal.propTypes = {
-  setModalOpen: PropTypes.func.isRequired,
-  header: PropTypes.string.isRequired,
+  modalClose: PropTypes.func.isRequired,
+  header: PropTypes.string,
   children: PropTypes.node.isRequired,
 };
 
 export default function Modal({
-  modalOpen,
-  setModalOpen,
   modalClose,
   header = null,
-  children,
+  children
 }) {
   useEffect(() => {
     const handleEscapeClose = (event) => {
       if (event.key === "Escape") {
-        setModalOpen(false);
-        console.log(modalOpen);
+        modalClose();
       }
     };
     document.addEventListener("keydown", handleEscapeClose);
     return () => {
       document.removeEventListener("keydown", handleEscapeClose);
-      console.log(modalOpen);
     };
-  }, [modalOpen, setModalOpen]);
+  }, [modalClose]);
 
   return createPortal(
     <div className={styles.modal}>
       <div
         className={styles.overlay}
-        onClick={() => {
-          setModalOpen(false);
-          console.log(modalOpen);
-        }}
+        onClick={() => modalClose()}
       ></div>
       <div className={styles.container}>
         <div className={styles.container__header}>
           {header && <h1 className="text text_type_main-large">{header}</h1>}
           <div
             className={styles.container__close}
-            onClick={modalClose}
+            onClick={() => modalClose()}
           >
             <CloseIcon type="primary" />
           </div>
