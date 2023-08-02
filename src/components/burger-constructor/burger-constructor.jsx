@@ -7,7 +7,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
-import {ingredientPropType} from "../../utils/prop-types";
+import { ingredientPropType } from "../../utils/prop-types";
 import PropTypes from "prop-types";
 import styles from "./burger-constructor.module.scss";
 
@@ -16,13 +16,9 @@ BurgerConstructor.propTypes = {
   ingredients: PropTypes.arrayOf(ingredientPropType).isRequired,
 };
 
-export default function BurgerConstructor({ingredients, cart, setIsModalOpen}) {
+export default function BurgerConstructor({ ingredients, cart }) {
   const bun = ingredients.find((el) => el.type === "bun");
-
-  function handlerOrderDetails(){
-    setIsModalOpen(true);
-    <Modal setModalOpen={setIsModalOpen} children={<OrderDetails/>} header={'fff'}/>
-  }
+  const [modalOpen, setModalOpen] = React.useState(null);
 
   return (
     <>
@@ -47,7 +43,7 @@ export default function BurgerConstructor({ingredients, cart, setIsModalOpen}) {
                   className={`${styles.constructor__pos} pr-1`}
                   key={pos._id + idx}
                 >
-                  <DragIcon type="primary"/>
+                  <DragIcon type="primary" />
                   <ConstructorElement
                     isLocked={false}
                     text={pos.name}
@@ -72,19 +68,24 @@ export default function BurgerConstructor({ingredients, cart, setIsModalOpen}) {
       </ul>
       <div className={styles.constructor__total}>
         <p className={`text text_type_digits-medium`}>
-          610 <CurrencyIcon type="primary"/>
+          610 <CurrencyIcon type="primary" />
         </p>
         <Button
           htmlType="button"
           type="primary"
           size="large"
           extraClass="mr-4"
-          onClick={handlerOrderDetails}
+          onClick={() => setModalOpen(true)}
         >
           Оформить заказ
         </Button>
-
       </div>
+      {modalOpen && (
+        <Modal
+          modalClose={() => setModalOpen(false)}
+          children={<OrderDetails />}
+        />
+      )}
     </>
   );
 }
