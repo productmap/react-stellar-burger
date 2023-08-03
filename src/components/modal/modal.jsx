@@ -3,6 +3,7 @@ import styles from "./modal.module.scss";
 import { useEffect } from "react";
 import PropTypes from "prop-types";
 import { createPortal } from "react-dom";
+import ModalOverlay from "../modal-overlay/modal-overlay";
 
 Modal.propTypes = {
   modalClose: PropTypes.func.isRequired,
@@ -29,11 +30,8 @@ export default function Modal({
 
   return createPortal(
     <div className={styles.modal}>
-      <div
-        className={styles.overlay}
-        onClick={() => modalClose()}
-      ></div>
-      <div className={styles.container}>
+      <ModalOverlay modalClose={() => modalClose()}/>
+       <div className={styles.container}>
         <div className={styles.container__header}>
           {header && <h1 className="text text_type_main-large">{header}</h1>}
           <div
