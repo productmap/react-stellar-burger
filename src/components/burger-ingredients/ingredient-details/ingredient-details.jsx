@@ -1,4 +1,10 @@
 import styles from "./ingredient-details.module.scss";
+import {ingredientPropType} from "../../../utils/prop-types";
+import {Ingredient} from "../ingredient/ingredient";
+
+Ingredient.propTypes = {
+  ingredient: ingredientPropType.isRequired
+};
 
 export default function IngredientDetails({ ingredient }) {
   return (
