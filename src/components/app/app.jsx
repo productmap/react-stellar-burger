@@ -3,25 +3,24 @@ import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import "./app.scss";
+import getIngredients from "../../utils/api";
 
 export default function App() {
   const [state, setState] = useState({
     isLoading: false,
     hasError: false,
   });
-  const url = "https://norma.nomoreparties.space/api/ingredients";
   const [cart, setCart] = useState([]);
+  const [apiError, setApiError] = useState(null);
   const [ingredients, setIngredients] = useState([]);
 
-
   useEffect(() => {
-    Ingredients();
+    ingredientsData();
   }, []);
 
-  const Ingredients = () => {
+  const ingredientsData = () => {
     setState({ hasError: false, isLoading: true });
-    fetch(url)
-      .then((res) => res.json())
+    getIngredients()
       .then((data) => {
         setState({ hasError: false, isLoading: false });
         setIngredients(data.data);
@@ -36,6 +35,7 @@ export default function App() {
       })
       .catch((error) => {
         console.log(`Ошибка: ${error}`);
+        setApiError(`Ошибка: ${error}`);
         setState({ hasError: true, isLoading: false });
       });
   };
@@ -44,6 +44,7 @@ export default function App() {
     <div className="app">
       {state.isLoading && "Загрузка..."}
       {state.hasError && "Произошла ошибка"}
+      {apiError}
       {!state.isLoading && !state.hasError && ingredients.length && (
         <>
           <AppHeader />
