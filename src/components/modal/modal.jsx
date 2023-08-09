@@ -30,13 +30,13 @@ export default function Modal({
 
   return createPortal(
     <div className={styles.modal}>
-      <ModalOverlay modalClose={() => modalClose()}/>
+      <ModalOverlay modalClose={modalClose}/>
        <div className={styles.container}>
         <div className={styles.container__header}>
           {header && <h1 className="text text_type_main-large">{header}</h1>}
           <div
             className={styles.container__close}
-            onClick={() => modalClose()}
+            onClick={modalClose}
           >
             <CloseIcon type="primary" />
           </div>

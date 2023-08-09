@@ -1,25 +1,63 @@
-import React from "react";
+import {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { IngredientsGroup } from "./ingredients-group/ingredients-group";
-import { ingredientPropType } from "../../utils/prop-types";
-import PropTypes from "prop-types";
+// import { ingredientPropType } from "../../utils/prop-types";
+// import PropTypes from "prop-types";
 import styles from "./burger-ingredients.module.scss";
 import Modal from "../modal/modal";
 import IngredientDetails from "./ingredient-details/ingredient-details";
+import { Ingredients } from "../../services/appContext";
 
-BurgerIngredients.propTypes = {
-  ingredients: PropTypes.arrayOf(ingredientPropType).isRequired,
-};
-
-export default function BurgerIngredients({ ingredients }) {
+export default function BurgerIngredients() {
+  const { ingredients } = useContext(Ingredients);
+  const [currentGroup, setCurrentGroup] = useState("bun");
+  const [currentIngredient, setCurrentIngredient] = useState(null);
   const ingredientsGroups = {
     bun: "Булки",
     sauce: "Соусы",
     main: "Начинки",
   };
+  const sectionsRef = useRef([]);
 
-  const [current, setCurrent] = React.useState("bun");
-  const [currentIngredient, setCurrentIngredient] = React.useState(null);
+  function scrollToGroup(key) {
+    document.getElementById(key).scrollIntoView();
+  }
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setCurrentGroup(entry.target.getAttribute("id"));
+          }
+        });
+      },
+      {
+        threshold: 0.3,
+      }
+    );
+
+    // const targetSections = document.querySelectorAll("section");
+    sectionsRef.current.forEach((section) => {
+      observer.observe(section);
+    });
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
+  const refCallback = useCallback((element) => {
+    if (element) {
+      sectionsRef.current.push(element);
+    }
+  }, []);
 
   return (
     <>
@@ -31,8 +69,11 @@ export default function BurgerIngredients({ ingredients }) {
           return (
             <Tab
               value={key}
-              active={current === { key }}
-              onClick={setCurrent}
+              active={currentGroup === key}
+              onClick={() => {
+                scrollToGroup(key);
+                setCurrentGroup(key);
+              }}
               key={key}
             >
               {ingredientsGroups[key]}
@@ -44,11 +85,12 @@ export default function BurgerIngredients({ ingredients }) {
         {Object.keys(ingredientsGroups).map((key) => {
           return (
             <IngredientsGroup
+              key={key}
               groupKey={key}
               groupName={ingredientsGroups[key]}
               ingredients={ingredients}
-              key={key}
               showDetails={setCurrentIngredient}
+              {...{ refCallback }}
             />
           );
         })}

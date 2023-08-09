@@ -1,4 +1,3 @@
-import React from "react";
 import { Ingredient } from "../ingredient/ingredient";
 import { ingredientPropType } from "../../../utils/prop-types";
 import PropTypes from "prop-types";
@@ -16,9 +15,10 @@ export function IngredientsGroup({
   groupName,
   ingredients,
   showDetails,
+  refCallback,
 }) {
   return (
-    <div className={`${styles.group} pb-10`}>
+    <div className={`${styles.group} pb-10`} id={groupKey} ref={refCallback}>
       <h2 className={`${styles.group__header} pb-6`}>{groupName}</h2>
       <div className={`${styles.group__list} pr-4 pl-4`}>
         {ingredients.map((ingredient) => {
