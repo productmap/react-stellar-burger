@@ -5,7 +5,7 @@ OrderDetails.propTypes = {
   orderNumber: PropTypes.number.isRequired,
 };
 
-export default function OrderDetails({ orderNumber = 0 }) {
+export default function OrderDetails({ orderNumber }) {
   return (
     <div className={`${styles.orderAccepted}`}>
       <p className={`${styles.orderNumber} text text_type_digits-large pt-4`}>

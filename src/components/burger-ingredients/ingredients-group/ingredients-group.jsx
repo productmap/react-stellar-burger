@@ -6,7 +6,7 @@ import styles from "./ingredients-group.module.scss";
 IngredientsGroup.propTypes = {
   groupKey: PropTypes.string.isRequired,
   groupName: PropTypes.string.isRequired,
-  ingredients: PropTypes.arrayOf(ingredientPropType).isRequired,
+  ingredients: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired,
   showDetails: PropTypes.func.isRequired,
 };
 

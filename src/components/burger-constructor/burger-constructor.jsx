@@ -21,20 +21,19 @@ import { orderBurger } from "../../utils/api";
 export default function BurgerConstructor() {
   const { ingredients } = useContext(Ingredients);
   const { cart, setCart } = useContext(Cart);
-  const [orderNumber, setOrderNumber] = useState(0);
+  const [orderNumber, setOrderNumber] = useState();
   const [totalPrice, setTotalPrice] = useState(0);
   const burgerBun = ingredients.find((el) => el.type === "bun");
   const burgerIngredients = cart.filter((el) => el.type !== "bun");
-  const [modalOpen, setModalOpen] = useState(null);
 
   useEffect(() => {
     let total = cart.reduce((acc, el) => acc + el.price, 0);
     setTotalPrice(total);
   }, [setTotalPrice, cart]);
 
-  function handlerDeletePosition(uid) {
-    const newCart = cart.filter((pos) => {
-      return pos.key !== uid;
+  function handleDeleteIngredient(uid) {
+    const newCart = cart.filter((ingredient) => {
+      return ingredient.key !== uid;
     });
     setCart(newCart);
   }
@@ -42,6 +41,7 @@ export default function BurgerConstructor() {
   return (
     <>
       <ul className={styles.constructor__list}>
+        {/* верхняя булка */}
         <li className={`${styles.constructor__pos} pr-4`}>
           <ConstructorElement
             type="top"
@@ -64,12 +64,13 @@ export default function BurgerConstructor() {
                   text={ingredient.name}
                   price={ingredient.price}
                   thumbnail={ingredient.image}
-                  handleClose={() => handlerDeletePosition(ingredient.key)}
+                  handleClose={() => handleDeleteIngredient(ingredient.key)}
                 />
               </li>
             );
           })}
         </ul>
+        {/* нижняя булка */}
         <li className={`${styles.constructor__pos} pr-4`}>
           <ConstructorElement
             type="bottom"
@@ -79,29 +80,28 @@ export default function BurgerConstructor() {
             thumbnail={burgerBun.image}
           />
         </li>
+        <li className={styles.constructor__total}>
+          <p className={`text text_type_digits-medium`}>
+            {totalPrice} <CurrencyIcon type="primary" />
+          </p>
+          <Button
+              htmlType="button"
+              type="primary"
+              size="large"
+              extraClass="mr-4"
+              onClick={() => {
+                const cartSet = cart.map((i) => i._id);
+                orderBurger(cartSet).then((data) => {
+                  setOrderNumber(data.order.number);
+                });
+              }}
+          >
+            Оформить заказ
+          </Button>
+        </li>
       </ul>
-      <div className={styles.constructor__total}>
-        <p className={`text text_type_digits-medium`}>
-          {totalPrice} <CurrencyIcon type="primary" />
-        </p>
-        <Button
-          htmlType="button"
-          type="primary"
-          size="large"
-          extraClass="mr-4"
-          onClick={() => {
-            const cartSet = cart.map((i) => i._id);
-            orderBurger(cartSet).then((data) => {
-              setOrderNumber(data.order.number);
-            });
-            setModalOpen(true);
-          }}
-        >
-          Оформить заказ
-        </Button>
-      </div>
-      {modalOpen && (
-        <Modal modalClose={() => setModalOpen(false)}>
+      {orderNumber && (
+        <Modal modalClose={() => setOrderNumber(null)}>
           <OrderDetails orderNumber={orderNumber} />
         </Modal>
       )}

@@ -36,7 +36,6 @@ export default function App() {
         setCart(burger);
       })
       .catch((error) => {
-        console.log(`Ошибка: ${error}`);
         setApiError(`Ошибка: ${error}`);
         setAppState({ hasError: true, isLoading: false });
       });
@@ -44,7 +43,7 @@ export default function App() {
 
   return (
     <div className="app">
-      <Ingredients.Provider value={{ ingredients, setIngredients }}>
+      <Ingredients.Provider value={{ ingredients }}>
         <Cart.Provider value={{ cart, setCart }}>
           {appState.isLoading && "Загрузка..."}
           {appState.hasError && "Произошла ошибка"}

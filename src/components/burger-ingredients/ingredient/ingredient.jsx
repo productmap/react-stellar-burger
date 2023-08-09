@@ -17,14 +17,18 @@ Ingredient.propTypes = {
 export function Ingredient({ ingredient, showDetails }) {
   const { cart, setCart } = useContext(Cart);
 
+  function handleAddToBurger() {
+    setCart([{ ...ingredient, key: uuid() }, ...cart]);
+  }
+
+  function handleIngredientDetails() {
+    showDetails(ingredient);
+    // Временно
+    handleAddToBurger();
+  }
+
   return (
-    <div
-      className={styles.ingredient}
-      onClick={() => {
-        showDetails(ingredient);
-        setCart([{ ...ingredient, key: uuid() },...cart]);
-      }}
-    >
+    <div className={styles.ingredient} onClick={handleIngredientDetails}>
       <img src={ingredient.image} alt={ingredient.name} />
       <p
         className={`${styles.ingredient__price} pt-2 pb-3 text text_type_digits-default`}

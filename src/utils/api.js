@@ -1,5 +1,4 @@
 const url = "https://norma.nomoreparties.space/api";
-
 const headers = {
     "Content-Type": "application/json; charset=UTF-8"
 };
@@ -9,7 +8,7 @@ const checkResponse = (res) => {
 };
 
 export async function getIngredients() {
-    let res = await fetch(`${url}/ingredients`, {
+    const res = await fetch(`${url}/ingredients`, {
         method: "GET",
         headers: headers,
     });
@@ -17,7 +16,7 @@ export async function getIngredients() {
 }
 
 export async function orderBurger(data) {
-    let res = await fetch(`${url}/orders`, {
+    const res = await fetch(`${url}/orders`, {
         method: "POST",
         headers: headers,
         body: JSON.stringify({ingredients: data}),

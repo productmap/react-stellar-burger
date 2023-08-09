@@ -39,7 +39,8 @@ export default function BurgerIngredients() {
         });
       },
       {
-        threshold: 0.3,
+        threshold: 0,
+        rootMargin: '-50% 0% -50% 0%',
       }
     );
 
