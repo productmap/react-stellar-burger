@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   Button,
   ConstructorElement,
@@ -10,7 +10,7 @@ import OrderDetails from "../order-details/order-details";
 // import { ingredientPropType } from "../../utils/prop-types";
 // import PropTypes from "prop-types";
 import styles from "./burger-constructor.module.scss";
-import { Cart, Ingredients, OrderNumber } from "../../services/appContext";
+import { Cart, Ingredients } from "../../services/appContext";
 import { orderBurger } from "../../utils/api";
 
 // BurgerConstructor.propTypes = {
@@ -21,23 +21,20 @@ import { orderBurger } from "../../utils/api";
 export default function BurgerConstructor() {
   const { ingredients } = useContext(Ingredients);
   const { cart, setCart } = useContext(Cart);
-
+  const [orderNumber, setOrderNumber] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
-  const bun = ingredients.find((el) => el.type === "bun");
-  const [modalOpen, setModalOpen] = React.useState(null);
+  const burgerBun = ingredients.find((el) => el.type === "bun");
+  const burgerIngredients = cart.filter((el) => el.type !== "bun");
+  const [modalOpen, setModalOpen] = useState(null);
 
   useEffect(() => {
-    let total = 0;
-    cart.forEach((item) => {
-      let currentItem = ingredients.find((el) => el._id === item.id);
-      total += currentItem.price;
-    });
+    let total = cart.reduce((acc, el) => acc + el.price, 0);
     setTotalPrice(total);
-  }, [ingredients, setTotalPrice, cart]);
+  }, [setTotalPrice, cart]);
 
   function handlerDeletePosition(uid) {
     const newCart = cart.filter((pos) => {
-      return pos.uid !== uid;
+      return pos.key !== uid;
     });
     setCart(newCart);
   }
@@ -49,43 +46,37 @@ export default function BurgerConstructor() {
           <ConstructorElement
             type="top"
             isLocked={true}
-            text={bun.name + " (верх)"}
-            price={bun.price}
-            thumbnail={bun.image}
+            text={burgerBun.name + " (верх)"}
+            price={burgerBun.price}
+            thumbnail={burgerBun.image}
           />
         </li>
         <ul className={`${styles.constructor__ingredients} custom-scroll`}>
-          {cart.map((ingredient, idx) => {
-            const pos = ingredients.find(
-              (el) => el._id === ingredient.id && el.type !== "bun"
+          {burgerIngredients.map((ingredient) => {
+            return (
+              <li
+                className={`${styles.constructor__pos} pr-1`}
+                key={ingredient.key}
+              >
+                <DragIcon type="primary" />
+                <ConstructorElement
+                  isLocked={false}
+                  text={ingredient.name}
+                  price={ingredient.price}
+                  thumbnail={ingredient.image}
+                  handleClose={() => handlerDeletePosition(ingredient.key)}
+                />
+              </li>
             );
-            if (pos) {
-              return (
-                <li
-                  className={`${styles.constructor__pos} pr-1`}
-                  key={pos._id + idx}
-                >
-                  <DragIcon type="primary" />
-                  <ConstructorElement
-                    isLocked={false}
-                    text={pos.name}
-                    price={pos.price}
-                    thumbnail={pos.image}
-                    handleClose={() => handlerDeletePosition(ingredient.uid)}
-                  />
-                </li>
-              );
-            }
-            return null;
           })}
         </ul>
         <li className={`${styles.constructor__pos} pr-4`}>
           <ConstructorElement
             type="bottom"
             isLocked={true}
-            text={bun.name + " (низ)"}
-            price={bun.price}
-            thumbnail={bun.image}
+            text={burgerBun.name + " (низ)"}
+            price={burgerBun.price}
+            thumbnail={burgerBun.image}
           />
         </li>
       </ul>
@@ -99,21 +90,20 @@ export default function BurgerConstructor() {
           size="large"
           extraClass="mr-4"
           onClick={() => {
-            const cartSet = cart.map((i) => i.id);
-            orderBurger({ ingredients: cartSet }).then((data) =>
-              console.log(data)
-            );
-            // setModalOpen(true)
+            const cartSet = cart.map((i) => i._id);
+            orderBurger(cartSet).then((data) => {
+              setOrderNumber(data.order.number);
+            });
+            setModalOpen(true);
           }}
         >
           Оформить заказ
         </Button>
       </div>
       {modalOpen && (
-        <Modal
-          modalClose={() => setModalOpen(false)}
-          children={<OrderDetails />}
-        />
+        <Modal modalClose={() => setModalOpen(false)}>
+          <OrderDetails orderNumber={orderNumber} />
+        </Modal>
       )}
     </>
   );

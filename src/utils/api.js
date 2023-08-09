@@ -1,9 +1,7 @@
 const url = "https://norma.nomoreparties.space/api";
 
 const headers = {
-    // headers: {
-    //     "Content-Type": "application/json; charset=UTF-8",
-    // },
+    "Content-Type": "application/json; charset=UTF-8"
 };
 
 const checkResponse = (res) => {
@@ -19,12 +17,10 @@ export async function getIngredients() {
 }
 
 export async function orderBurger(data) {
-    const test = {"ingredients": ["643d69a5c3f7b9001cfa093c", "643d69a5c3f7b9001cfa0943","643d69a5c3f7b9001cfa093c"]}
     let res = await fetch(`${url}/orders`, {
         method: "POST",
         headers: headers,
-        body: JSON.stringify(test),
+        body: JSON.stringify({ingredients: data}),
     });
-    // console.log(JSON.stringify(data))
     return checkResponse(res);
 }

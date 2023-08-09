@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
+import { v4 as uuid } from "uuid";
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import { getIngredients } from "../../utils/api";
 import "./app.scss";
-import { Ingredients, Cart} from "../../services/appContext";
+import { Ingredients, Cart } from "../../services/appContext";
 
 export default function App() {
   const [appState, setAppState] = useState({
@@ -17,30 +17,30 @@ export default function App() {
   const [cart, setCart] = useState([]);
 
   useEffect(() => {
-    ingredientsData();
-  }, []);
-
-  const ingredientsData = () => {
     setAppState({ hasError: false, isLoading: true });
     getIngredients()
       .then((data) => {
         setAppState({ hasError: false, isLoading: false });
         setIngredients(data.data);
-        setCart([
-          { id: "643d69a5c3f7b9001cfa093c", uid: uuidv4() },
-          { id: "643d69a5c3f7b9001cfa0944", uid: uuidv4() },
-          { id: "643d69a5c3f7b9001cfa093f", uid: uuidv4() },
-          { id: "643d69a5c3f7b9001cfa0947", uid: uuidv4() },
-          { id: "643d69a5c3f7b9001cfa0946", uid: uuidv4() },
-          { id: "643d69a5c3f7b9001cfa0946", uid: uuidv4() },
-        ]);
+        const bun = data.data.find((el) => el.type === "bun");
+        const ingredients = data.data.filter((el) => el.type !== "bun");
+        const burgerIngredients = ingredients.map((el) => ({
+          ...el,
+          key: uuid(),
+        }));
+        const burger = [
+          { ...bun, key: uuid() },
+          ...burgerIngredients,
+          { ...bun, key: uuid() },
+        ];
+        setCart(burger);
       })
       .catch((error) => {
         console.log(`Ошибка: ${error}`);
         setApiError(`Ошибка: ${error}`);
         setAppState({ hasError: true, isLoading: false });
       });
-  };
+  }, []);
 
   return (
     <div className="app">
