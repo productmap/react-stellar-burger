@@ -6,7 +6,7 @@ import { ingredientPropType } from "../../../utils/prop-types";
 import { v4 as uuid } from "uuid";
 import styles from "./ingredient.module.scss";
 import PropTypes from "prop-types";
-import { Cart } from "../../../services/appContext";
+import { Burger } from "../../../services/appContext";
 import { useContext } from "react";
 
 Ingredient.propTypes = {
@@ -15,10 +15,10 @@ Ingredient.propTypes = {
 };
 
 export function Ingredient({ ingredient, showDetails }) {
-  const { cart, setCart } = useContext(Cart);
+  const { burger, setBurger } = useContext(Burger);
 
   function handleAddToBurger() {
-    setCart([{ ...ingredient, key: uuid() }, ...cart]);
+    setBurger([{ ...ingredient, key: uuid() }, ...burger]);
   }
 
   function handleIngredientDetails() {

@@ -5,7 +5,7 @@ import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import { getIngredients } from "../../utils/api";
 import "./app.scss";
-import { Ingredients, Cart } from "../../services/appContext";
+import { Ingredients, Burger } from "../../services/appContext";
 
 export default function App() {
   const [appState, setAppState] = useState({
@@ -14,7 +14,7 @@ export default function App() {
   });
   const [apiError, setApiError] = useState(null);
   const [ingredients, setIngredients] = useState([]);
-  const [cart, setCart] = useState([]);
+  const [burger, setBurger] = useState([]);
 
   useEffect(() => {
     setAppState({ hasError: false, isLoading: true });
@@ -33,7 +33,7 @@ export default function App() {
           ...burgerIngredients,
           { ...bun, key: uuid() },
         ];
-        setCart(burger);
+        setBurger(burger);
       })
       .catch((error) => {
         setApiError(`Ошибка: ${error}`);
@@ -44,7 +44,7 @@ export default function App() {
   return (
     <div className="app">
       <Ingredients.Provider value={{ ingredients }}>
-        <Cart.Provider value={{ cart, setCart }}>
+        <Burger.Provider value={{ burger: burger, setBurger: setBurger }}>
           {appState.isLoading && "Загрузка..."}
           {appState.hasError && "Произошла ошибка"}
           {apiError}
@@ -61,7 +61,7 @@ export default function App() {
               </main>
             </>
           )}
-        </Cart.Provider>
+        </Burger.Provider>
       </Ingredients.Provider>
     </div>
   );

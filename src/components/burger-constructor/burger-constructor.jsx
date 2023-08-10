@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useMemo, useState } from "react";
 import {
   Button,
   ConstructorElement,
@@ -7,35 +7,30 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
-// import { ingredientPropType } from "../../utils/prop-types";
-// import PropTypes from "prop-types";
 import styles from "./burger-constructor.module.scss";
-import { Cart, Ingredients } from "../../services/appContext";
+import { Burger, Ingredients } from "../../services/appContext";
 import { orderBurger } from "../../utils/api";
-
-// BurgerConstructor.propTypes = {
-//   cart: PropTypes.arrayOf(PropTypes.string).isRequired,
-//   ingredients: PropTypes.arrayOf(ingredientPropType).isRequired,
-// };
 
 export default function BurgerConstructor() {
   const { ingredients } = useContext(Ingredients);
-  const { cart, setCart } = useContext(Cart);
+  const { burger, setBurger } = useContext(Burger);
   const [orderNumber, setOrderNumber] = useState();
-  const [totalPrice, setTotalPrice] = useState(0);
   const burgerBun = ingredients.find((el) => el.type === "bun");
-  const burgerIngredients = cart.filter((el) => el.type !== "bun");
+  const burgerIngredients = useMemo(
+    () => burger.filter((el) => el.type !== "bun"),
+    [burger]
+  );
 
-  useEffect(() => {
-    let total = cart.reduce((acc, el) => acc + el.price, 0);
-    setTotalPrice(total);
-  }, [setTotalPrice, cart]);
+  const totalPrice = useMemo(
+    () => burger.reduce((acc, el) => acc + el.price, 0),
+    [burger]
+  );
 
   function handleDeleteIngredient(uid) {
-    const newCart = cart.filter((ingredient) => {
+    const newBurger = burger.filter((ingredient) => {
       return ingredient.key !== uid;
     });
-    setCart(newCart);
+    setBurger(newBurger);
   }
 
   return (
@@ -85,16 +80,16 @@ export default function BurgerConstructor() {
             {totalPrice} <CurrencyIcon type="primary" />
           </p>
           <Button
-              htmlType="button"
-              type="primary"
-              size="large"
-              extraClass="mr-4"
-              onClick={() => {
-                const cartSet = cart.map((i) => i._id);
-                orderBurger(cartSet).then((data) => {
-                  setOrderNumber(data.order.number);
-                });
-              }}
+            htmlType="button"
+            type="primary"
+            size="large"
+            extraClass="mr-4"
+            onClick={() => {
+              const cartSet = burger.map((i) => i._id);
+              orderBurger(cartSet).then((data) => {
+                setOrderNumber(data.order.number);
+              });
+            }}
           >
             Оформить заказ
           </Button>
