@@ -1,10 +1,4 @@
-import {
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { IngredientsGroup } from "./ingredients-group/ingredients-group";
 import styles from "./burger-ingredients.module.scss";
@@ -38,11 +32,10 @@ export default function BurgerIngredients() {
       },
       {
         threshold: 0,
-        rootMargin: '-50% 0% -50% 0%',
+        rootMargin: "-50% 0% -50% 0%",
       }
     );
 
-    // const targetSections = document.querySelectorAll("section");
     sectionsRef.current.forEach((section) => {
       observer.observe(section);
     });

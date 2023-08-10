@@ -27,10 +27,10 @@ export default function BurgerConstructor() {
   );
 
   function handleDeleteIngredient(uid) {
-    const newBurger = burger.filter((ingredient) => {
+    const newState = burger.filter((ingredient) => {
       return ingredient.key !== uid;
     });
-    setBurger(newBurger);
+    setBurger(newState);
   }
 
   return (
