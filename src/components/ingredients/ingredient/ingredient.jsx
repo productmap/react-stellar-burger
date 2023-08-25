@@ -5,7 +5,7 @@ import {
 import { ingredientPropType } from "../../../utils/prop-types";
 import styles from "./ingredient.module.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { setCurrentIngredient } from "../../../store/current-ingredient/current-ingredient";
+import { setCurrentIngredient } from "../../../store/current-ingredient";
 import { useDrag } from "react-dnd";
 import clsx from "clsx";
 

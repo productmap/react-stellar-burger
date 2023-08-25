@@ -18,9 +18,6 @@ export const burgersApi = createApi({
       query: (payload) => ({
         url: `/orders`,
         method: "POST",
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-        },
         body: { ingredients: payload },
       }),
     }),

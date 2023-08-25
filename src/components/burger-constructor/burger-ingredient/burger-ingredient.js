@@ -5,7 +5,7 @@ import {
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "../burger-constructor.module.scss";
-import {removeIngredient} from "../../../store/burger/burger";
+import {removeIngredient} from "../../../store/burger";
 import {useDispatch} from "react-redux";
 const style = {
   cursor: "move",

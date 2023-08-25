@@ -1,8 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { burgersApi } from "./api/burgers.api";
-import burgerReducer from "./burger/burger";
-import currentIngredientReducer from "./current-ingredient/current-ingredient";
-import orderNumberReducer from "./order-number/order-number";
+import burgerReducer from "./burger";
+import currentIngredientReducer from "./current-ingredient";
+import orderNumberReducer from "./order-number";
 
 export const store = configureStore({
   reducer: {

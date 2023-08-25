@@ -4,7 +4,7 @@ import { IngredientsGroup } from "./ingredients-group/ingredients-group";
 import IngredientDetails from "./ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
 import { useGetIngredientsQuery } from "../../store/api/burgers.api";
-import { setCurrentIngredient } from "../../store/current-ingredient/current-ingredient";
+import { setCurrentIngredient } from "../../store/current-ingredient";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./ingredients.module.scss";
 

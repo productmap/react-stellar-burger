@@ -8,12 +8,8 @@ import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import styles from "./burger-constructor.module.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { setOrderNumber } from "../../store/order-number/order-number";
-import {
-  addIngredient,
-  newBurger,
-  sortedBurger,
-} from "../../store/burger/burger";
+import { setOrderNumber } from "../../store/order-number";
+import { addIngredient, newBurger, sortedBurger } from "../../store/burger";
 import { useDrop } from "react-dnd";
 import clsx from "clsx";
 import BurgerDetails from "./burger-details/burger-details";
