@@ -1,9 +1,9 @@
-import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import styles from "./modal.module.scss";
 import { useEffect } from "react";
-import PropTypes from "prop-types";
 import { createPortal } from "react-dom";
 import ModalOverlay from "../modal-overlay/modal-overlay";
+import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import PropTypes from "prop-types";
+import styles from "./modal.module.scss";
 
 Modal.propTypes = {
   modalClose: PropTypes.func.isRequired,
@@ -11,11 +11,7 @@ Modal.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-export default function Modal({
-  modalClose,
-  header = null,
-  children
-}) {
+export default function Modal({ modalClose, header = null, children }) {
   useEffect(() => {
     const handleEscapeClose = (event) => {
       if (event.key === "Escape") {
@@ -30,20 +26,17 @@ export default function Modal({
 
   return createPortal(
     <div className={styles.modal}>
-      <ModalOverlay modalClose={modalClose}/>
-       <div className={styles.container}>
+      <ModalOverlay modalClose={modalClose} />
+      <div className={styles.container}>
         <div className={styles.container__header}>
           {header && <h1 className="text text_type_main-large">{header}</h1>}
-          <div
-            className={styles.container__close}
-            onClick={modalClose}
-          >
+          <div className={styles.container__close} onClick={modalClose}>
             <CloseIcon type="primary" />
           </div>
         </div>
         {children}
       </div>
     </div>,
-    document.getElementById("modal")
+    document.querySelector("#modal")
   );
 }

@@ -1,68 +1,37 @@
-import { useEffect, useState } from "react";
-import { v4 as uuid } from "uuid";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 import AppHeader from "../app-header/app-header";
-import BurgerIngredients from "../burger-ingredients/burger-ingredients";
+import Ingredients from "../ingredients/ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
-import { getIngredients } from "../../utils/api";
-import "./app.scss";
-import { Ingredients, Burger } from "../../services/appContext";
+import { useGetIngredientsQuery } from "../../store/api/ingredients/ingredients";
+import styles from "./app.module.scss";
 
 export default function App() {
-  const [appState, setAppState] = useState({
-    isLoading: false,
-    hasError: false,
-  });
-  const [apiError, setApiError] = useState(null);
-  const [ingredients, setIngredients] = useState([]);
-  const [burger, setBurger] = useState([]);
-
-  useEffect(() => {
-    setAppState({ hasError: false, isLoading: true });
-    getIngredients()
-      .then((data) => {
-        setAppState({ hasError: false, isLoading: false });
-        setIngredients(data.data);
-        const bun = data.data.find((el) => el.type === "bun");
-        const ingredients = data.data.filter((el) => el.type !== "bun");
-        const burgerIngredients = ingredients.map((el) => ({
-          ...el,
-          key: uuid(),
-        }));
-        const burger = [
-          { ...bun, key: uuid() },
-          ...burgerIngredients,
-          { ...bun, key: uuid() },
-        ];
-        setBurger(burger);
-      })
-      .catch((error) => {
-        setApiError(`Ошибка: ${error}`);
-        setAppState({ hasError: true, isLoading: false });
-      });
-  }, []);
+  const {
+    data: ingredients = [],
+    isError,
+    error,
+    isLoading,
+    isFetching,
+  } = useGetIngredientsQuery();
 
   return (
-    <div className="app">
-      <Ingredients.Provider value={{ ingredients }}>
-        <Burger.Provider value={{ burger: burger, setBurger: setBurger }}>
-          {appState.isLoading && "Загрузка..."}
-          {appState.hasError && "Произошла ошибка"}
-          {apiError}
-          {!appState.isLoading && !appState.hasError && ingredients.length && (
-            <>
-              <AppHeader />
-              <main className="constructor pb-10">
-                <section className="constructor__column">
-                  <BurgerIngredients />
-                </section>
-                <section className="constructor__column pt-25">
-                  <BurgerConstructor />
-                </section>
-              </main>
-            </>
-          )}
-        </Burger.Provider>
-      </Ingredients.Provider>
+    <div className={styles.app}>
+      {isError ? (
+        <>Произошла ошибка: {error}</>
+      ) : isLoading || isFetching ? (
+        <>Загрузка...</>
+      ) : ingredients ? (
+        <>
+          <AppHeader />
+          <main className={styles.main}>
+            <DndProvider backend={HTML5Backend}>
+              <Ingredients />
+              <BurgerConstructor />
+            </DndProvider>
+          </main>
+        </>
+      ) : null}
     </div>
   );
 }

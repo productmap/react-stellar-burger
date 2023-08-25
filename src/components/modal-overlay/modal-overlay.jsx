@@ -1,13 +1,12 @@
-import React, {useEffect} from 'react';
-import styles from "./modal-overlay.module.scss"
+import React, { useEffect } from "react";
+import styles from "./modal-overlay.module.scss";
 import PropTypes from "prop-types";
 
 ModalOverlay.propTypes = {
-  modalClose: PropTypes.func.isRequired
+  modalClose: PropTypes.func.isRequired,
 };
 
-function ModalOverlay ({modalClose}) {
-
+export default function ModalOverlay({ modalClose }) {
   useEffect(() => {
     const handleEscapeClose = (event) => {
       if (event.key === "Escape") {
@@ -20,12 +19,5 @@ function ModalOverlay ({modalClose}) {
     };
   }, [modalClose]);
 
-  return (
-    <div
-      className={styles.overlay}
-      onClick={() => modalClose()}
-    ></div>
-  );
+  return <div className={styles.overlay} onClick={() => modalClose()}></div>;
 }
-
-export default ModalOverlay;

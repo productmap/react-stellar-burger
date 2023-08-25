@@ -1,15 +1,18 @@
-import { useCallback, useContext, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { IngredientsGroup } from "./ingredients-group/ingredients-group";
-import styles from "./burger-ingredients.module.scss";
-import Modal from "../modal/modal";
 import IngredientDetails from "./ingredient-details/ingredient-details";
-import { Ingredients } from "../../services/appContext";
+import Modal from "../modal/modal";
+import { useGetIngredientsQuery } from "../../store/api/ingredients/ingredients";
+import { setCurrentIngredient } from "../../store/current-ingredient/current-ingredient";
+import { useDispatch, useSelector } from "react-redux";
+import styles from "./ingredients.module.scss";
 
-export default function BurgerIngredients() {
-  const { ingredients } = useContext(Ingredients);
+export default function Ingredients() {
+  const dispatch = useDispatch();
+  const { data: ingredients } = useGetIngredientsQuery();
   const [currentGroup, setCurrentGroup] = useState("bun");
-  const [currentIngredient, setCurrentIngredient] = useState(null);
+  const { currentIngredient } = useSelector((store) => store.currentIngredient);
   const ingredientsGroups = {
     bun: "Булки",
     sauce: "Соусы",
@@ -52,7 +55,7 @@ export default function BurgerIngredients() {
   }, []);
 
   return (
-    <>
+    <section>
       <h1 className={`text text_type_main-large pt-10 pb-5`}>
         Соберите бургер
       </h1>
@@ -81,7 +84,6 @@ export default function BurgerIngredients() {
               groupKey={key}
               groupName={ingredientsGroups[key]}
               ingredients={ingredients}
-              showDetails={setCurrentIngredient}
               {...{ refCallback }}
             />
           );
@@ -90,11 +92,11 @@ export default function BurgerIngredients() {
       {currentIngredient && (
         <Modal
           header="Детали ингредиента"
-          modalClose={() => setCurrentIngredient(false)}
+          modalClose={() => dispatch(setCurrentIngredient(null))}
         >
           <IngredientDetails ingredient={currentIngredient} />
         </Modal>
       )}
-    </>
+    </section>
   );
 }

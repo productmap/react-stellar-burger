@@ -5,6 +5,7 @@
   align-items: center;
   width: 272px;
   flex-flow: column nowrap;
+  cursor: pointer;
 
   &__price {
     display: inline-flex;
@@ -15,4 +16,8 @@
   &__description {
     text-align: center;
   }
+}
+
+.isDrag {
+  opacity: 0.4;
 }

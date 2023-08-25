@@ -5,44 +5,25 @@
   align-items: center;
   height: 100%;
   margin: 0 auto;
-  // Базовый шрифт
-  font-family: 'Jet Brains Mono', Verdana, monospace;
-  font-weight: normal;
-  // Плавный скролл
-  scroll-behavior: smooth;
-  overscroll-behavior: contain;
-  // Сглаживание шрифтов
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  -webkit-text-size-adjust: 100%;
-  -ms-text-size-adjust: 100%;
-  -moz-text-size-adjust: 100%;
-  // Отключение выделения
-  -webkit-user-select: none;
-  -ms-user-select: none;
-  // Отключение выделения текста на странице
-  user-select: none;
-  // Отключение зума на мобильных
-  touch-action: pan-x pan-y;
-  // Отключение подсветки при тапе
-  -webkit-tap-highlight-color: transparent;
 }
 
 * {
-  // Плавный скролл
-  scroll-behavior: smooth;
-  overscroll-behavior: contain;
+  // Базовый шрифт
+  font-family: 'Jet Brains Mono', Verdana, monospace;
+  font-weight: normal;
   // Сглаживание шрифтов
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
   -moz-text-size-adjust: 100%;
-  // Отключение выделения
-  -webkit-user-select: none;
-  -ms-user-select: none;
+  // Плавный скрол
+  scroll-behavior: smooth;
+  overscroll-behavior: contain;
   // Отключение выделения текста на странице
   user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
   // Отключение зума на мобильных
   touch-action: pan-x pan-y;
   // Отключение подсветки при тапе

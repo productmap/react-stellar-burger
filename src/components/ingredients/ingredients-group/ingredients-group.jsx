@@ -7,14 +7,12 @@ IngredientsGroup.propTypes = {
   groupKey: PropTypes.string.isRequired,
   groupName: PropTypes.string.isRequired,
   ingredients: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired,
-  showDetails: PropTypes.func.isRequired,
 };
 
 export function IngredientsGroup({
   groupKey,
   groupName,
   ingredients,
-  showDetails,
   refCallback,
 }) {
   return (
@@ -23,13 +21,7 @@ export function IngredientsGroup({
       <div className={`${styles.group__list} pr-4 pl-4`}>
         {ingredients.map((ingredient) => {
           if (ingredient.type === groupKey)
-            return (
-              <Ingredient
-                ingredient={ingredient}
-                key={ingredient._id}
-                showDetails={showDetails}
-              />
-            );
+            return <Ingredient ingredient={ingredient} key={ingredient._id} />;
           return null;
         })}
       </div>
