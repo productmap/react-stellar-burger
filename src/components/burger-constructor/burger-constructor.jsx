@@ -1,9 +1,8 @@
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import {
   Button,
   ConstructorElement,
   CurrencyIcon,
-  DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
@@ -13,12 +12,13 @@ import { setOrderNumber } from "../../store/order-number/order-number";
 import {
   addIngredient,
   newBurger,
-  removeIngredient,
+  sortedBurger,
 } from "../../store/burger/burger";
 import { useDrop } from "react-dnd";
 import clsx from "clsx";
 import { useOrderBurgerMutation } from "../../store/api/order-burger/order-burger";
 import BurgerDetails from "./burger-details/burger-details";
+import { BurgerIngredient } from "./burger-ingredient/burger-ingredient";
 
 export default function BurgerConstructor() {
   const dispatch = useDispatch();
@@ -31,22 +31,43 @@ export default function BurgerConstructor() {
     [burger]
   );
 
-  // Счетчик суммы заказа
-  const totalPrice = useMemo(
-    () => burger.reduce((acc, el) => acc + el.price, 0),
-    [burger]
-  );
-
-  // DND
+  // Добавление перетаскиваемого ингредиента
   const [{ isHover }, dropTarget] = useDrop({
     accept: "ingredient",
     collect: (monitor) => ({
       isHover: monitor.isOver(),
+      canDrop: monitor.canDrop(),
     }),
     drop(ingredient) {
       dispatch(addIngredient(ingredient));
     },
   });
+
+  // Сортировка
+  const moveIngredient = useCallback(
+    (dragIndex, hoverIndex) => {
+      dispatch(sortedBurger({ dragIndex, hoverIndex }));
+    },
+    [dispatch]
+  );
+
+  const renderIngredient = useCallback((ingredient, index) => {
+    return (
+      <BurgerIngredient
+        key={ingredient.key}
+        index={index}
+        id={ingredient._id}
+        ingredient={ingredient}
+        moveIngredient={moveIngredient}
+      />
+    );
+  }, []);
+
+  // Счетчик суммы заказа
+  const totalPrice = useMemo(
+    () => burger.reduce((acc, el) => acc + el.price, 0),
+    [burger]
+  );
 
   // Ручка заказа
   const [orderBurger, { isLoading }] = useOrderBurgerMutation();
@@ -88,25 +109,9 @@ export default function BurgerConstructor() {
           </li>
         ) : (
           <ul className={`${styles.constructor__ingredients} custom-scroll`}>
-            {burgerIngredients.map((ingredient) => {
-              return (
-                <li
-                  className={`${styles.constructor__pos} pr-1`}
-                  key={ingredient.key}
-                >
-                  <DragIcon type="primary" />
-                  <ConstructorElement
-                    isLocked={false}
-                    text={ingredient.name}
-                    price={ingredient.price}
-                    thumbnail={ingredient.image}
-                    handleClose={() =>
-                      dispatch(removeIngredient(ingredient.key))
-                    }
-                  />
-                </li>
-              );
-            })}
+            {burgerIngredients.map((ingredient, idx) =>
+              renderIngredient(ingredient, idx)
+            )}
           </ul>
         )}
 

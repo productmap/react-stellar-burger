@@ -5,16 +5,14 @@ import {
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "../burger-constructor.module.scss";
+import {removeIngredient} from "../../../store/burger/burger";
+import {useDispatch} from "react-redux";
 const style = {
-  border: "1px dashed gray",
-  padding: "0.5rem 1rem",
-  marginBottom: ".5rem",
-  backgroundColor: "white",
   cursor: "move",
 };
 
-
-export const BurgerIngredient = ({ id, ingredient, index, moveCard }) => {
+export const BurgerIngredient = ({ id, ingredient, index, moveIngredient }) => {
+  const dispatch = useDispatch();
   const ref = useRef(null);
   const [{ handlerId }, drop] = useDrop({
     accept: "burgerIngredient",
@@ -54,7 +52,7 @@ export const BurgerIngredient = ({ id, ingredient, index, moveCard }) => {
         return;
       }
       // Time to actually perform the action
-      moveCard(dragIndex, hoverIndex);
+      moveIngredient(dragIndex, hoverIndex);
       // Note: we're mutating the monitor item here!
       // Generally it's better to avoid mutations,
       // but it's good here for the sake of performance
@@ -72,25 +70,26 @@ export const BurgerIngredient = ({ id, ingredient, index, moveCard }) => {
       isDragging: monitor.isDragging(),
     }),
   });
+
   const opacity = isDragging ? 0 : 1;
   drag(drop(ref));
+
   return (
-    <div ref={ref} style={{ ...style, opacity }} data-handler-id={handlerId}>
-      return (
-      <li
-        className={`${styles.constructor__pos} pr-1`}
-        key={ingredient.key}
-      >
-        <DragIcon type="primary" />
-        <ConstructorElement
-          isLocked={false}
-          text={ingredient.name}
-          price={ingredient.price}
-          thumbnail={ingredient.image}
-          // handleClose={() => dispatch(removeIngredient(ingredient.key))}
-        />
-      </li>
-      );
-    </div>
+    <li
+      key={ingredient.key}
+      ref={ref}
+      className={`${styles.constructor__pos} pr-1`}
+      style={{ ...style, opacity }}
+      data-handler-id={handlerId}
+    >
+      <DragIcon type="primary" />
+      <ConstructorElement
+        isLocked={false}
+        text={ingredient.name}
+        price={ingredient.price}
+        thumbnail={ingredient.image}
+        handleClose={() => dispatch(removeIngredient(ingredient.key))}
+      />
+    </li>
   );
 };

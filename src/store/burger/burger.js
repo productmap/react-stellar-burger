@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { v4 as uuid } from "uuid";
+import update from "immutability-helper";
 
 const burgerSlice = createSlice({
   name: "burger",
@@ -22,9 +23,17 @@ const burgerSlice = createSlice({
     newBurger(state) {
       state.burger = [];
     },
+    sortedBurger(state, action) {
+      state.burger = update(state.burger, {
+        $splice: [
+          [action.payload.dragIndex, 1],
+          [action.payload.hoverIndex, 0, state.burger[action.payload.dragIndex]],
+        ],
+      });
+    },
   },
 });
 
-export const { addIngredient, removeIngredient, newBurger } =
+export const { addIngredient, removeIngredient, newBurger, sortedBurger } =
   burgerSlice.actions;
 export default burgerSlice.reducer;
