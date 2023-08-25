@@ -3,7 +3,7 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { IngredientsGroup } from "./ingredients-group/ingredients-group";
 import IngredientDetails from "./ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
-import { useGetIngredientsQuery } from "../../store/api/ingredients/ingredients";
+import { useGetIngredientsQuery } from "../../store/api/burgers.api";
 import { setCurrentIngredient } from "../../store/current-ingredient/current-ingredient";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./ingredients.module.scss";

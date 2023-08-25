@@ -16,9 +16,9 @@ import {
 } from "../../store/burger/burger";
 import { useDrop } from "react-dnd";
 import clsx from "clsx";
-import { useOrderBurgerMutation } from "../../store/api/order-burger/order-burger";
 import BurgerDetails from "./burger-details/burger-details";
 import { BurgerIngredient } from "./burger-ingredient/burger-ingredient";
+import { useOrderBurgerMutation } from "../../store/api/burgers.api";
 
 export default function BurgerConstructor() {
   const dispatch = useDispatch();
@@ -51,17 +51,20 @@ export default function BurgerConstructor() {
     [dispatch]
   );
 
-  const renderIngredient = useCallback((ingredient, index) => {
-    return (
-      <BurgerIngredient
-        key={ingredient.key}
-        index={index}
-        id={ingredient._id}
-        ingredient={ingredient}
-        moveIngredient={moveIngredient}
-      />
-    );
-  }, []);
+  const renderIngredient = useCallback(
+    (ingredient, index) => {
+      return (
+        <BurgerIngredient
+          key={ingredient.key}
+          index={index}
+          id={ingredient._id}
+          ingredient={ingredient}
+          moveIngredient={moveIngredient}
+        />
+      );
+    },
+    [moveIngredient]
+  );
 
   // Счетчик суммы заказа
   const totalPrice = useMemo(

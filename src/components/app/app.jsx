@@ -3,7 +3,7 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import AppHeader from "../app-header/app-header";
 import Ingredients from "../ingredients/ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
-import { useGetIngredientsQuery } from "../../store/api/ingredients/ingredients";
+import { useGetIngredientsQuery } from "../../store/api/burgers.api";
 import styles from "./app.module.scss";
 
 export default function App() {
