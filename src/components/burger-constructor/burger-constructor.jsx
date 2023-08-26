@@ -12,7 +12,7 @@ import { setOrderNumber } from "../../store/order-number";
 import { addIngredient, newBurger, sortedBurger } from "../../store/burger";
 import { useDrop } from "react-dnd";
 import clsx from "clsx";
-import BurgerDetails from "./burger-details/burger-details";
+// import BurgerDetails from "./burger-details/burger-details";
 import { BurgerIngredient } from "./burger-ingredient/burger-ingredient";
 import { useOrderBurgerMutation } from "../../store/api/burgers.api";
 
@@ -71,6 +71,7 @@ export default function BurgerConstructor() {
   // Ручка заказа
   const [orderBurger, { isLoading }] = useOrderBurgerMutation();
   async function handleOrderBurger(burger) {
+    if (burger.length === 0) return;
     try {
       const ingredientsList = burger.map((i) => i._id);
       const response = await orderBurger(ingredientsList).unwrap();
@@ -132,11 +133,11 @@ export default function BurgerConstructor() {
         )}
 
         {/* Энергетическая ценность */}
-        {burger.length > 0 && (
-          <li>
-            <BurgerDetails />
-          </li>
-        )}
+        {/*{burger.length > 0 && (*/}
+        {/*  <li>*/}
+        {/*    <BurgerDetails />*/}
+        {/*  </li>*/}
+        {/*)}*/}
 
         <li className={styles.constructor__total}>
           <p className={`text text_type_digits-medium`}>

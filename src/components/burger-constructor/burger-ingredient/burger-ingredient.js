@@ -5,13 +5,22 @@ import {
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "../burger-constructor.module.scss";
-import {removeIngredient} from "../../../store/burger";
-import {useDispatch} from "react-redux";
+import { removeIngredient } from "../../../store/burger";
+import { useDispatch } from "react-redux";
+import PropTypes from "prop-types";
+import { ingredientPropType } from "../../../utils/prop-types";
 const style = {
   cursor: "move",
 };
 
-export const BurgerIngredient = ({ id, ingredient, index, moveIngredient }) => {
+BurgerIngredient.propTypes = {
+  id: PropTypes.string.isRequired,
+  ingredient: ingredientPropType.isRequired,
+  index: PropTypes.number.isRequired,
+  moveIngredient: PropTypes.func.isRequired,
+};
+
+export function BurgerIngredient({ id, ingredient, index, moveIngredient }) {
   const dispatch = useDispatch();
   const ref = useRef(null);
   const [{ handlerId }, drop] = useDrop({
@@ -76,7 +85,6 @@ export const BurgerIngredient = ({ id, ingredient, index, moveIngredient }) => {
 
   return (
     <li
-      key={ingredient.key}
       ref={ref}
       className={`${styles.constructor__pos} pr-1`}
       style={{ ...style, opacity }}
@@ -92,4 +100,4 @@ export const BurgerIngredient = ({ id, ingredient, index, moveIngredient }) => {
       />
     </li>
   );
-};
+}

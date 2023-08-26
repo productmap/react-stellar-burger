@@ -59,7 +59,7 @@ export default function Ingredients() {
       <h1 className={`text text_type_main-large pt-10 pb-5`}>
         Соберите бургер
       </h1>
-      <div style={{ display: "flex" }}>
+      <div className={styles.tabs}>
         {Object.keys(ingredientsGroups).map((key) => {
           return (
             <Tab
