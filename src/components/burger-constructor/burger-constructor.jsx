@@ -9,7 +9,11 @@ import OrderDetails from "../order-details/order-details";
 import styles from "./burger-constructor.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { setOrderNumber } from "../../store/order-number";
-import { addIngredient, newBurger, sortedBurger } from "../../store/burger";
+import {
+  addIngredient,
+  newBurger,
+  sortedBurger,
+} from "../../store/burger/burger";
 import { useDrop } from "react-dnd";
 import clsx from "clsx";
 // import BurgerDetails from "./burger-details/burger-details";
@@ -20,19 +24,14 @@ export default function BurgerConstructor() {
   const dispatch = useDispatch();
   const { orderNumber } = useSelector((store) => store.orderNumber);
   const { burger } = useSelector((store) => store.burger);
-
-  const burgerBun = burger.find((el) => el.type === "bun") ?? null;
-  const burgerIngredients = useMemo(
-    () => burger.filter((el) => el.type !== "bun"),
-    [burger]
-  );
+  const burgerBun = burger.bun;
 
   // Добавление перетаскиваемого ингредиента
   const [{ isHover }, dropTarget] = useDrop({
     accept: "ingredient",
     collect: (monitor) => ({
       isHover: monitor.isOver(),
-      canDrop: monitor.canDrop(),
+      // canDrop: monitor.canDrop(),
     }),
     drop(ingredient) {
       dispatch(addIngredient(ingredient));
@@ -63,18 +62,27 @@ export default function BurgerConstructor() {
   );
 
   // Счетчик суммы заказа
-  const totalPrice = useMemo(
-    () => burger.reduce((acc, el) => acc + el.price, 0),
-    [burger]
-  );
+  const totalPrice = useMemo(() => {
+    const ingredientsPrice = burger.ingredients.reduce(
+      (acc, el) => acc + el.price,
+      0
+    );
+    const bunsPrice = burger.bun.price ? burger.bun.price * 2 : 0;
+    return ingredientsPrice + bunsPrice;
+  }, [burger]);
 
   // Ручка заказа
   const [orderBurger, { isLoading }] = useOrderBurgerMutation();
   async function handleOrderBurger(burger) {
-    if (burger.length === 0) return;
+    if (!burger.bun) return;
     try {
-      const ingredientsList = burger.map((i) => i._id);
-      const response = await orderBurger(ingredientsList).unwrap();
+      const ingredientsList = burger.ingredients.map((i) => i._id);
+      const finalOrderList = [
+        burger.bun._id,
+        ...ingredientsList,
+        burger.bun._id,
+      ];
+      const response = await orderBurger(finalOrderList).unwrap();
       dispatch(setOrderNumber(response.order.number));
       dispatch(newBurger());
     } catch (error) {
@@ -103,13 +111,13 @@ export default function BurgerConstructor() {
         )}
 
         {/* Ингредиенты */}
-        {burgerIngredients.length === 0 ? (
+        {burger.ingredients.length === 0 ? (
           <li className={styles.empty}>
             <p>Перетащите сюда ингредиенты</p>
           </li>
         ) : (
           <ul className={`${styles.constructor__ingredients} custom-scroll`}>
-            {burgerIngredients.map((ingredient, idx) =>
+            {burger.ingredients.map((ingredient, idx) =>
               renderIngredient(ingredient, idx)
             )}
           </ul>

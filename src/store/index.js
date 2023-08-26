@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { burgersApi } from "./api/burgers.api";
-import burgerReducer from "./burger";
+import burgerReducer from "./burger/burger";
 import currentIngredientReducer from "./current-ingredient";
 import orderNumberReducer from "./order-number";
 

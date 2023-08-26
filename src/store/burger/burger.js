@@ -5,29 +5,34 @@ import update from "immutability-helper";
 const burgerSlice = createSlice({
   name: "burger",
   initialState: {
-    burger: [],
+    burger: { bun: "", ingredients: [] },
   },
   reducers: {
     addIngredient(state, action) {
       const ingredient = Object.assign({ key: uuid() }, action.payload);
       if (action.payload.type === "bun") {
-        state.burger = state.burger.filter((i) => i.type !== "bun");
-        state.burger.push(ingredient, ingredient);
+        state.burger.bun = ingredient;
       } else {
-        state.burger.push(ingredient);
+        state.burger.ingredients.push(ingredient);
       }
     },
     removeIngredient(state, action) {
-      state.burger = state.burger.filter((i) => i.key !== action.payload);
+      state.burger.ingredients = state.burger.ingredients.filter(
+        (i) => i.key !== action.payload
+      );
     },
     newBurger(state) {
-      state.burger = [];
+      state.burger = { bun: "", ingredients: [] };
     },
     sortedBurger(state, action) {
-      state.burger = update(state.burger, {
+      state.burger.ingredients = update(state.burger.ingredients, {
         $splice: [
           [action.payload.dragIndex, 1],
-          [action.payload.hoverIndex, 0, state.burger[action.payload.dragIndex]],
+          [
+            action.payload.hoverIndex,
+            0,
+            state.burger.ingredients[action.payload.dragIndex],
+          ],
         ],
       });
     },

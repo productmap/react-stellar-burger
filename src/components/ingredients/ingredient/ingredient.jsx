@@ -16,7 +16,13 @@ Ingredient.propTypes = {
 export function Ingredient({ ingredient }) {
   const dispatch = useDispatch();
   const { burger } = useSelector((store) => store.burger);
-  const quantity = burger.filter((i) => i._id === ingredient._id).length;
+  const quantity = () => {
+    if(ingredient.type === 'bun') {
+      return burger.buns.filter((i) => i._id === ingredient._id).length;
+    } else {
+      return burger.ingredients.filter((i) => i._id === ingredient._id).length;
+    }
+  }
 
   const [{ isDrag }, dragRef, dragPreviewRef] = useDrag({
     type: "ingredient",

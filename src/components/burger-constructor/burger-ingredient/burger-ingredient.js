@@ -5,7 +5,7 @@ import {
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "../burger-constructor.module.scss";
-import { removeIngredient } from "../../../store/burger";
+import { removeIngredient } from "../../../store/burger/burger";
 import { useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 import { ingredientPropType } from "../../../utils/prop-types";
