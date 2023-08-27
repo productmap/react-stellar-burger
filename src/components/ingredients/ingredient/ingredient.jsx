@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setCurrentIngredient } from "../../../store/current-ingredient";
 import { useDrag } from "react-dnd";
 import clsx from "clsx";
+import { useMemo } from "react";
 
 Ingredient.propTypes = {
   ingredient: ingredientPropType.isRequired,
@@ -16,13 +17,10 @@ Ingredient.propTypes = {
 export function Ingredient({ ingredient }) {
   const dispatch = useDispatch();
   const { burger } = useSelector((store) => store.burger);
-  const quantity = () => {
-    if(ingredient.type === 'bun') {
-      return burger.buns.filter((i) => i._id === ingredient._id).length;
-    } else {
-      return burger.ingredients.filter((i) => i._id === ingredient._id).length;
-    }
-  }
+
+  const quantity = [burger.bun, burger.ingredients, burger.bun]
+    .flat()
+    .filter((i) => i._id === ingredient._id).length;
 
   const [{ isDrag }, dragRef, dragPreviewRef] = useDrag({
     type: "ingredient",
