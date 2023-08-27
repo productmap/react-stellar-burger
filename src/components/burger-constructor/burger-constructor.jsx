@@ -16,7 +16,7 @@ import {
 } from "../../store/burger/burger";
 import { useDrop } from "react-dnd";
 import clsx from "clsx";
-// import BurgerDetails from "./burger-details/burger-details";
+import BurgerDetails from "./burger-details/burger-details";
 import { BurgerIngredient } from "./burger-ingredient/burger-ingredient";
 import { useOrderBurgerMutation } from "../../store/api/burgers.api";
 
@@ -31,7 +31,6 @@ export default function BurgerConstructor() {
     accept: "ingredient",
     collect: (monitor) => ({
       isHover: monitor.isOver(),
-      // canDrop: monitor.canDrop(),
     }),
     drop(ingredient) {
       dispatch(addIngredient(ingredient));
@@ -92,7 +91,7 @@ export default function BurgerConstructor() {
 
   return (
     <section className={styles.constructor} ref={dropTarget}>
-      <ul className={clsx(styles.constructor__list, isHover && styles.hover)}>
+      <ul className={clsx(styles.constructor__list, isHover && styles.isHover)}>
         {/* верхняя булка */}
         {burgerBun ? (
           <li className={styles.constructor__pos}>
@@ -140,12 +139,12 @@ export default function BurgerConstructor() {
           </li>
         )}
 
-        {/* Энергетическая ценность */}
-        {/*{burger.length > 0 && (*/}
-        {/*  <li>*/}
-        {/*    <BurgerDetails />*/}
-        {/*  </li>*/}
-        {/*)}*/}
+        {/*Энергетическая ценность*/}
+        {totalPrice > 0 && (
+          <li>
+            <BurgerDetails />
+          </li>
+        )}
 
         <li className={styles.constructor__total}>
           <p className={`text text_type_digits-medium`}>

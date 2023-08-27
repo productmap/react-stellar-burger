@@ -21,7 +21,13 @@ export function IngredientsGroup({
       <div className={`${styles.group__list} pr-4 pl-4`}>
         {ingredients.map((ingredient) => {
           if (ingredient.type === groupKey)
-            return <Ingredient ingredient={ingredient} key={ingredient._id} />;
+            return (
+              <Ingredient
+                ingredient={ingredient}
+                key={ingredient._id}
+                showCopyIcon={true}
+              />
+            );
           return null;
         })}
       </div>

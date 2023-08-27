@@ -18,6 +18,10 @@
   }
 }
 
-.isDrag {
-  opacity: 0.4;
+.isDragging {
+  opacity: 0.3;
+}
+
+.ingredient.isDragging {
+  cursor: move;
 }

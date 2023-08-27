@@ -4,25 +4,29 @@ import styles from "./burger-details.module.scss";
 
 export default function BurgerDetails() {
   const { burger } = useSelector((store) => store.burger);
+  const burgerIngredients = useMemo(
+    () => [burger.bun, ...burger.ingredients, burger.bun],
+    [burger]
+  );
 
   const totalCalories = useMemo(
-    () => burger.reduce((acc, el) => acc + el.calories, 0),
-    [burger]
+    () => burgerIngredients.reduce((acc, el) => acc + el.calories, 0),
+    [burgerIngredients]
   );
 
   const totalProteins = useMemo(
-    () => burger.reduce((acc, el) => acc + el.proteins, 0),
-    [burger]
+    () => burgerIngredients.reduce((acc, el) => acc + el.proteins, 0),
+    [burgerIngredients]
   );
 
   const totalFat = useMemo(
-    () => burger.reduce((acc, el) => acc + el.fat, 0),
-    [burger]
+    () => burgerIngredients.reduce((acc, el) => acc + el.fat, 0),
+    [burgerIngredients]
   );
 
   const totalCarbohydrates = useMemo(
-    () => burger.reduce((acc, el) => acc + el.carbohydrates, 0),
-    [burger]
+    () => burgerIngredients.reduce((acc, el) => acc + el.carbohydrates, 0),
+    [burgerIngredients]
   );
 
   return (

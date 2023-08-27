@@ -44,9 +44,10 @@
   }
 }
 
-.hover {
+.isHover {
   outline: 2px solid rgba(76, 76, 255, 0.2);
   background-color: rgba(76, 76, 255, 0.05);
+  cursor: copy;
 }
 
 .empty {
