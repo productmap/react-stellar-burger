@@ -21,18 +21,15 @@ export function Ingredient({ ingredient, showCopyIcon }) {
     .flat()
     .filter((i) => i._id === ingredient._id).length;
 
-  const [{ isDragging }, dragRef, preview] = useDrag({
-    type: "ingredient",
-    item: ingredient,
-    // options: {
-    //   dropEffect: "copy",
-    // },
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
-      // cursor: monitor.isDragging() ? "copy" : "move",
-      // opacity: monitor.isDragging() ? 0.4 : 1,
+  const [{ isDragging }, dragRef, preview] = useDrag(
+    () => ({
+      type: "ingredient",
+      item: ingredient,
+      options: { dropEffect: "copy" },
+      collect: (monitor) => ({ isDragging: monitor.isDragging() }),
     }),
-  });
+    []
+  );
 
   function handleIngredientDetails() {
     dispatch(setCurrentIngredient(ingredient));
@@ -40,12 +37,14 @@ export function Ingredient({ ingredient, showCopyIcon }) {
 
   const previewImg = new Image();
   previewImg.src = ingredient.image;
-  previewImg.style.cursor= isDragging ? "copy" : "move";
-  preview(previewImg);
+  // previewImg.className = styles.isActive;
+  preview(previewImg, {
+    captureDraggingState: true,
+  });
 
   return (
     <>
-      <DragPreviewImage connect={preview} src={ingredient.image}/>
+      <DragPreviewImage connect={preview} src={ingredient.image} />
       <div
         className={styles.ingredient}
         onClick={handleIngredientDetails}
@@ -56,7 +55,6 @@ export function Ingredient({ ingredient, showCopyIcon }) {
           src={ingredient.image}
           alt={ingredient.name}
           ref={preview}
-          // style={{cursor}}
         />
         <p
           className={`${styles.ingredient__price} pt-2 pb-3 text text_type_digits-default`}

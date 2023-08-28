@@ -22,6 +22,11 @@
   opacity: 0.3;
 }
 
-.ingredient.isDragging {
-  cursor: move;
+.isActive {
+  //cursor: move !important;
+  //outline: 1px dashed blueviolet;
 }
+
+//.ingredient.isDragging {
+//  cursor: move;
+//}

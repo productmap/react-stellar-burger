@@ -49,6 +49,10 @@
   background-color: rgba(76, 76, 255, 0.05);
   cursor: copy;
 }
+.isActive {
+  cursor: copy;
+  //outline: 1px dashed blueviolet;
+}
 
 .empty {
   display: inline-flex;

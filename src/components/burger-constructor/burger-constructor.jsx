@@ -27,10 +27,11 @@ export default function BurgerConstructor() {
   const burgerBun = burger.bun;
 
   // Добавление перетаскиваемого ингредиента
-  const [{ isHover }, dropTarget] = useDrop({
+  const [{ isHover, isActive }, dropTarget] = useDrop({
     accept: "ingredient",
     collect: (monitor) => ({
       isHover: monitor.isOver(),
+      isActive: monitor.canDrop(),
     }),
     drop(ingredient) {
       dispatch(addIngredient(ingredient));
@@ -90,8 +91,15 @@ export default function BurgerConstructor() {
   }
 
   return (
-    <section className={styles.constructor} ref={dropTarget}>
-      <ul className={clsx(styles.constructor__list, isHover && styles.isHover)}>
+    <section className={styles.constructor}>
+      <ul
+        className={clsx(
+          styles.constructor__list,
+          isHover && styles.isHover,
+          isActive && styles.isActive
+        )}
+        ref={dropTarget}
+      >
         {/* верхняя булка */}
         {burgerBun ? (
           <li className={styles.constructor__pos}>
@@ -104,7 +112,7 @@ export default function BurgerConstructor() {
             />
           </li>
         ) : (
-          <li className={clsx(styles.empty, styles.empty_top)}>
+          <li className={clsx(styles.empty, styles.empty_top, isActive && styles.isActive)}>
             Перетащите сюда булку
           </li>
         )}
