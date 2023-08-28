@@ -22,8 +22,12 @@
   opacity: 0.3;
 }
 
+.dragging {
+  cursor: grabbing;
+}
+
 .isActive {
-  //cursor: move !important;
+  //cursor: pointer !important;
   //outline: 1px dashed blueviolet;
 }
 

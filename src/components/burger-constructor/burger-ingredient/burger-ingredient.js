@@ -70,7 +70,7 @@ export function BurgerIngredient({ id, ingredient, index, moveIngredient }) {
     },
   });
 
-  const [{ isDragging }, drag] = useDrag({
+  const [{ isDragging }, drag, preview] = useDrag({
     type: "burgerIngredient",
     item: () => {
       return { id, index };
@@ -82,6 +82,13 @@ export function BurgerIngredient({ id, ingredient, index, moveIngredient }) {
 
   const opacity = isDragging ? 0 : 1;
   drag(drop(ref));
+
+  const previewImg = new Image();
+  previewImg.src = ingredient.image;
+  // previewImg.className = styles.isActive;
+  preview(previewImg, {
+    captureDraggingState: true,
+  });
 
   return (
     <li
