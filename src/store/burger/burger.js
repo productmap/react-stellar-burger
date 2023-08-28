@@ -1,5 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { v4 as uuid } from "uuid";
+import { createSlice, nanoid } from "@reduxjs/toolkit";
 import update from "immutability-helper";
 
 const burgerSlice = createSlice({
@@ -9,7 +8,7 @@ const burgerSlice = createSlice({
   },
   reducers: {
     addIngredient(state, action) {
-      const ingredient = Object.assign({ key: uuid() }, action.payload);
+      const ingredient = Object.assign({ key: nanoid() }, action.payload);
       if (action.payload.type === "bun") {
         state.burger.bun = ingredient;
       } else {
