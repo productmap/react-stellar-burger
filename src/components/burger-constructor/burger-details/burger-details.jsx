@@ -4,10 +4,9 @@ import styles from "./burger-details.module.scss";
 
 export default function BurgerDetails() {
   const { burger } = useSelector((store) => store.burger);
-  const burgerIngredients = useMemo(
-    () => [burger.bun, ...burger.ingredients, burger.bun],
-    [burger]
-  );
+  const burgerIngredients = useMemo(() => {
+    return [burger.bun, ...burger.ingredients, burger.bun].filter((i) => i._id);
+  }, [burger]);
 
   const totalCalories = useMemo(
     () => burgerIngredients.reduce((acc, el) => acc + el.calories, 0),
