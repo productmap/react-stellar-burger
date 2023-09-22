@@ -1,6 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const BASE_URL = "https://norma.nomoreparties.space/api";
+const refreshToken = localStorage.getItem("refreshToken");
+const accessToken = localStorage.getItem("accessToken");
 
 export const burgersApi = createApi({
   reducerPath: "burgersApi",
@@ -10,9 +12,7 @@ export const burgersApi = createApi({
   endpoints: (builder) => ({
     getIngredients: builder.query({
       query: () => `/ingredients`,
-      transformResponse: (response) => {
-        return response.data;
-      },
+      transformResponse: (response) => response.data,
     }),
     orderBurger: builder.mutation({
       query: (payload) => ({
@@ -21,7 +21,43 @@ export const burgersApi = createApi({
         body: { ingredients: payload },
       }),
     }),
+    registration: builder.mutation({
+      query: (payload) => ({
+        url: `auth/register`,
+        method: "POST",
+        body: payload,
+      }),
+    }),
+    login: builder.mutation({
+      query: (payload) => ({
+        url: `/auth/login`,
+        method: "POST",
+        body: payload,
+      }),
+    }),
+    logout: builder.mutation({
+      query: () => ({
+        url: `/auth/logout`,
+        method: "POST",
+        body: { token: refreshToken },
+      }),
+    }),
+    getUser: builder.query({
+      query: () => ({
+        url: `/auth/user`,
+        method: "GET",
+        header: {
+          authorization: accessToken,
+        },
+      }),
+    }),
   }),
 });
 
-export const { useGetIngredientsQuery, useOrderBurgerMutation } = burgersApi;
+export const {
+  useGetIngredientsQuery,
+  useOrderBurgerMutation,
+  useLoginMutation,
+  useRegistrationMutation,
+  useGetUserQuery,
+} = burgersApi;

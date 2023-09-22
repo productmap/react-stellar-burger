@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- https://burgers.productmap.ru -->
+<svg version="1.2" baseProfile="tiny" id="burger" xmlns="http://www.w3.org/2000/svg"
+     x="0px"
+     y="0px"
+     viewBox="-30 -30 460 460"
+     overflow="visible"
+     xml:space="preserve"
+     style="filter: url(#glow);overflow: visible;">
+<style>
+    @keyframes flicker {
+      0%    { opacity: 1; }
+      3%    { opacity: 0.4; }
+      6%    { opacity: 1; }
+      7%    { opacity: 0.4; }
+      8%    { opacity: 1; }
+      9%    { opacity: 0.4; }
+      10%   { opacity: 1; }
+      89%   { opacity: 1; }
+      90%   { opacity: 0.4; }
+      100%  { opacity: 0.4; }
+    }
+</style>
+  <defs>
+    <filter id="glow" filterUnits="userSpaceOnUse"
+            x="-50%" y="-50%" width="200%" height="200%">
+       <!-- blur the text at different levels-->
+      <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur5"/>
+      <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur10"/>
+      <feGaussianBlur in="SourceGraphic" stdDeviation="20" result="blur20"/>
+      <feGaussianBlur in="SourceGraphic" stdDeviation="30" result="blur30"/>
+      <feGaussianBlur in="SourceGraphic" stdDeviation="50" result="blur50"/>
+      <!-- merge all the blurs except for the first one -->
+      <feMerge result="blur-merged">
+        <feMergeNode in="blur10"/>
+        <feMergeNode in="blur20"/>
+        <feMergeNode in="blur30"/>
+        <feMergeNode in="blur50"/>
+      </feMerge>
+      <!-- recolour the merged blurs red-->
+      <feColorMatrix result="red-blur" in="blur-merged" type="matrix"
+                     values="1 0 0 0 0
+                             0 0.06 0 0 0
+                             0 0 0.44 0 0
+                             0 0 0 1 0"/>
+      <feMerge>
+        <feMergeNode in="red-blur"/>       <!-- largest blurs coloured red -->
+        <feMergeNode in="blur5"/>          <!-- smallest blur left white -->
+        <feMergeNode in="SourceGraphic"/>  <!-- original white text -->
+      </feMerge>
+    </filter>
+  </defs>
+
+  <path id="bun-top"
+        fill="none"
+        stroke="#4C4CFF"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="M33.1,105.2c-3.7,6.5,1.7,14,9.1,13.1c109.9-13.2,190.9-17.1,305.7-10.1c7.5,0.5,12.5-7.4,8.4-13.7C322.3,43.4,264.1,9.7,198,9.7
+	C127.5,9.7,65.9,48.1,33.1,105.2z"/>
+  <g id="bum-top-dots">
+		<ellipse transform="matrix(0.2588 -0.9659 0.9659 0.2588 140.4103 323.0495)" fill="none" stroke="#4C4CFF"
+             stroke-width="2" cx="280.7" cy="70" rx="9.5" ry="14.2"
+             style="animation: flicker 2.9s infinite 1s step-end;"/>
+    <ellipse fill="none" stroke="#4C4CFF" stroke-width="2" cx="183.7" cy="76.2" rx="14.2" ry="9.5"
+             style="animation: flicker 2.8s infinite 2s step-end;"/>
+    <ellipse transform="matrix(0.2588 -0.9659 0.9659 0.2588 125.6924 246.8677)" fill="none" stroke="#4C4CFF"
+             stroke-width="2" cx="223.7" cy="41.5" rx="9.5" ry="14.2"
+             style="animation: flicker 2.8s infinite 1s step-end;"/>
+    <ellipse transform="matrix(0.8855 -0.4647 0.4647 0.8855 -15.3917 62.9458)" fill="none" stroke="#4C4CFF"
+             stroke-width="2" cx="120" cy="62.7" rx="14.2" ry="9.5"
+             style="animation: flicker 2.9s infinite 2s step-end;"/>
+</g>
+
+  <path id="bun-middle"
+        fill="none"
+        stroke="#E33CD5"
+        stroke-width="3"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        style="animation: flicker 5s infinite 2s step-end;"
+        d="M386.6,223.1c1.2-10-6.5-18.6-16.6-19.4c-122.4-9.9-217.8-11.4-344.1-4.8c-10.1,0.5-18.1,8.9-17.1,18.9c1.3,14.2,4.3,28,8.6,41.2
+	c2.5,7.6,9.9,12.3,17.9,12c118.9-4.1,210.8-4.4,326.1-1.3c8,0.2,15.3-4.5,17.8-12.1C382.7,246.5,385.2,235,386.6,223.1z"/>
+  <path id="line" fill="none" stroke="#00CCCC" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" d="M8,156.9
+	c25.3-19,50.7-19,76,0s50.7,19,76,0s50.7-19,76,0s50.7,19,76,0s50.7-19,76,0"/>
+
+  <path id="bun-bottom"
+        fill="none"
+        stroke="#4C4CFF"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        style="animation: flicker 3s infinite 2s step-end;"
+        d="M345.4,319.7c4.8-5.8,0.5-14.2-7.1-14.3c-96-1.6-176.3,0.2-275.6,6.2c-7.5,0.5-11.4,9-6.4,14.6c34.8,38.9,85.4,63.4,141.7,63.4
+	C257.5,389.7,310.5,362.4,345.4,319.7z"/>
+  <g id="bum-bottom-dots">
+		<ellipse transform="matrix(0.4647 -0.8855 0.8855 0.4647 -231.2492 301.4765)" fill="none" stroke="#4C4CFF"
+             stroke-width="2" stroke-miterlimit="4" cx="133.7" cy="342" rx="7.1" ry="9.5"/>
+    <ellipse transform="matrix(0.9659 -0.2588 0.2588 0.9659 -79.7781 78.0413)" fill="none" stroke="#4C4CFF"
+             stroke-width="2" stroke-miterlimit="4" cx="256.5" cy="342" rx="9.5" ry="7.1"/>
+    <ellipse fill="none" stroke="#4C4CFF" stroke-width="2" cx="198" cy="358.8" rx="9.5" ry="7.1"/>
+</g>
+</svg>

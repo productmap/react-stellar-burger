@@ -5,38 +5,52 @@ import {
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./app-header.module.scss";
+import { NavLink } from "react-router-dom";
 
 export default function AppHeader() {
   return (
     <header className={styles.header}>
       <nav className={`${styles.header__left} pt-6 pb-4`}>
         <div>
-          <a
-            href="/"
-            className={`${styles.header__button} pr-5 pl-5 mr-2 text_color_primary`}
+          <NavLink
+            end
+            to="/"
+            className={({ isActive }) =>
+              `${styles.link} pr-5 pl-5 mr-2 text_color_inactive ${
+                isActive ? styles.active : ""
+              }`
+            }
           >
-            <BurgerIcon type="primary" />
+            <BurgerIcon type="secondary" />
             Конструктор
-          </a>
-          <a
-            href="/"
-            className={`${styles.header__button} pr-5 pl-5 text_color_inactive`}
+          </NavLink>
+          <NavLink
+            to="/orders"
+            className={({ isActive }) =>
+              `${styles.link} pr-5 pl-5 text_color_inactive ${
+                isActive ? styles.active : ""
+              }`
+            }
           >
             <ListIcon type="secondary" />
             Лента заказов
-          </a>
+          </NavLink>
         </div>
 
         <Logo className={styles.header__center} />
 
         <div className={styles.header__right}>
-          <a
-            href="/"
-            className={`${styles.header__button} pr-5 pl-5 text_color_inactive`}
+          <NavLink
+            to="/profile"
+            className={({ isActive }) =>
+              `${styles.link} pr-5 pl-5 text_color_inactive ${
+                isActive ? styles.active : ""
+              }`
+            }
           >
             <ProfileIcon type="secondary" />
             Личный кабинет
-          </a>
+          </NavLink>
         </div>
       </nav>
     </header>

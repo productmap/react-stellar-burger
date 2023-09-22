@@ -1,0 +1,86 @@
+.wrapper {
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  flex-flow: row;
+  width: 100%;
+}
+
+.column {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-flow: column;
+  width: 100%;
+}
+
+.errorHeader {
+  font-size: 62px;
+  font-weight: bold;
+}
+
+.errorMessage {
+  font-size: 32px;
+  text-align: center;
+}
+
+.errorCode {
+  font-size: 120px;
+  margin: 0;
+  padding: 0;
+}
+
+.errorImage {
+  width: 100%;
+  min-width: 260px;
+  max-width: 480px;
+  padding: 20px;
+  object-fit: contain;
+}
+
+
+#burger {
+  //filter: drop-shadow(0px 0px 3px #116466);
+}
+
+#burger-bottom {
+  animation: blink linear infinite 2s;
+}
+
+.logo b span:nth-of-type(2) {
+  animation: blink linear infinite 3s;
+}
+
+@keyframes blink {
+  78% {
+    color: inherit;
+    text-shadow: inherit;
+  }
+  79% {
+    color: #333;
+  }
+  80% {
+    text-shadow: none;
+  }
+  81% {
+    color: inherit;
+    text-shadow: inherit;
+  }
+  82% {
+    color: #333;
+    text-shadow: none;
+  }
+  83% {
+    color: inherit;
+    text-shadow: inherit;
+  }
+  92% {
+    color: #333;
+    text-shadow: none;
+  }
+  92.5% {
+    color: inherit;
+    text-shadow: inherit;
+  }
+}

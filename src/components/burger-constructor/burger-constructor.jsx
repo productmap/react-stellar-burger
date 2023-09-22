@@ -5,20 +5,18 @@ import {
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../modal/modal";
-import OrderDetails from "../order-details/order-details";
+// import OrderDetails from "../order-details/order-details";
 import styles from "./burger-constructor.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { setOrderNumber } from "../../store/order-number";
-import {
-  addIngredient,
-  newBurger,
-  sortedBurger,
-} from "../../store/burger/burger";
+import { addIngredient, newBurger, sortedBurger } from "../../store/burger";
 import { useDrop } from "react-dnd";
 import clsx from "clsx";
 import BurgerDetails from "./burger-details/burger-details";
 import { BurgerIngredient } from "./burger-ingredient/burger-ingredient";
 import { useOrderBurgerMutation } from "../../store/api/burgers.api";
+import LoginForm from "../login-form/login-form";
+import {toast} from "react-toastify";
 
 export default function BurgerConstructor() {
   const dispatch = useDispatch();
@@ -72,6 +70,7 @@ export default function BurgerConstructor() {
 
   // Ручка заказа
   const [orderBurger, { isLoading }] = useOrderBurgerMutation();
+
   async function handleOrderBurger(burger) {
     if (!burger.bun) return;
     try {
@@ -85,20 +84,17 @@ export default function BurgerConstructor() {
       dispatch(setOrderNumber(response.order.number));
       dispatch(newBurger());
     } catch (error) {
-      console.log(error);
+      toast.error(error.data.message);
     }
   }
 
   return (
     <section className={styles.constructor}>
       <ul
-        className={clsx(
-          styles.constructor__list,
-          isHover && styles.isHover
-        )}
+        className={clsx(styles.constructor__list, isHover && styles.isHover)}
         ref={dropTarget}
       >
-        {/* верхняя булка */}
+        {/* Верхняя булка */}
         {burgerBun ? (
           <li className={styles.constructor__pos}>
             <ConstructorElement
@@ -117,7 +113,12 @@ export default function BurgerConstructor() {
 
         {/* Ингредиенты */}
         {burger.ingredients.length === 0 ? (
-          <li className={styles.empty}>
+          <li
+            className={clsx(
+              styles.empty,
+              burgerBun && burger.ingredients.length === 0 && styles.emptyIngredients
+            )}
+          >
             <p>Перетащите сюда ингредиенты</p>
           </li>
         ) : (
@@ -128,7 +129,7 @@ export default function BurgerConstructor() {
           </ul>
         )}
 
-        {/* нижняя булка */}
+        {/* Нижняя булка */}
         {burgerBun ? (
           <li className={styles.constructor__pos}>
             <ConstructorElement
@@ -145,13 +146,14 @@ export default function BurgerConstructor() {
           </li>
         )}
 
-        {/*Энергетическая ценность*/}
+        {/* Энергетическая ценность */}
         {totalPrice > 0 && (
           <li>
             <BurgerDetails />
           </li>
         )}
 
+        {/* Итог */}
         <li className={styles.constructor__total}>
           <p className={`text text_type_digits-medium`}>
             {totalPrice} <CurrencyIcon type="primary" />
@@ -168,9 +170,12 @@ export default function BurgerConstructor() {
           </Button>
         </li>
       </ul>
+
+      {/* Модалка заказа */}
       {orderNumber && (
-        <Modal modalClose={() => dispatch(setOrderNumber(null))}>
-          <OrderDetails orderNumber={orderNumber} />
+        <Modal modalClose={() => dispatch(setOrderNumber(null))} header="Вход">
+          {/*<OrderDetails orderNumber={orderNumber} />*/}
+          <LoginForm/>
         </Modal>
       )}
     </section>

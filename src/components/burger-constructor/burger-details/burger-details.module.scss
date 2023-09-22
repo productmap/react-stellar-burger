@@ -1,21 +1,21 @@
 .BurgerDetails {
   display: flex;
-  flex-flow: row nowrap;
   justify-content: center;
   align-items: center;
-  gap: 40px;
-  list-style: none;
   padding: 16px 0 0 0;
+  list-style: none;
+  flex-flow: row nowrap;
+  gap: 40px;
 
   &__list {
-    list-style: none;
     display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 32px 0 0;
+    margin: 0;
+    list-style: none;
     flex-flow: row;
     gap: 20px;
-    width: 100%;
-    justify-content: space-between;
-    margin: 0;
-    padding: 32px 0 0;
   }
 
   &__item {

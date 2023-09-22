@@ -8,13 +8,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { setCurrentIngredient } from "../../../store/current-ingredient";
 import { DragPreviewImage, useDrag } from "react-dnd";
 import clsx from "clsx";
+import {useNavigate} from "react-router-dom";
 
 Ingredient.propTypes = {
   ingredient: ingredientPropType.isRequired,
 };
 
 export function Ingredient({ ingredient, showCopyIcon }) {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { burger } = useSelector((store) => store.burger);
 
   const quantity = [burger.bun, burger.ingredients, burger.bun]
@@ -32,12 +34,12 @@ export function Ingredient({ ingredient, showCopyIcon }) {
   );
 
   function handleIngredientDetails() {
-    dispatch(setCurrentIngredient(ingredient));
+    // dispatch(setCurrentIngredient(ingredient));
+    navigate(`ingredients/${ingredient._id}`)
   }
 
   const previewImg = new Image();
   previewImg.src = ingredient.image;
-  // previewImg.className = styles.isActive;
   preview(previewImg, {
     captureDraggingState: true,
   });

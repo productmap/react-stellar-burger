@@ -20,22 +20,32 @@
   &__right {
     justify-self: flex-end;
   }
+}
 
-  &__button {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    text-decoration: none;
-    font-size: 16px;
-    line-height: 1.5;
-    font-weight: normal;
-    cursor: pointer;
-    outline: none;
-    border-radius: var(--common-border-radius);
-    transition: var(--common-transition);
-    &:hover{
-      color: var(--text-primary-color);
-      opacity: 0.9;
-    }
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  font-size: 16px;
+  line-height: 1.5;
+  font-weight: normal;
+  cursor: pointer;
+  outline: none;
+  border-radius: var(--common-border-radius);
+  transition: var(--common-transition);
+
+  &:hover {
+    color: var(--text-primary-color);
+    opacity: 0.9;
   }
 }
+
+.active {
+  color: #fff;
+
+  svg {
+    fill: #fff;
+  }
+}
+

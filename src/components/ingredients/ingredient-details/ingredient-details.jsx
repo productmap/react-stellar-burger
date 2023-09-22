@@ -1,12 +1,28 @@
 import styles from "./ingredient-details.module.scss";
-import { ingredientPropType } from "../../../utils/prop-types";
-import { Ingredient } from "../ingredient/ingredient";
+import {useParams} from "react-router-dom";
+import {useGetIngredientsQuery} from "../../../store/api/burgers.api";
+import {useEffect} from "react";
+import {useSelector} from "react-redux";
 
-Ingredient.propTypes = {
-  ingredient: ingredientPropType.isRequired,
-};
+// Ingredient.propTypes = {
+//   ingredient: ingredientPropType.isRequired,
+// };
 
-export default function IngredientDetails({ ingredient }) {
+export default function IngredientDetails() {
+  const { id } = useParams();
+  // const ingredients = useSelector(store => store.ingredients)
+  const ingredients = useSelector(store => store.ingredients);
+  console.log(ingredients)
+  const ingredient = ingredients.filter(i => i.id === id)
+
+  // useEffect(() => {
+  //   return () => {
+  //     const ingredient = ingredients.filter(i => i.id === id)
+  //   };
+  // }, [ingredients]);
+
+
+
   return (
     <div>
       <img

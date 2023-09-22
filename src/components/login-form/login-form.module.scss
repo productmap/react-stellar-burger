@@ -1,0 +1,15 @@
+.form {
+  display: flex;
+  align-items: center;
+  flex-flow: column wrap;
+}
+
+.link, .link:visited {
+  color: #4C4CFF;
+  text-decoration: none;
+  transition: opacity .2s;
+
+  &:hover {
+    opacity: .8;
+  }
+}

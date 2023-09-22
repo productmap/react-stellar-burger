@@ -1,7 +1,6 @@
 import { DndProvider } from "react-dnd-multi-backend";
-import AppHeader from "../app-header/app-header";
-import Ingredients from "../ingredients/ingredients";
-import BurgerConstructor from "../burger-constructor/burger-constructor";
+import Ingredients from "../../components/ingredients/ingredients";
+import BurgerConstructor from "../../components/burger-constructor/burger-constructor";
 import { useGetIngredientsQuery } from "../../store/api/burgers.api";
 import { HTML5toTouch } from "../../utils/constants";
 import styles from "./app.module.scss";
@@ -14,6 +13,8 @@ export default function App() {
     isLoading,
     isFetching,
   } = useGetIngredientsQuery();
+  // const {data} = useLoaderData()
+  // console.log(data)
 
   return (
     <div className={styles.app}>
@@ -22,15 +23,10 @@ export default function App() {
       ) : isLoading || isFetching ? (
         <>Загрузка...</>
       ) : ingredients ? (
-        <>
-          <AppHeader />
-          <main className={styles.main}>
             <DndProvider options={HTML5toTouch}>
               <Ingredients />
               <BurgerConstructor />
             </DndProvider>
-          </main>
-        </>
       ) : null}
     </div>
   );

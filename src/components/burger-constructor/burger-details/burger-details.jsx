@@ -29,7 +29,7 @@ export default function BurgerDetails() {
   );
 
   return (
-    <ul className={`${styles.BurgerDetails}`}>
+    <ul className={styles.BurgerDetails}>
       <li className={styles.BurgerDetails__item}>
         <p className="text text_type_main-small text_color_inactive pb-2">
           Калории,ккал

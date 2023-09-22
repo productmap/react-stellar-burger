@@ -5,10 +5,10 @@
   height: 100vh;
   background-color: #131316;
   color: #f2f2f3;
-  flex-flow: column;
+  flex-flow: row;
 }
 
-.main {
+.wrapper {
   display: flex;
   justify-content: center;
   width: 100%;
