@@ -22,17 +22,34 @@ export default function Profile() {
     <>
       <ul className={styles.menu}>
         <li className="text text_type_main-medium">
-          <NavLink to="" className={styles.link}>
+          <NavLink
+            to="/profile"
+            end
+            className={({ isActive }) =>
+              isActive ? styles.link_active : styles.link
+            }
+          >
             Профиль
           </NavLink>
         </li>
         <li className="text text_type_main-medium">
-          <NavLink to="orders" className={styles.link}>
+          <NavLink
+            to="/profile/orders"
+            className={({ isActive }) =>
+              isActive ? styles.link_active : styles.link
+            }
+          >
             История заказов
           </NavLink>
         </li>
         <li className="text text_type_main-medium">
-          <NavLink to="" className={styles.link} onClick={handleLogout}>
+          <NavLink
+            to="/"
+            className={({ isActive }) =>
+              isActive ? styles.link_active : styles.link
+            }
+            onClick={handleLogout}
+          >
             Выход
           </NavLink>
         </li>

@@ -1,25 +1,29 @@
 import { useEffect } from "react";
 import { Navigate, useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useGetUserQuery } from "../../store/api/burgers.api";
+import { setUser } from "../../store/user";
 
 export function PrivateRoute({ onlyUnAuth = false, component }) {
   const location = useLocation();
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const user = useSelector((store) => store.user);
 
   // Загрузка авторизованного пользователя
   const {
     data: currentUser,
-    isSuccess,
+    isSuccess: authIsSuccess,
     isError,
     error: authError,
     isLoading,
   } = useGetUserQuery();
 
   useEffect(() => {
-    if (isSuccess) console.log(currentUser);
-  }, [currentUser, isSuccess]);
+    if (authIsSuccess) {
+      console.log(currentUser);
+      dispatch(setUser(currentUser));
+    }
+  }, [currentUser, dispatch, authIsSuccess]);
 
   useEffect(() => {
     if (isError) console.log(authError);

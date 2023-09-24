@@ -18,7 +18,18 @@
 }
 
 .link {
+  color: #8585AD;
+  text-decoration: none;
   &:hover{
     opacity: .8;
+  }
+
+  &_active {
+    color: #fff;
+    text-decoration: none;
+
+    &:hover {
+      opacity: .8;
+    }
   }
 }
