@@ -22,13 +22,17 @@ export default function Profile() {
     <>
       <ul className={styles.menu}>
         <li className="text text_type_main-medium">
-          <NavLink to="">Профиль</NavLink>
+          <NavLink to="" className={styles.link}>
+            Профиль
+          </NavLink>
         </li>
         <li className="text text_type_main-medium">
-          <NavLink to="orders">История заказов</NavLink>
+          <NavLink to="orders" className={styles.link}>
+            История заказов
+          </NavLink>
         </li>
         <li className="text text_type_main-medium">
-          <NavLink to="" onClick={handleLogout}>
+          <NavLink to="" className={styles.link} onClick={handleLogout}>
             Выход
           </NavLink>
         </li>

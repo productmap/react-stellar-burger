@@ -47,8 +47,18 @@ export const burgersApi = createApi({
         url: `/auth/user`,
         method: "GET",
         header: {
-          authorization: accessToken,
+          Authorization: refreshToken,
         },
+      }),
+    }),
+    updateUser: builder.query({
+      query: (payload) => ({
+        url: `/auth/user`,
+        method: "PATCH",
+        header: {
+          Authorization: accessToken,
+        },
+        body: payload,
       }),
     }),
   }),

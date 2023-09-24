@@ -72,7 +72,10 @@ export default function BurgerConstructor() {
   const [orderBurger, { isLoading }] = useOrderBurgerMutation();
 
   async function handleOrderBurger(burger) {
-    if (!burger.bun) return;
+    if (!burger.bun) {
+      toast.info("Без космических булок чуда не будет")
+      return;
+    }
     try {
       const ingredientsList = burger.ingredients.map((i) => i._id);
       const finalOrderList = [
