@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useGetUserQuery } from "../../store/api/burgers.api";
-import { setUser } from "../../store/user";
+import { checkUserAuth } from "../../store/user";
 
 export function PrivateRoute({ onlyUnAuth = false, component }) {
   const location = useLocation();
@@ -13,24 +13,19 @@ export function PrivateRoute({ onlyUnAuth = false, component }) {
   const {
     data: currentUser,
     isSuccess: authIsSuccess,
-    isError,
-    error: authError,
-    isLoading,
+    // isError,
+    // error: authError,
+    // isLoading,
   } = useGetUserQuery();
 
-  useEffect(() => {
-    if (authIsSuccess) {
-      console.log(currentUser);
-      dispatch(setUser(currentUser));
-    }
-  }, [currentUser, dispatch, authIsSuccess]);
-
-  useEffect(() => {
-    if (isError) console.log(authError);
-  }, [isError, authError]);
+  // useEffect(() => {
+  if (authIsSuccess) {
+    dispatch(checkUserAuth(currentUser));
+  }
+  // }, [currentUser, dispatch, authIsSuccess]);
 
   // Пока загружается показывать загрузчик
-  if (isLoading) return "Загружаю...";
+  // if (isLoading) return "Загружаю...";
 
   // Если неавторизованный по приватному пути
   if (!onlyUnAuth && !user.isAuthenticated) {

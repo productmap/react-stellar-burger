@@ -2,12 +2,18 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const BASE_URL = "https://norma.nomoreparties.space/api";
 const refreshToken = localStorage.getItem("refreshToken");
-const accessToken = localStorage.getItem("accessToken");
 
 export const burgersApi = createApi({
   reducerPath: "burgersApi",
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
+    prepareHeaders: (headers) => {
+      const accessToken = localStorage.getItem("accessToken");
+      if (accessToken) {
+        headers.set("Authorization", accessToken);
+      }
+      return headers;
+    },
   }),
   endpoints: (builder) => ({
     getIngredients: builder.query({
@@ -45,18 +51,12 @@ export const burgersApi = createApi({
     getUser: builder.query({
       query: () => ({
         url: `/auth/user`,
-        headers: {
-          Authorization: accessToken,
-        },
       }),
     }),
     updateUser: builder.mutation({
       query: (payload) => ({
         url: `/auth/user`,
         method: "PATCH",
-        headers: {
-          Authorization: accessToken,
-        },
         body: payload,
       }),
     }),

@@ -15,7 +15,10 @@ const userSlice = createSlice({
       localStorage.setItem("accessToken", action.payload["accessToken"]);
       localStorage.setItem("refreshToken", action.payload["refreshToken"]);
     },
-    checkUserAuth() {},
+    checkUserAuth(state, action) {
+      state.currentUser = action.payload.user;
+      state.isAuthenticated = true;
+    },
     logout() {
       localStorage.clear();
       return initialState;
