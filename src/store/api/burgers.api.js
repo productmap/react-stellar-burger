@@ -1,32 +1,47 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const BASE_URL = "https://norma.nomoreparties.space/api";
+const accessToken = localStorage.getItem("accessToken");
 const refreshToken = localStorage.getItem("refreshToken");
+
+const baseQuery = fetchBaseQuery({
+  baseUrl: BASE_URL,
+  prepareHeaders: (headers) => {
+    if (accessToken) {
+      headers.set("Authorization", accessToken);
+    }
+    return headers;
+  },
+});
+
+const baseQueryWithReAuth = async (args, api, extraOptions) => {
+  let response = await baseQuery(args, api, extraOptions);
+
+  if (response?.error?.status === 403) {
+    console.log(response.error.status);
+    if (refreshToken) {
+      const refreshResponse = await baseQuery(
+        { url: "/auth/token", method: "POST", body: { token: refreshToken } },
+        api,
+        extraOptions
+      );
+
+      if (refreshResponse) {
+        console.log(refreshResponse);
+        localStorage.setItem("accessToken", refreshResponse.data.accessToken);
+        localStorage.setItem("refreshToken", refreshResponse.data.refreshToken);
+      }
+    }
+  } else {
+    localStorage.clear();
+  }
+  return response;
+};
 
 export const burgersApi = createApi({
   reducerPath: "burgersApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: BASE_URL,
-    prepareHeaders: (headers) => {
-      const accessToken = localStorage.getItem("accessToken");
-      if (accessToken) {
-        headers.set("Authorization", accessToken);
-      }
-      return headers;
-    },
-  }),
+  baseQuery: baseQueryWithReAuth,
   endpoints: (builder) => ({
-    getIngredients: builder.query({
-      query: () => `/ingredients`,
-      transformResponse: (response) => response.data,
-    }),
-    orderBurger: builder.mutation({
-      query: (payload) => ({
-        url: `/orders`,
-        method: "POST",
-        body: { ingredients: payload },
-      }),
-    }),
     registration: builder.mutation({
       query: (payload) => ({
         url: `auth/register`,
@@ -60,13 +75,25 @@ export const burgersApi = createApi({
         body: payload,
       }),
     }),
+    getIngredients: builder.query({
+      query: () => `/ingredients`,
+      transformResponse: (response) => response.data,
+    }),
+    orderBurger: builder.mutation({
+      query: (payload) => ({
+        url: `/orders`,
+        method: "POST",
+        body: { ingredients: payload },
+      }),
+    }),
   }),
 });
 
 export const {
+  useRegistrationMutation,
+  useLoginMutation,
+  useRefreshTokenMutation,
+  useGetUserQuery,
   useGetIngredientsQuery,
   useOrderBurgerMutation,
-  useLoginMutation,
-  useRegistrationMutation,
-  useGetUserQuery,
 } = burgersApi;

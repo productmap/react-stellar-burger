@@ -3,7 +3,9 @@ import AppWrapper from "../components/app-wrapper/app-wrapper";
 import {
   PrivateRoute,
   OnlyUnAuth,
-} from "../components/private-route/private-route";
+} from "../hoc/private-route";
+
+// Страницы
 import {
   App,
   ErrorPage,
@@ -14,9 +16,10 @@ import {
   Profile,
   Register,
   ResetPassword,
+  MyOrders,
+  MyInfo
 } from "../pages";
-import MyOrders from "../pages/my-orders/my-orders";
-import MyInfo from "../pages/my-info/my-info";
+
 
 export const router = createBrowserRouter([
   {

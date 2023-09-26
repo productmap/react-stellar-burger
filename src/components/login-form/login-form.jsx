@@ -33,7 +33,7 @@ export default function LoginForm() {
     e.preventDefault();
 
     if (!email || !password) {
-      toast("Заполните все поля");
+      toast.error("Заполните все поля");
       return;
     }
 

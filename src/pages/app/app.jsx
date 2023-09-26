@@ -13,8 +13,6 @@ export default function App() {
     isLoading,
     isFetching,
   } = useGetIngredientsQuery();
-  // const {data} = useLoaderData()
-  // console.log(data)
 
   return (
     <div className={styles.app}>

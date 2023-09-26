@@ -2,6 +2,8 @@ import { Outlet } from "react-router-dom";
 import AppHeader from "../app-header/app-header";
 import styles from "./app-wrapper.module.scss";
 import { ToastContainer } from "react-toastify";
+import {useDispatch} from "react-redux";
+import {useEffect} from "react";
 
 export default function AppWrapper() {
   return (
