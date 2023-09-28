@@ -14,7 +14,7 @@ export default function Profile() {
       dispatch(logout());
       navigate("/");
     } catch (error) {
-      toast.error(error || error.data.message);
+      toast.error(error.data.message);
     }
   }
 

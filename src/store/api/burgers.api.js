@@ -18,7 +18,7 @@ const baseQueryWithReAuth = async (args, api, extraOptions) => {
   let response = await baseQuery(args, api, extraOptions);
 
   if (response?.error?.status === 403) {
-    console.log(response.error.status);
+    console.log("Refresh token");
     if (refreshToken) {
       const refreshResponse = await baseQuery(
         { url: "/auth/token", method: "POST", body: { token: refreshToken } },
@@ -27,13 +27,11 @@ const baseQueryWithReAuth = async (args, api, extraOptions) => {
       );
 
       if (refreshResponse) {
-        console.log(refreshResponse);
+        // console.log(refreshResponse)
         localStorage.setItem("accessToken", refreshResponse.data.accessToken);
         localStorage.setItem("refreshToken", refreshResponse.data.refreshToken);
       }
     }
-  } else {
-    localStorage.clear();
   }
   return response;
 };
@@ -52,6 +50,20 @@ export const burgersApi = createApi({
     login: builder.mutation({
       query: (payload) => ({
         url: `/auth/login`,
+        method: "POST",
+        body: payload,
+      }),
+    }),
+    forgotPassword: builder.mutation({
+      query: (payload) => ({
+        url: `/password-reset`,
+        method: "POST",
+        body: payload,
+      }),
+    }),
+    resetPassword: builder.mutation({
+      query: (payload) => ({
+        url: `/password-reset/reset`,
         method: "POST",
         body: payload,
       }),
@@ -92,8 +104,10 @@ export const burgersApi = createApi({
 export const {
   useRegistrationMutation,
   useLoginMutation,
-  useRefreshTokenMutation,
+  useForgotPasswordMutation,
+  useResetPasswordMutation,
   useGetUserQuery,
+  useUpdateUserMutation,
   useGetIngredientsQuery,
   useOrderBurgerMutation,
 } = burgersApi;

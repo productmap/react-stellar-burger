@@ -33,16 +33,16 @@ export function Ingredient({ ingredient, showCopyIcon }) {
     []
   );
 
-  function handleIngredientDetails() {
-    // dispatch(setCurrentIngredient(ingredient));
-    navigate(`ingredients/${ingredient._id}`)
-  }
-
   const previewImg = new Image();
   previewImg.src = ingredient.image;
   preview(previewImg, {
     captureDraggingState: true,
   });
+
+  function handleIngredientDetails() {
+    // dispatch(setCurrentIngredient(ingredient));
+    navigate(`ingredients/${ingredient._id}`)
+  }
 
   return (
     <>

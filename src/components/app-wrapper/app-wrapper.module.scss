@@ -1,5 +1,6 @@
 .app {
   display: flex;
+  justify-content: flex-start;
   align-items: center;
   width: 100%;
   height: 100vh;
@@ -8,9 +9,10 @@
   flex-flow: column;
 }
 
-.wrapper {
+.main {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
+  align-items: flex-start;
   width: 100%;
   height: 100vh;
   max-width: 1400px;

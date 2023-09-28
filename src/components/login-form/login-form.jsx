@@ -39,7 +39,6 @@ export default function LoginForm() {
 
     try {
       const response = await login(formValues).unwrap();
-      console.log(response)
       dispatch(setUser(response));
     } catch (error) {
       toast.error(error.data.message);

@@ -7,7 +7,7 @@ import {
 
 // Страницы
 import {
-  App,
+  Constructor,
   ErrorPage,
   ForgotPassword,
   IngredientInfo,
@@ -17,9 +17,8 @@ import {
   Register,
   ResetPassword,
   MyOrders,
-  MyInfo
+  MyInfo,
 } from "../pages";
-
 
 export const router = createBrowserRouter([
   {
@@ -29,11 +28,8 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <App />,
+        element: <Constructor />,
         // loader: burgersApi.endpoints.getIngredients.initiate(),
-        // loader: async () => {
-        //   return data;
-        // },
       },
       {
         path: "login",

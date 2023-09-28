@@ -3,9 +3,9 @@ import Ingredients from "../../components/ingredients/ingredients";
 import BurgerConstructor from "../../components/burger-constructor/burger-constructor";
 import { useGetIngredientsQuery } from "../../store/api/burgers.api";
 import { HTML5toTouch } from "../../utils/constants";
-import styles from "./app.module.scss";
+import styles from "./constructor.module.scss";
 
-export default function App() {
+export default function Constructor() {
   const {
     data: ingredients = [],
     isError,
@@ -15,7 +15,7 @@ export default function App() {
   } = useGetIngredientsQuery();
 
   return (
-    <div className={styles.app}>
+    <div className={styles.constructor}>
       {isError ? (
         <>Произошла ошибка: {error}</>
       ) : isLoading || isFetching ? (

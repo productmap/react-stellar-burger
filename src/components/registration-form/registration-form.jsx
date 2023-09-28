@@ -16,7 +16,7 @@ const formState = {
   password: "",
 };
 
-function RegistrationForm() {
+export default function RegistrationForm() {
   const location = useLocation();
   const [formValues, setFormValue] = useState(formState);
   const { name, email, password } = formValues;
@@ -85,5 +85,3 @@ function RegistrationForm() {
     </form>
   );
 }
-
-export default RegistrationForm;
