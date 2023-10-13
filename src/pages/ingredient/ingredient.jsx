@@ -1,19 +1,15 @@
 import IngredientDetails from "../../components/ingredients/ingredient-details/ingredient-details";
-import AppWrapper from "../../components/app-wrapper/app-wrapper";
-import { useSelector } from "react-redux";
-import { store } from "../../store";
-import { useParams } from "react-router-dom";
+import {useLoaderData} from "react-router-dom";
 
-const IngredientInfo = () => {
-  const params = useParams();
-  const ingredients = useSelector(store => store.ingredients)
-  // const imgredient = ingredients[_]
+export default function IngredientInfo() {
+  // const location = useLocation();
+  const background = useLoaderData();
+  // const { from } = location.state;
+  console.log(background);
+
   return (
-    <AppWrapper>
-      {/*<IngredientDetails />*/}
-      {params.id}
-    </AppWrapper>
+    <>
+      <IngredientDetails />
+    </>
   );
 };
-
-export default IngredientInfo;

@@ -14,8 +14,8 @@ Ingredient.propTypes = {
   ingredient: ingredientPropType.isRequired,
 };
 
-export function Ingredient({ ingredient, showCopyIcon }) {
-  // const dispatch = useDispatch();
+export function Ingredient({ ingredient }) {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { burger } = useSelector((store) => store.burger);
 
@@ -40,7 +40,7 @@ export function Ingredient({ ingredient, showCopyIcon }) {
   });
 
   function handleIngredientDetails() {
-    // dispatch(setCurrentIngredient(ingredient));
+    dispatch(setCurrentIngredient(ingredient));
     navigate(`ingredients/${ingredient._id}`)
   }
 

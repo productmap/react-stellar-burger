@@ -19,6 +19,9 @@ import {
   MyOrders,
   MyInfo,
 } from "../pages";
+import Modal from "../components/modal/modal";
+import IngredientDetails from "../components/ingredients/ingredient-details/ingredient-details";
+import Background from "./loaders/background";
 
 export const router = createBrowserRouter([
   {
@@ -67,9 +70,10 @@ export const router = createBrowserRouter([
       },
       {
         path: "/ingredients/:id",
+        loader: Background,
         element: <IngredientInfo />,
         // element: (
-        //   <Modal header="Детали ингредиента" modalClose={() => {}}>
+        //   <Modal header="Детали ингредиента" modalClose={() => {navigate(-1)}}>
         //     <IngredientDetails />
         //   </Modal>
         // ),

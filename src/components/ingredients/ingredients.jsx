@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { IngredientsGroup } from "./ingredients-group/ingredients-group";
-import IngredientDetails from "./ingredient-details/ingredient-details";
-import Modal from "../modal/modal";
+// import IngredientDetails from "./ingredient-details/ingredient-details";
+// import Modal from "../modal/modal";
 import { useGetIngredientsQuery } from "../../store/api/burgers.api";
 import { setCurrentIngredient } from "../../store/current-ingredient";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,7 +12,7 @@ export default function Ingredients() {
   const dispatch = useDispatch();
   const { data: ingredients } = useGetIngredientsQuery();
   const [currentGroup, setCurrentGroup] = useState("bun");
-  const { currentIngredient } = useSelector((store) => store.currentIngredient);
+  // const { currentIngredient } = useSelector((store) => store.currentIngredient);
   const ingredientsGroups = {
     bun: "Булки",
     sauce: "Соусы",
@@ -89,14 +89,14 @@ export default function Ingredients() {
           );
         })}
       </div>
-      {currentIngredient && (
-        <Modal
-          header="Детали ингредиента"
-          modalClose={() => dispatch(setCurrentIngredient(null))}
-        >
-          <IngredientDetails ingredient={currentIngredient} />
-        </Modal>
-      )}
+      {/*{currentIngredient && (*/}
+      {/*  <Modal*/}
+      {/*    header="Детали ингредиента"*/}
+      {/*    modalClose={() => dispatch(setCurrentIngredient(null))}*/}
+      {/*  >*/}
+      {/*    <IngredientDetails ingredient={currentIngredient} />*/}
+      {/*  </Modal>*/}
+      {/*)}*/}
     </section>
   );
 }
