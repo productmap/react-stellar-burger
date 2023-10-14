@@ -1,8 +1,6 @@
 import styles from "./ingredient-details.module.scss";
-import {useParams} from "react-router-dom";
+import { useParams } from "react-router-dom";
 import {useGetIngredientsQuery} from "../../../store/api/burgers.api";
-import { ingredientPropType } from "../../../utils/prop-types";
-import { string } from "prop-types";
 
 export default function IngredientDetails() {
   const { id } = useParams();

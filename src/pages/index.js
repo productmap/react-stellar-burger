@@ -6,7 +6,7 @@ import Profile from "../pages/profile/profile";
 import Register from "../pages/register/register";
 import ResetPassword from "../pages/reset-password/reset-password";
 import Constructor from "./constructor/constructor";
-import IngredientInfo from "../pages/ingredient/ingredient";
+import IngredientInfo from "./ingredient-info/ingredient-info";
 import MyOrders from "../pages/my-orders/my-orders";
 import MyInfo from "../pages/my-info/my-info";
 

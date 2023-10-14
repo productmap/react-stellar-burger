@@ -1,18 +1,18 @@
 .wrapper {
   display: flex;
-  height: 100vh;
   justify-content: center;
   align-items: center;
-  flex-flow: row;
   width: 100%;
+  height: 100vh;
+  flex-flow: row;
 }
 
 .column {
   display: flex;
-  align-items: center;
   justify-content: center;
-  flex-flow: column;
+  align-items: center;
   width: 100%;
+  flex-flow: column;
 }
 
 .errorHeader {
@@ -21,20 +21,20 @@
 }
 
 .errorMessage {
-  font-size: 32px;
   text-align: center;
+  font-size: 32px;
 }
 
 .errorCode {
-  font-size: 120px;
-  margin: 0;
   padding: 0;
+  margin: 0;
+  font-size: 120px;
 }
 
 .errorImage {
   width: 100%;
-  min-width: 260px;
   max-width: 480px;
+  min-width: 260px;
   padding: 20px;
   object-fit: contain;
 }

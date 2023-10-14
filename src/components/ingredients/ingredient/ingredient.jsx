@@ -4,19 +4,18 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { ingredientPropType } from "../../../utils/prop-types";
 import styles from "./ingredient.module.scss";
-import { useDispatch, useSelector } from "react-redux";
-import { setCurrentIngredient } from "../../../store/current-ingredient";
+import { useSelector } from "react-redux";
 import { DragPreviewImage, useDrag } from "react-dnd";
 import clsx from "clsx";
-import {useNavigate} from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 Ingredient.propTypes = {
   ingredient: ingredientPropType.isRequired,
 };
 
 export function Ingredient({ ingredient }) {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
   const { burger } = useSelector((store) => store.burger);
 
   const quantity = [burger.bun, burger.ingredients, burger.bun]
@@ -40,8 +39,9 @@ export function Ingredient({ ingredient }) {
   });
 
   function handleIngredientDetails() {
-    dispatch(setCurrentIngredient(ingredient));
-    navigate(`ingredients/${ingredient._id}`)
+    navigate(`ingredients/${ingredient._id}`, {
+      state: { background: location },
+    });
   }
 
   return (
