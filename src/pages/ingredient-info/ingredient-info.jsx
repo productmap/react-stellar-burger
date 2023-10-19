@@ -1,26 +1,19 @@
 import IngredientDetails from "../../components/ingredients/ingredient-details/ingredient-details";
-import {useLocation, useNavigate} from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import Modal from "../../components/modal/modal";
 import styles from "./ingredient-info.module.scss"
 
 export default function IngredientInfo() {
   const location = useLocation();
-  const navigate = useNavigate();
+  const background = !!location.state;
 
-  return (
-    <section className={styles.section} >
-      {location?.state?.background ? (
-        <Modal
-          header="Детали ингредиента"
-          modalClose={() => {
-            navigate(-1);
-          }}
-        >
-          <IngredientDetails />
-        </Modal>
-      ) : (
-        <IngredientDetails />
-      )}
+  return background ? (
+    <Modal title="Детали ингредиента">
+      <IngredientDetails />
+    </Modal>
+  ) : (
+    <section className={styles.section}>
+      <IngredientDetails />
     </section>
   );
 };

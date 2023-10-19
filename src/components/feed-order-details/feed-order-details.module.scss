@@ -1,0 +1,73 @@
+.orderDetails {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 640px;
+  margin: auto;
+  outline: 1px solid red;
+  flex-flow: column;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 64px;
+  max-width: 640px;
+}
+
+.burgerName {
+  align-self: flex-start;
+}
+
+.status {
+  align-self: flex-start;
+  color: #00CCCC;
+}
+
+.list {
+  display: flex;
+  width: 100%;
+  padding: 24px 0 0 0;
+  margin: 0;
+  list-style: none;
+  flex-flow: column nowrap;
+  gap: 16px;
+}
+
+.item {
+  display: inline-flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+
+  &__image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 64px;
+    height: 64px;
+    padding: 4px;
+    box-sizing: border-box;
+    background: var(--interface-bg, #131316);
+    border: 2px solid var(--button-normal, #801AB2);
+    border-radius: 100px;
+    object-fit: cover;
+  }
+  &__description{
+    flex: 1;
+  }
+
+  &__price {
+    display: inline-flex;
+    align-items: center;
+  }
+}
+
+.total {
+  display: inline-flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}

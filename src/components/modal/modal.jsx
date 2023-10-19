@@ -1,20 +1,26 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { createPortal } from "react-dom";
-import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
 import styles from "./modal.module.scss";
 
 Modal.propTypes = {
-  modalClose: PropTypes.func.isRequired,
-  header: PropTypes.string,
-  children: PropTypes.node.isRequired,
+  props: PropTypes.any,
 };
 
-export default function Modal({ modalClose, header = null, children }) {
-  // const location = useLocation();
-  // console.log(location)
+export default function Modal({ ...props }) {
+  const navigate = useNavigate();
+  const modalClose = useMemo(() => {
+    return props.modalClose
+      ? props.modalClose
+      : () => {
+          navigate(-1);
+        };
+  }, [navigate, props.modalClose]);
+  const title = props.title ? props.title : null;
+  const subTitle = props.modalClose ? props.modalClose : null;
 
   useEffect(() => {
     const handleEscapeClose = (event) => {
@@ -28,21 +34,22 @@ export default function Modal({ modalClose, header = null, children }) {
     };
   }, [modalClose]);
 
-  // if (!location.state && location.state.background) {
-  //   return children;
-  // }
-
   return createPortal(
     <div className={styles.modal}>
       <ModalOverlay modalClose={modalClose} />
       <div className={styles.container}>
         <div className={styles.container__header}>
-          {header && <h1 className="text text_type_main-large">{header}</h1>}
+          <div>
+            {title && <h1 className="text text_type_main-large">{title}</h1>}
+            {subTitle && (
+              <p className="text text_type_main-large">{subTitle}</p>
+            )}
+          </div>
           <div className={styles.container__close} onClick={modalClose}>
             <CloseIcon type="primary" />
           </div>
         </div>
-        {children}
+        {props.children}
       </div>
     </div>,
     document.querySelector("#modal")

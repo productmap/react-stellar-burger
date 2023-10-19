@@ -4,6 +4,7 @@ import BurgerConstructor from "../../components/burger-constructor/burger-constr
 import { useGetIngredientsQuery } from "../../store/api/burgers.api";
 import { HTML5toTouch } from "../../utils/constants";
 import styles from "./constructor.module.scss";
+import {Outlet} from "react-router-dom";
 
 export default function Constructor() {
   const {
@@ -24,6 +25,7 @@ export default function Constructor() {
             <DndProvider options={HTML5toTouch}>
               <Ingredients />
               <BurgerConstructor />
+              <Outlet />
             </DndProvider>
       ) : null}
     </div>

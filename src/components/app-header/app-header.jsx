@@ -5,7 +5,7 @@ import {
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./app-header.module.scss";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 export default function AppHeader() {
   return (
@@ -15,6 +15,7 @@ export default function AppHeader() {
           <NavLink
             end
             to="/"
+            unstable_viewTransition
             className={({ isActive }) =>
               `${styles.link} pr-5 pl-5 mr-2 text_color_inactive ${
                 isActive ? styles.active : ""
@@ -25,7 +26,8 @@ export default function AppHeader() {
             Конструктор
           </NavLink>
           <NavLink
-            to="/orders"
+            to="/feed"
+            unstable_viewTransition
             className={({ isActive }) =>
               `${styles.link} pr-5 pl-5 text_color_inactive ${
                 isActive ? styles.active : ""
@@ -37,11 +39,14 @@ export default function AppHeader() {
           </NavLink>
         </div>
 
-        <Logo className={styles.header__center} />
+        <Link to="/" unstable_viewTransition>
+          <Logo className={styles.header__center} />
+        </Link>
 
         <div className={styles.header__right}>
           <NavLink
             to="/profile"
+            unstable_viewTransition
             className={({ isActive }) =>
               `${styles.link} pr-5 pl-5 text_color_inactive ${
                 isActive ? styles.active : ""

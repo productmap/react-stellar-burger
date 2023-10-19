@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { reAuthUser } from "../store/user";
 import { useGetUserQuery } from "../store/api/burgers.api";
@@ -8,7 +8,6 @@ export function PrivateRoute({ onlyUnAuth = false, component }) {
   const location = useLocation();
   const dispatch = useDispatch();
   const user = useSelector((store) => store.user);
-  const navigate = useNavigate();
   const { from } = location.state || { from: { pathname: "/" } };
 
   // Загрузка данных пользователя
@@ -16,8 +15,7 @@ export function PrivateRoute({ onlyUnAuth = false, component }) {
 
   useEffect(() => {
     if (currentUser) dispatch(reAuthUser(currentUser));
-    // navigate(location.state?.from?.pathname);
-  }, [currentUser, dispatch, location, navigate]);
+  }, [currentUser, dispatch]);
 
   // Пока загружается показывать загрузчик
   if (isLoading) return "Загружаю...";

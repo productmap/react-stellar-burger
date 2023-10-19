@@ -18,3 +18,14 @@ export const HTML5toTouch = {
     },
   ],
 };
+
+export const orderStatus = {
+  done: {
+    text: "Готово",
+    color: "#fff"
+  },
+  notReady: {
+    text: "В работе",
+    color: "#fff"
+  }
+}

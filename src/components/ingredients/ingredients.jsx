@@ -7,9 +7,15 @@ import { useGetIngredientsQuery } from "../../store/api/burgers.api";
 import { setCurrentIngredient } from "../../store/current-ingredient";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./ingredients.module.scss";
+import {useLocation, useNavigate} from "react-router-dom";
+import Modal from "../modal/modal";
+import IngredientDetails from "./ingredient-details/ingredient-details";
 
 export default function Ingredients() {
   const dispatch = useDispatch();
+  const location = useLocation();
+  const navigate = useNavigate();
+
   const { data: ingredients } = useGetIngredientsQuery();
   const [currentGroup, setCurrentGroup] = useState("bun");
   // const { currentIngredient } = useSelector((store) => store.currentIngredient);
@@ -56,7 +62,7 @@ export default function Ingredients() {
 
   return (
     <section>
-      <h1 className={`text text_type_main-large pt-10 pb-5`}>
+      <h1 className="text text_type_main-large pt-10 pb-5">
         Соберите бургер
       </h1>
       <div className={styles.tabs}>
@@ -89,12 +95,14 @@ export default function Ingredients() {
           );
         })}
       </div>
-      {/*{currentIngredient && (*/}
+      {/*{location.state?.background && (*/}
       {/*  <Modal*/}
       {/*    header="Детали ингредиента"*/}
-      {/*    modalClose={() => dispatch(setCurrentIngredient(null))}*/}
+      {/*    modalClose={() => {*/}
+      {/*      navigate(-1);*/}
+      {/*    }}*/}
       {/*  >*/}
-      {/*    <IngredientDetails ingredient={currentIngredient} />*/}
+      {/*    <IngredientDetails />*/}
       {/*  </Modal>*/}
       {/*)}*/}
     </section>

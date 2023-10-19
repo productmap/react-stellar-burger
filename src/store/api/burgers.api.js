@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const BASE_URL = "https://norma.nomoreparties.space/api";
+const WS_URL = "wss://norma.nomoreparties.space"
 const accessToken = localStorage.getItem("accessToken");
 const refreshToken = localStorage.getItem("refreshToken");
 
@@ -98,6 +99,32 @@ export const burgersApi = createApi({
         body: { ingredients: payload },
       }),
     }),
+    getFeed: builder.query({
+      query: (channel) => `/orders/all`,
+      async onCacheEntryAdded(
+        arg,
+        { updateCachedData, cacheDataLoaded, cacheEntryRemoved }
+      ) {
+        const ws = new WebSocket(WS_URL);
+        try {
+          await cacheDataLoaded;
+          const listener = (event) => {
+            const data = JSON.parse(event.data);
+            if (data.channel !== arg) return;
+
+            updateCachedData((draft) => {
+              draft.push(data);
+            });
+
+          };
+          ws.addEventListener("message", listener);
+        } catch {
+          console.log("error")
+        }
+        await cacheEntryRemoved;
+        ws.close();
+      },
+    }),
   }),
 });
 
@@ -110,4 +137,5 @@ export const {
   useUpdateUserMutation,
   useGetIngredientsQuery,
   useOrderBurgerMutation,
+  useGetFeedQuery,
 } = burgersApi;

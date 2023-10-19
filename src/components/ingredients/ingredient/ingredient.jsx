@@ -39,7 +39,7 @@ export function Ingredient({ ingredient }) {
   });
 
   function handleIngredientDetails() {
-    navigate(`ingredients/${ingredient._id}`, {
+    navigate(`/ingredients/${ingredient._id}`, {
       state: { background: location },
     });
   }

@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { Link, Navigate, useLocation } from "react-router-dom";
 import {
   Button,
@@ -10,6 +9,8 @@ import { useLoginMutation } from "../../store/api/burgers.api";
 import { setUser } from "../../store/user";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
+import { useForm } from "../../hooks/useForm";
+import { useEffect } from "react";
 
 const initialState = {
   email: "",
@@ -19,14 +20,14 @@ const initialState = {
 export default function LoginForm() {
   const dispatch = useDispatch();
   const location = useLocation();
-  const [formValues, setFormValues] = useState(initialState);
+  const { formValues, handleChange } = useForm(initialState);
   const { email, password } = formValues;
   const { from } = location.state || { from: { pathname: "/" } };
-  const [login, { isSuccess, isLoading }] = useLoginMutation();
+  const [login, { isSuccess, isLoading, error }] = useLoginMutation();
 
-  const handleChange = (e) => {
-    setFormValues({ ...formValues, [e.target.name]: e.target.value });
-  };
+  useEffect(() => {
+    toast.error(error?.data?.message);
+  }, [error]);
 
   // Ручка авторизации
   async function handleLogin(e) {
@@ -34,7 +35,7 @@ export default function LoginForm() {
 
     if (!email || !password) {
       toast.error("Заполните все поля");
-      return;
+      return
     }
 
     try {
@@ -72,13 +73,13 @@ export default function LoginForm() {
       </Button>
       <p className="text text_type_main-default text_color_inactive mb-4">
         Вы — новый пользователь?{" "}
-        <Link to={"/registration"} className={styles.link}>
+        <Link to={"/registration"} unstable_viewTransition className={styles.link}>
           Зарегистрироваться
         </Link>
       </p>
       <p className="text text_type_main-default text_color_inactive">
         Забыли пароль?{" "}
-        <Link to={"/forgot-password"} className={styles.link}>
+        <Link to={"/forgot-password"} unstable_viewTransition className={styles.link}>
           Восстановить пароль
         </Link>
       </p>

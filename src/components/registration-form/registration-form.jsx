@@ -77,7 +77,7 @@ export default function RegistrationForm() {
       </Button>
       <p className="text text_type_main-default text_color_inactive mb-4">
         Уже зарегистрированы?{" "}
-        <Link to={"/login"} className={styles.link}>
+        <Link to={"/login"} unstable_viewTransition className={styles.link}>
           Войти
         </Link>
       </p>

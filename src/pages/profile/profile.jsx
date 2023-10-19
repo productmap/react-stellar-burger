@@ -24,6 +24,7 @@ export default function Profile() {
         <li className="text text_type_main-medium">
           <NavLink
             to="/profile"
+            unstable_viewTransition
             end
             className={({ isActive }) =>
               isActive ? styles.link_active : styles.link
@@ -35,6 +36,7 @@ export default function Profile() {
         <li className="text text_type_main-medium">
           <NavLink
             to="/profile/orders"
+            unstable_viewTransition
             className={({ isActive }) =>
               isActive ? styles.link_active : styles.link
             }
@@ -45,6 +47,7 @@ export default function Profile() {
         <li className="text text_type_main-medium">
           <NavLink
             to="/"
+            unstable_viewTransition
             className={({ isActive }) =>
               isActive ? styles.link_active : styles.link
             }

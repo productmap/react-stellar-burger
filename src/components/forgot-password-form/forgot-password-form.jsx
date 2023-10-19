@@ -54,7 +54,7 @@ export default function ForgotPasswordForm() {
       </Button>
       <p className="text text_type_main-default text_color_inactive mb-4">
         Вспомнили пароль?{" "}
-        <Link to={"/login"} className={styles.link}>
+        <Link to={"/login"} unstable_viewTransition className={styles.link}>
           Войти
         </Link>
       </p>
