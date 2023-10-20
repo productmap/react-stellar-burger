@@ -81,20 +81,20 @@ export default function BurgerConstructor() {
 
     if (!user.isAuthenticated) {
       navigate("/login");
-    }
-
-    try {
-      const ingredientsList = burger.ingredients.map((i) => i._id);
-      const finalOrderList = [
-        burger.bun._id,
-        ...ingredientsList,
-        burger.bun._id,
-      ];
-      const response = await orderBurger(finalOrderList).unwrap();
-      dispatch(setOrderNumber(response.order.number));
-      dispatch(newBurger());
-    } catch (error) {
-      toast.error(error.data.message);
+    } else {
+      try {
+        const ingredientsList = burger.ingredients.map((i) => i._id);
+        const finalOrderList = [
+          burger.bun._id,
+          ...ingredientsList,
+          burger.bun._id,
+        ];
+        const response = await orderBurger(finalOrderList).unwrap();
+        dispatch(setOrderNumber(response.order.number));
+        dispatch(newBurger());
+      } catch (error) {
+        toast.error(error.data.message);
+      }
     }
   }
 

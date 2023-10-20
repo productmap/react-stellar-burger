@@ -51,13 +51,13 @@ export default function LoginForm() {
       <EmailInput
         name={"email"}
         placeholder={"E-mail"}
-        onChange={(e) => handleChange(e)}
+        onChange={handleChange}
         value={email}
         extraClass="mb-6"
       />
       <PasswordInput
         name={"password"}
-        onChange={(e) => handleChange(e)}
+        onChange={handleChange}
         value={password}
         error={false}
         extraClass="mb-6"
