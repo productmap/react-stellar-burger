@@ -1,19 +1,22 @@
 import React from "react";
 import styles from "./feed-info.module.scss";
 import { useGetFeedQuery } from "../../store/api/burgers.api";
-import {Link} from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 export default function FeedInfo() {
   const { data: feed = [] } = useGetFeedQuery();
+  const location = useLocation();
   let total = feed.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-  const totalToday = feed.totalToday
+  const totalToday = feed["totalToday"]
     .toString()
     .replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 
-  const readyOrders = feed.orders.filter((order) => order.status === "done");
-  const notReadyOrders = feed.orders.filter(
-    (order) => order.status === "done"
-  );
+  const readyOrders = feed["orders"]
+    .slice(0, 10)
+    .filter((order) => order.status === "done");
+  const notReadyOrders = feed["orders"]
+    .slice(0, 10)
+    .filter((order) => order.status === "pending");
 
   return (
     <section className={styles.feedInfo}>
@@ -23,8 +26,15 @@ export default function FeedInfo() {
           <ul className={styles.ordersList}>
             {readyOrders.map((order) => {
               return (
-                <li key={order._id} className={`${styles.orderNumber} text text_type_digits-default`}>
-                  <Link to={`/feed/${order.number}`} className="text text_type_digits-default" unstable_viewTransition>{order.number}</Link>
+                <li key={order._id}>
+                  <Link
+                    to={`/feed/${order["number"]}`}
+                    state={{ background: location }}
+                    className={`${styles.orderNumber} ${styles.orderNumber_type_done}  text text_type_digits-default`}
+                    unstable_viewTransition
+                  >
+                    {order["number"]}
+                  </Link>
                 </li>
               );
             })}
@@ -36,7 +46,13 @@ export default function FeedInfo() {
             {notReadyOrders.map((order) => {
               return (
                 <li key={order._id}>
-                  <Link to={`/feed/${order.number}`} className="text text_type_digits-default" unstable_viewTransition>{order.number}</Link>
+                  <Link
+                    to={`/feed/${order.number}`}
+                    className={`${styles.orderNumber} ${styles.orderNumber_type_pending} text text_type_digits-default`}
+                    unstable_viewTransition
+                  >
+                    {order.number}
+                  </Link>
                 </li>
               );
             })}

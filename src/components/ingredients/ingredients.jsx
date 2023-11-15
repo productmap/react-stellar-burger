@@ -1,24 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { IngredientsGroup } from "./ingredients-group/ingredients-group";
-// import IngredientDetails from "./ingredient-details/ingredient-details";
-// import Modal from "../modal/modal";
 import { useGetIngredientsQuery } from "../../store/api/burgers.api";
-import { setCurrentIngredient } from "../../store/current-ingredient";
-import { useDispatch, useSelector } from "react-redux";
 import styles from "./ingredients.module.scss";
-import {useLocation, useNavigate} from "react-router-dom";
-import Modal from "../modal/modal";
-import IngredientDetails from "./ingredient-details/ingredient-details";
 
 export default function Ingredients() {
-  const dispatch = useDispatch();
-  const location = useLocation();
-  const navigate = useNavigate();
-
   const { data: ingredients } = useGetIngredientsQuery();
   const [currentGroup, setCurrentGroup] = useState("bun");
-  // const { currentIngredient } = useSelector((store) => store.currentIngredient);
   const ingredientsGroups = {
     bun: "Булки",
     sauce: "Соусы",
@@ -82,7 +70,7 @@ export default function Ingredients() {
           );
         })}
       </div>
-      <div className={`${styles.ingredients} itemList custom-scroll mt-10`}>
+      <div className={`${styles.ingredients} itemList scroll-theme mt-10`}>
         {Object.keys(ingredientsGroups).map((key) => {
           return (
             <IngredientsGroup
@@ -95,16 +83,6 @@ export default function Ingredients() {
           );
         })}
       </div>
-      {/*{location.state?.background && (*/}
-      {/*  <Modal*/}
-      {/*    header="Детали ингредиента"*/}
-      {/*    modalClose={() => {*/}
-      {/*      navigate(-1);*/}
-      {/*    }}*/}
-      {/*  >*/}
-      {/*    <IngredientDetails />*/}
-      {/*  </Modal>*/}
-      {/*)}*/}
     </section>
   );
 }

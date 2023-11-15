@@ -1,10 +1,21 @@
-import React from "react";
 import styles from "./feed-orders.module.scss";
+import OrderItem from "../order-item/order-item";
+import PropTypes, { object } from "prop-types";
 
-export default function FeedOrders() {
+// FeedOrders.propTypes = {
+//   feed: PropTypes.array.isRequired,
+// };
+
+export default function FeedOrders({ feed }) {
+  const readyOrders = feed["orders"].filter((order) => order.status === "done");
+
   return (
     <section className={styles.feedOrders}>
-      <h2 className="text text_type_main-large pt-10 pb-5">Лента заказов</h2>
+      <ul className={`${styles.ordersList} scroll-theme`}>
+        {readyOrders.map((order, idx) => {
+          return <OrderItem order={order} key={idx} />;
+        })}
+      </ul>
     </section>
   );
 }

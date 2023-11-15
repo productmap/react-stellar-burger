@@ -80,7 +80,7 @@ export default function BurgerConstructor() {
     }
 
     if (!user.isAuthenticated) {
-      navigate("/login");
+      navigate("/login", { unstable_viewTransition: true });
     } else {
       try {
         const ingredientsList = burger.ingredients.map((i) => i._id);
@@ -134,7 +134,7 @@ export default function BurgerConstructor() {
             <p>Перетащите сюда ингредиенты</p>
           </li>
         ) : (
-          <ul className={`${styles.constructor__ingredients} custom-scroll`}>
+          <ul className={`${styles.constructor__ingredients} scroll-theme`}>
             {burger.ingredients.map((ingredient, idx) =>
               renderIngredient(ingredient, idx)
             )}

@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import AppWrapper from "../components/app-wrapper/app-wrapper";
 import { PrivateRoute, OnlyUnAuth } from "../hocs/private-route";
+import { userFeedLoader, feedLoader } from "./loaders";
 
 // Страницы
 import {
@@ -15,8 +16,9 @@ import {
   ResetPassword,
   MyOrders,
   MyInfo,
+  FeedOrder,
 } from "../pages";
-import FeedOrder from "../pages/feed-order/feed-order";
+
 
 export const router = createBrowserRouter([
   {
@@ -28,10 +30,10 @@ export const router = createBrowserRouter([
         path: "/",
         element: <Constructor />,
         children: [
-          {
-            path: "ingredients/:id",
-            element: <IngredientInfo />,
-          },
+          // {
+          //   path: "ingredients/:id",
+          //   element: <IngredientInfo />,
+          // },
         ],
       },
       {
@@ -61,12 +63,20 @@ export const router = createBrowserRouter([
           {
             path: "orders",
             element: <MyOrders />,
+            loader: userFeedLoader,
+            children: [
+              {
+                path: ":id",
+                element: <FeedOrder />,
+              },
+            ],
           },
         ],
       },
       {
         path: "feed",
         element: <Feed />,
+        loader: feedLoader,
       },
       {
         path: "/feed/:id",

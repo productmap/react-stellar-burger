@@ -21,12 +21,12 @@ export function PrivateRoute({ onlyUnAuth = false, component }) {
   if (isLoading) return "Загружаю...";
 
   if (onlyUnAuth && user.isAuthenticated) {
-    return <Navigate to={from} />;
+    return <Navigate to={from} unstable_viewTransition />;
   }
 
   // Если неавторизованный по приватному пути
   if (!onlyUnAuth && !user.isAuthenticated && !isLoading) {
-    return <Navigate to="/login" state={{ from: location }} />;
+    return <Navigate to="/login" state={{ from: location }} unstable_viewTransition  />;
   }
 
   // Если неавторизованный на авторизацию

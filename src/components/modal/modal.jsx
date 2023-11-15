@@ -12,15 +12,16 @@ Modal.propTypes = {
 
 export default function Modal({ ...props }) {
   const navigate = useNavigate();
+  const title = props.title ? props.title : null;
+  const subTitle = props.modalClose ? props.modalClose : null;
+
   const modalClose = useMemo(() => {
     return props.modalClose
       ? props.modalClose
       : () => {
-          navigate(-1);
+        navigate(-1, { unstable_viewTransition: true });
         };
   }, [navigate, props.modalClose]);
-  const title = props.title ? props.title : null;
-  const subTitle = props.modalClose ? props.modalClose : null;
 
   useEffect(() => {
     const handleEscapeClose = (event) => {
@@ -40,7 +41,7 @@ export default function Modal({ ...props }) {
       <div className={styles.container}>
         <div className={styles.container__header}>
           <div>
-            {title && <h1 className="text text_type_main-large">{title}</h1>}
+            {title && <h2 className="text text_type_main-large">{title}</h2>}
             {subTitle && (
               <p className="text text_type_main-large">{subTitle}</p>
             )}

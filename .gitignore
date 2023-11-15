@@ -4,3 +4,4 @@ static
 .cache
 .idea
 .gitattributes
+!/package-lock.json

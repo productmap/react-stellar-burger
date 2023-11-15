@@ -7,7 +7,8 @@ import styles from "./ingredient.module.scss";
 import { useSelector } from "react-redux";
 import { DragPreviewImage, useDrag } from "react-dnd";
 import clsx from "clsx";
-import { useLocation, useNavigate } from "react-router-dom";
+import {Route, Routes, useLocation, useNavigate} from "react-router-dom";
+import Modal from "../../modal/modal";
 
 Ingredient.propTypes = {
   ingredient: ingredientPropType.isRequired,
@@ -16,6 +17,7 @@ Ingredient.propTypes = {
 export function Ingredient({ ingredient }) {
   const navigate = useNavigate();
   const location = useLocation();
+  const background = location.state && location.state.background;
   const { burger } = useSelector((store) => store.burger);
 
   const quantity = [burger.bun, burger.ingredients, burger.bun]
@@ -41,11 +43,17 @@ export function Ingredient({ ingredient }) {
   function handleIngredientDetails() {
     navigate(`/ingredients/${ingredient._id}`, {
       state: { background: location },
+      unstable_viewTransition: true,
     });
   }
 
   return (
     <>
+      {/*{background && (*/}
+      {/*  <Routes>*/}
+      {/*    <Route path="/ingredients/:id" element={<Modal />} />*/}
+      {/*  </Routes>*/}
+      {/*)}*/}
       <DragPreviewImage connect={preview} src={ingredient.image} />
       <div
         className={styles.ingredient}
@@ -53,10 +61,14 @@ export function Ingredient({ ingredient }) {
         ref={dragRef}
       >
         <img
-          className={clsx(isDragging && styles.isDragging)}
+          className={clsx(
+            isDragging && styles.isDragging,
+            styles.ingredient__image
+          )}
           src={ingredient.image}
           alt={ingredient.name}
           ref={preview}
+          // style={{ viewTrinsitionName: "ingredient" }}
         />
         <p
           className={`${styles.ingredient__price} pt-2 pb-3 text text_type_digits-default`}

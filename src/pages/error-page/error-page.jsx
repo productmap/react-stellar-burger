@@ -1,11 +1,10 @@
-import { useRouteError } from "react-router-dom";
-// import AppWrapper from "../../components/app-wrapper/app-wrapper";
+// import { useRouteError } from "react-router-dom";
 import styles from "./error-page.module.scss";
 import logo from "../../assets/images/burger-animated.svg";
 import AppHeader from "../../components/app-header/app-header";
 
 export default function ErrorPage() {
-  const error = useRouteError();
+  // const error = useRouteError();
 
   return (
     <>
@@ -14,7 +13,7 @@ export default function ErrorPage() {
         <div className={styles.column}>
           <h1 className={styles.errorHeader}>Опаа...!</h1>
           <p className={styles.errorMessage}>Что-то бургер зажевало</p>
-          <p className={styles.errorCode}>{error.status}</p>
+          {/*<p className={styles.errorCode}>{error.status}</p>*/}
         </div>
         <div className={styles.column}>
           <img src={logo} className={styles.errorImage} alt="Stellar Burgers" />

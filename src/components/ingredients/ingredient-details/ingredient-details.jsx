@@ -1,6 +1,6 @@
-import styles from "./ingredient-details.module.scss";
 import { useParams } from "react-router-dom";
 import {useGetIngredientsQuery} from "../../../store/api/burgers.api";
+import styles from "./ingredient-details.module.scss";
 
 export default function IngredientDetails() {
   const { id } = useParams();
@@ -18,6 +18,7 @@ export default function IngredientDetails() {
             src={ingredient.image}
             alt={ingredient.name}
             className={styles.IngredientDetails__image}
+            style={{ viewTrinsitionName: "ingredient" }}
           />
           <p
             className={`${styles.IngredientDetails__title} text text_type_main-medium pt-4`}

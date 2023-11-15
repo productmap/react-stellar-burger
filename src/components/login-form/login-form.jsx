@@ -34,7 +34,7 @@ export default function LoginForm() {
     e.preventDefault();
 
     if (!email || !password) {
-      toast.error("Заполните все поля");
+      toast.info("Если забыли регистрационные данные, воспользуйтесь восстановлением.");
       return
     }
 

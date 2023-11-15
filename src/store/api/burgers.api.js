@@ -18,8 +18,8 @@ const baseQuery = fetchBaseQuery({
 const baseQueryWithReAuth = async (args, api, extraOptions) => {
   let response = await baseQuery(args, api, extraOptions);
 
-  if (response?.error?.status === 403) {
-    console.log("Refresh token");
+  if (response?.error?.status === 401 || response?.error?.status === 403) {
+    // console.log("Refresh token");
     if (refreshToken) {
       const refreshResponse = await baseQuery(
         { url: "/auth/token", method: "POST", body: { token: refreshToken } },
@@ -67,6 +67,13 @@ export const burgersApi = createApi({
         url: `/password-reset/reset`,
         method: "POST",
         body: payload,
+      }),
+    }),
+    getToken: builder.mutation({
+      query: (payload) => ({
+        url: `auth/token`,
+        method: "POST",
+        body: { token: refreshToken },
       }),
     }),
     logout: builder.mutation({
@@ -125,6 +132,32 @@ export const burgersApi = createApi({
         ws.close();
       },
     }),
+    getUserFeed: builder.query({
+      query: (channel) => `/orders`,
+      async onCacheEntryAdded(
+        arg,
+        { updateCachedData, cacheDataLoaded, cacheEntryRemoved }
+      ) {
+        const ws = new WebSocket(`${WS_URL}/orders?token=${accessToken.split(' ')[1]}`);
+        try {
+          await cacheDataLoaded;
+          const listener = (event) => {
+            const data = JSON.parse(event.data);
+            if (data.channel !== arg) return;
+
+            updateCachedData((draft) => {
+              // draft.push(data);
+            });
+
+          };
+          ws.addEventListener("message", listener);
+        } catch {
+          console.log("error")
+        }
+        await cacheEntryRemoved;
+        ws.close();
+      },
+    }),
   }),
 });
 
@@ -138,4 +171,5 @@ export const {
   useGetIngredientsQuery,
   useOrderBurgerMutation,
   useGetFeedQuery,
+  useGetUserFeedQuery,
 } = burgersApi;

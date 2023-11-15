@@ -1,35 +1,69 @@
 .IngredientDetails {
   display: flex;
-  flex-flow: column;
   justify-content: center;
   align-items: center;
+  flex-flow: column;
 
   &__image {
     display: flex;
     justify-content: center;
     height: 240px;
-    //height: 100%;
     margin: auto;
+    //transition: all ease .5s;
+    //view-transition-name: ingredient;
   }
 
   &__title {
-    text-align: center;
     width: 100%;
+    text-align: center;
   }
 
   &__list {
-    list-style: none;
     display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 32px 0 0 0;
+    margin: 0;
+    list-style: none;
     flex-flow: row;
     gap: 20px;
-    width: 100%;
-    justify-content: space-between;
-    padding: 0;
-    margin: 0;
-    padding-top: 32px;
   }
 
   &__item {
     text-align: center;
   }
 }
+
+//::view-transition-old(ingredient),
+//::view-transition-new(ingredient) {
+//  //animation: none;
+//  mix-blend-mode: normal;
+//  height: 100%;
+//  //transform-origin: right center;
+//}
+//
+//::view-transition-old(ingredient) {
+//  animation: 0.25s linear both shrink-x;
+//}
+//
+//::view-transition-new(ingredient) {
+//  animation: 0.25s 0.25s linear both grow-x;
+//}
+
+//@keyframes grow-x {
+//  from {
+//    transform: scaleX(0);
+//  }
+//  to {
+//    transform: scaleX(1);
+//  }
+//}
+//
+//@keyframes shrink-x {
+//  from {
+//    transform: scaleX(0);
+//  }
+//  to {
+//    transform: scaleX(1);
+//  }
+//}

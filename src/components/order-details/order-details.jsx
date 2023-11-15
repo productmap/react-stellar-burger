@@ -7,11 +7,11 @@ OrderDetails.propTypes = {
 
 export default function OrderDetails({ orderNumber }) {
   return (
-    <div className={`${styles.orderAccepted}`}>
+    <div className={styles.orderAccepted}>
       <p className={`${styles.orderNumber} text text_type_digits-large pt-4`}>
         {orderNumber}
       </p>
-      <p className={`text text_type_main-medium pt-8`}>идентификатор заказа</p>
+      <p className="text text_type_main-medium pt-8">идентификатор заказа</p>
       <div className={`${styles.statusIcon} mt-16 pt-16`}></div>
       <p className="text text_type_main-default pt-15">
         Ваш заказ начали готовить

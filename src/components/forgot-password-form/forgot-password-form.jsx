@@ -18,7 +18,7 @@ export default function ForgotPasswordForm() {
     e.preventDefault();
 
     if (!email) {
-      toast.error("Введите указанный при регистрации email адрес");
+      toast.info("Введите указанный при регистрации email адрес");
       return;
     }
 

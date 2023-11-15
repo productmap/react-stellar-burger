@@ -1,27 +1,27 @@
 #root {
-  box-sizing: border-box;
   display: flex;
-  flex-flow: column nowrap;
   align-items: center;
   height: 100%;
   margin: 0 auto;
+  box-sizing: border-box;
+  flex-flow: column nowrap;
 }
 
 * {
   // Базовый шрифт
-  font-family: 'Jet Brains Mono', Verdana, monospace;
+  // Отключение выделения текста на странице
+  user-select: none;
+  font-family: "Jet Brains Mono", Verdana, monospace;
   font-weight: normal;
+  // Плавный скрол
+  scroll-behavior: smooth;
   // Сглаживание шрифтов
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
   -moz-text-size-adjust: 100%;
-  // Плавный скрол
-  scroll-behavior: smooth;
   overscroll-behavior: contain;
-  // Отключение выделения текста на странице
-  user-select: none;
   -webkit-user-select: none;
   -ms-user-select: none;
   // Отключение зума на мобильных
@@ -35,7 +35,55 @@
 //  outline: 1px solid salmon;
 //}
 
-// Палитра
+// Глобальные переменные
 :root {
-  --Main-background: #131316;
+  --main-background: #131316;
+  --interface-modal-bg: #1c1c21;
+  --interface-modal-edge: rgba(76, 76, 255, 0.2);
+  --interface-success: #0cc;
+  --text-primary-light-standart-text: #f2f2f3;
+  --header-height: 94px;
+
+  // --toastify theme
+  --toastify-toast-background: #fff;
+  --toastify-font-family: sans-serif;
+}
+
+.scroll-theme {
+  &::-webkit-scrollbar {
+    width: 16px;
+    background-color: #2f2f37;
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: #2f2f37;
+    border-radius: 16px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #8585ad;
+    border: 3px solid #2f2f37;
+    border-radius: 8px;
+  }
+}
+
+.burgerToast {
+  padding: 16px;
+  //box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.04), 0 0 2px 0 rgba(0, 0, 0, 0.06), 0 4px 8px 0 rgba(0, 0, 0, 0.04);
+  box-shadow: 0 0 16px 8px rgba(51, 51, 255, 0.03),
+    0 0 8px 8px rgba(51, 51, 255, 0.05);
+  background-color: var(--interface-modal-bg);
+  border: 1px solid var(--interface-modal-edge);
+  border-radius: 16px;
+  filter: drop-shadow(0px 4px 32px rgba(51, 51, 255, 0.2));
+}
+
+.burgerToastBody {
+  display: inline-flex;
+  gap: 8px;
+}
+
+.burgerToastProgress {
 }

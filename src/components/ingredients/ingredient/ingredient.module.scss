@@ -6,6 +6,11 @@
   width: 272px;
   flex-flow: column nowrap;
   cursor: pointer;
+  //view-transition-name: ingredient;
+
+  &__image {
+    //view-transition-name: ingredient;
+  }
 
   &__price {
     display: inline-flex;
@@ -30,7 +35,3 @@
   //cursor: pointer !important;
   //outline: 1px dashed blueviolet;
 }
-
-//.ingredient.isDragging {
-//  cursor: move;
-//}

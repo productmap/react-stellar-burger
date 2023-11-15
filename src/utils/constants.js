@@ -22,10 +22,14 @@ export const HTML5toTouch = {
 export const orderStatus = {
   done: {
     text: "Готово",
-    color: "#fff"
+    color: "#fff",
   },
-  notReady: {
+  pending: {
     text: "В работе",
-    color: "#fff"
-  }
-}
+    color: "#fff",
+  },
+  created: {
+    text: "Создан",
+    color: "#fff",
+  },
+};

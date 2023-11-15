@@ -9,6 +9,7 @@ import Constructor from "./constructor/constructor";
 import IngredientInfo from "./ingredient-info/ingredient-info";
 import MyOrders from "../pages/my-orders/my-orders";
 import MyInfo from "../pages/my-info/my-info";
+import FeedOrder from "../pages/feed-order/feed-order";
 
 export {
   Constructor,
@@ -21,5 +22,6 @@ export {
   Register,
   ResetPassword,
   MyOrders,
-  MyInfo
+  MyInfo,
+  FeedOrder
 };

@@ -1,22 +1,20 @@
 import React, { useEffect, useState } from "react";
 import styles from "./feed-order-details.module.scss";
-import { useParams } from "react-router-dom";
-import {
-  useGetFeedQuery,
-  useGetIngredientsQuery,
-} from "../../store/api/burgers.api";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useGetIngredientsQuery } from "../../store/api/burgers.api";
 import {
   CurrencyIcon,
   FormattedDate,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import PropTypes from "prop-types";
 
-export default function FeedOrderDetails() {
-  const { id } = useParams();
-  const { data: order } = useGetFeedQuery(undefined, {
-    selectFromResult: ({ data }) => ({
-      data: data?.orders.find((i) => i.number === parseInt(id)),
-    }),
-  });
+FeedOrderDetails.propTypes = {
+  order: PropTypes.any.isRequired,
+};
+
+export default function FeedOrderDetails({ order }) {
+  const navigate = useNavigate();
+  const location = useLocation();
   const { data: ingredients } = useGetIngredientsQuery();
   const [totalPrice, setTotalPrice] = useState(null);
   const [orderIngredients, setOrderIngredients] = useState([]);
@@ -41,10 +39,21 @@ export default function FeedOrderDetails() {
     }
   }, [order, ingredients]);
 
+  const handlerIngredientDetails = (id) => {
+    navigate(`/ingredients/${id}`, {
+      state: {
+        background: location.state
+          ? location.state.background.pathname
+          : location,
+      },
+      unstable_viewTransition: true,
+    });
+  };
+
   return (
     <>
       {order && (
-        <>
+        <div className={styles.orderDetails}>
           <h2 className={`${styles.header} text text_type_digits-default`}>
             #{order.number}
           </h2>
@@ -59,10 +68,14 @@ export default function FeedOrderDetails() {
           >
             Состав:
           </p>
-          <ul className={styles.list}>
+          <ul className={`${styles.list} scroll-theme`}>
             {orderIngredients.map((i, idx) => {
               return (
-                <li className={styles.item} key={idx}>
+                <li
+                  className={styles.item}
+                  key={idx}
+                  onClick={() => handlerIngredientDetails(i._id)}
+                >
                   <img
                     className={styles.item__image}
                     src={i.image}
@@ -86,11 +99,13 @@ export default function FeedOrderDetails() {
             <p className="text text_type_main-default text_color_inactive">
               <FormattedDate date={new Date(order.updatedAt)} />
             </p>
-            <span className="text text_type_digits-default">
+            <span
+              className={`${styles.totalPrice} text text_type_digits-default`}
+            >
               {totalPrice} <CurrencyIcon type="primary" />
             </span>
           </div>
-        </>
+        </div>
       )}
     </>
   );

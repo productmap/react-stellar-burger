@@ -4,7 +4,6 @@
   width: 100%;
   max-width: 640px;
   margin: auto;
-  outline: 1px solid red;
   flex-flow: column;
 }
 
@@ -29,18 +28,35 @@
 .list {
   display: flex;
   width: 100%;
+  height: 100%;
+  max-height: calc(100vh - var(--header-height) - 550px);
+  min-height: 100px;
   padding: 24px 0 0 0;
   margin: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
   list-style: none;
   flex-flow: column nowrap;
-  gap: 16px;
 }
 
 .item {
   display: inline-flex;
   justify-content: space-between;
   align-items: center;
+  padding: 16px;
+  border: 1px solid transparent;
+  border-radius: 48px;
+  transition: all 0.2s ease;
   gap: 16px;
+
+  &:hover {
+    //box-shadow: 0 4px 32px 0 rgba(51, 51, 255, 0.10),
+    //0 0 8px 8px rgba(51, 51, 255, 0.05),
+    //0 0 16px 8px rgba(51, 51, 255, 0.05);
+    border: 1px solid var(--interface-modal-edge);
+    cursor: pointer;
+    //transform: scale(1.01);
+  }
 
   &__image {
     display: flex;
@@ -50,8 +66,10 @@
     height: 64px;
     padding: 4px;
     box-sizing: border-box;
-    background: var(--interface-bg, #131316);
-    border: 2px solid var(--button-normal, #801AB2);
+    background: var(--interface-bg);
+    background: linear-gradient(#131316, #131316) padding-box,
+    linear-gradient(45deg, #801AB2, #4C4CFF) border-box;
+    border: 2px solid transparent;
     border-radius: 100px;
     object-fit: cover;
   }
@@ -62,6 +80,7 @@
   &__price {
     display: inline-flex;
     align-items: center;
+    gap: 8px;
   }
 }
 
@@ -70,4 +89,10 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
+}
+
+.totalPrice {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }

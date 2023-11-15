@@ -2,8 +2,6 @@ import { Outlet } from "react-router-dom";
 import AppHeader from "../app-header/app-header";
 import styles from "./app-wrapper.module.scss";
 import { ToastContainer } from "react-toastify";
-import {useDispatch} from "react-redux";
-import React, { useEffect } from "react";
 import { BurgerIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
 export default function AppWrapper() {
@@ -24,6 +22,8 @@ export default function AppWrapper() {
         draggable
         pauseOnHover
         theme="dark"
+        toastClassName="burgerToast"
+        bodyClassName="burgerToastBody"
         icon=<BurgerIcon type="primary" />
       />
     </div>

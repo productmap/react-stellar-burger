@@ -1,5 +1,5 @@
-import styles from "./feed-order.module.scss";
 import FeedOrderDetails from "../../components/feed-order-details/feed-order-details";
+import styles from "./feed-order.module.scss";
 
 export default function FeedOrder() {
   return (
