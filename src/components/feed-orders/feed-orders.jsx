@@ -1,21 +1,20 @@
-import styles from "./feed-orders.module.scss";
 import OrderItem from "../order-item/order-item";
-import PropTypes, { object } from "prop-types";
-
-// FeedOrders.propTypes = {
-//   feed: PropTypes.array.isRequired,
-// };
+import styles from "./feed-orders.module.scss";
+import { orderPropType } from "../../utils/prop-types";
+import PropTypes from "prop-types";
 
 export default function FeedOrders({ feed }) {
-  const readyOrders = feed["orders"].filter((order) => order.status === "done");
-
   return (
     <section className={styles.feedOrders}>
       <ul className={`${styles.ordersList} scroll-theme`}>
-        {readyOrders.map((order, idx) => {
+        {feed.map((order, idx) => {
           return <OrderItem order={order} key={idx} />;
         })}
       </ul>
     </section>
   );
 }
+
+FeedOrders.propTypes = {
+  feed: PropTypes.arrayOf(orderPropType),
+};

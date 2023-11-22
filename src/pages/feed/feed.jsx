@@ -1,35 +1,26 @@
-import styles from "./feed.module.scss";
+import { useGetFeedQuery } from "../../store/api/burgers.api";
 import FeedInfo from "../../components/feed-info/feed-info";
 import FeedOrders from "../../components/feed-orders/feed-orders";
-import {
-  useGetFeedQuery,
-  useGetIngredientsQuery,
-} from "../../store/api/burgers.api";
+import styles from "./feed.module.scss";
 
 export default function Feed() {
-  const {
-    data: feed = [],
-    isError,
-    error,
-    isLoading,
-    isFetching,
-  } = useGetFeedQuery();
-
-  const { data: ingredients } = useGetIngredientsQuery();
+  const { data: feed = [], isLoading } = useGetFeedQuery();
 
   return (
     <section className={styles.feed}>
-      <h2 className="text text_type_main-large pt-10 pb-5">Лента заказов</h2>
-      {isError ? (
-        <>Произошла ошибка: {error}</>
-      ) : isLoading || isFetching ? (
+      <h2 className={`${styles.header} text text_type_main-large pt-10 pb-5`}>
+        Лента заказов
+      </h2>
+      {isLoading ? (
         <>Загрузка...</>
-      ) : feed && ingredients ? (
-        <>
-          <FeedOrders feed={feed} />
+      ) : feed ? (
+        <div className={styles.twoColumns}>
+          <FeedOrders feed={feed["orders"]} />
           <FeedInfo />
-        </>
-      ) : null}
+        </div>
+      ) : (
+        <>Нет заказов</>
+      )}
     </section>
   );
 }

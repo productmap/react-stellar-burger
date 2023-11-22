@@ -2,8 +2,8 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const BASE_URL = "https://norma.nomoreparties.space/api";
 const WS_URL = "wss://norma.nomoreparties.space"
-const accessToken = localStorage.getItem("accessToken");
-const refreshToken = localStorage.getItem("refreshToken");
+const accessToken = localStorage.getItem("accessToken") ?? "";
+const refreshToken = localStorage.getItem("refreshToken") ?? "";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: BASE_URL,
@@ -103,7 +103,7 @@ export const burgersApi = createApi({
       query: (payload) => ({
         url: `/orders`,
         method: "POST",
-        body: { ingredients: payload },
+        body: { ingredients: payload, token: accessToken },
       }),
     }),
     getFeed: builder.query({
@@ -122,11 +122,10 @@ export const burgersApi = createApi({
             updateCachedData((draft) => {
               draft.push(data);
             });
-
           };
           ws.addEventListener("message", listener);
         } catch {
-          console.log("error")
+          console.log("error");
         }
         await cacheEntryRemoved;
         ws.close();
@@ -138,7 +137,9 @@ export const burgersApi = createApi({
         arg,
         { updateCachedData, cacheDataLoaded, cacheEntryRemoved }
       ) {
-        const ws = new WebSocket(`${WS_URL}/orders?token=${accessToken.split(' ')[1]}`);
+        const ws = new WebSocket(
+          `${WS_URL}/orders?token=${accessToken.split(" ")[1]}`
+        );
         try {
           await cacheDataLoaded;
           const listener = (event) => {
@@ -148,11 +149,10 @@ export const burgersApi = createApi({
             updateCachedData((draft) => {
               // draft.push(data);
             });
-
           };
           ws.addEventListener("message", listener);
         } catch {
-          console.log("error")
+          console.log("error");
         }
         await cacheEntryRemoved;
         ws.close();
@@ -166,6 +166,7 @@ export const {
   useLoginMutation,
   useForgotPasswordMutation,
   useResetPasswordMutation,
+  useLogoutMutation,
   useGetUserQuery,
   useUpdateUserMutation,
   useGetIngredientsQuery,

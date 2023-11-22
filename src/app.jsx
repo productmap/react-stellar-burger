@@ -49,7 +49,6 @@ export default function App() {
           >
             <Route path="" element={<MyInfo />} />
             <Route path="orders" element={<MyOrders />} >
-
             </Route>
 
           </Route>

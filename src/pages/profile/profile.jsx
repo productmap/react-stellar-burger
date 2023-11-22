@@ -4,14 +4,18 @@ import "react-toastify/dist/ReactToastify.css";
 import { useDispatch } from "react-redux";
 import { logout } from "../../store/user";
 import { toast } from "react-toastify";
+import { burgersApi } from "../../store/api/burgers.api";
+
 
 export default function Profile() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   function handleLogout() {
+    dispatch(logout());
     try {
-      dispatch(logout());
+      const resp = dispatch(burgersApi.endpoints.logout());
+      console.log(resp)
       navigate("/");
     } catch (error) {
       toast.error(error.data.message);
