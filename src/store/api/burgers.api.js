@@ -1,9 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import {logout} from "../user";
 
 const BASE_URL = "https://norma.nomoreparties.space/api";
 const WS_URL = "wss://norma.nomoreparties.space"
-const accessToken = localStorage.getItem("accessToken") ?? "";
-const refreshToken = localStorage.getItem("refreshToken") ?? "";
+const accessToken = localStorage.getItem("accessToken");
+const refreshToken = localStorage.getItem("refreshToken");
 
 const baseQuery = fetchBaseQuery({
   baseUrl: BASE_URL,
@@ -18,8 +19,7 @@ const baseQuery = fetchBaseQuery({
 const baseQueryWithReAuth = async (args, api, extraOptions) => {
   let response = await baseQuery(args, api, extraOptions);
 
-  if (response?.error?.status === 401 || response?.error?.status === 403) {
-    // console.log("Refresh token");
+  if (response?.error?.status === 403 || response?.error?.status === 401) {
     if (refreshToken) {
       const refreshResponse = await baseQuery(
         { url: "/auth/token", method: "POST", body: { token: refreshToken } },
@@ -31,6 +31,9 @@ const baseQueryWithReAuth = async (args, api, extraOptions) => {
         // console.log(refreshResponse)
         localStorage.setItem("accessToken", refreshResponse.data.accessToken);
         localStorage.setItem("refreshToken", refreshResponse.data.refreshToken);
+      } else {
+        localStorage.clear()
+        api.dispatch(logout())
       }
     }
   }
@@ -107,7 +110,7 @@ export const burgersApi = createApi({
       }),
     }),
     getFeed: builder.query({
-      query: (channel) => `/orders/all`,
+      query: () => `/orders/all`,
       async onCacheEntryAdded(
         arg,
         { updateCachedData, cacheDataLoaded, cacheEntryRemoved }
@@ -117,10 +120,13 @@ export const burgersApi = createApi({
           await cacheDataLoaded;
           const listener = (event) => {
             const data = JSON.parse(event.data);
-            if (data.channel !== arg) return;
+            // console.log(data)
 
-            updateCachedData((draft) => {
-              draft.push(data);
+            updateCachedData(( draft) => {
+              draft.push(data)
+              console.log("update")
+              // draft.push(data);
+              // dispatch(updateData(data))
             });
           };
           ws.addEventListener("message", listener);
@@ -132,11 +138,12 @@ export const burgersApi = createApi({
       },
     }),
     getUserFeed: builder.query({
-      query: (channel) => `/orders`,
+      query: () => `/orders`,
       async onCacheEntryAdded(
         arg,
         { updateCachedData, cacheDataLoaded, cacheEntryRemoved }
       ) {
+        console.log(accessToken)
         const ws = new WebSocket(
           `${WS_URL}/orders?token=${accessToken.split(" ")[1]}`
         );
@@ -144,19 +151,18 @@ export const burgersApi = createApi({
           await cacheDataLoaded;
           const listener = (event) => {
             const data = JSON.parse(event.data);
-            if (data.channel !== arg) return;
-
-            updateCachedData((draft) => {
-              // draft.push(data);
+            updateCachedData(() => {
+              return data;
             });
           };
           ws.addEventListener("message", listener);
         } catch {
-          console.log("error");
+          console.log("ws error");
         }
         await cacheEntryRemoved;
         ws.close();
       },
+      // transformResponse: (response) => response["orders"].reverse(),
     }),
   }),
 });
