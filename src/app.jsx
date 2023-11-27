@@ -12,14 +12,13 @@ import {
   ResetPassword,
   MyOrders,
   MyInfo,
-  FeedOrder,
 } from "./pages";
 import AppWrapper from "./components/app-wrapper/app-wrapper";
 import Modal from "./components/modal/modal";
 import { OnlyUnAuth, PrivateRoute } from "./hocs/private-route";
 import IngredientDetails from "./components/ingredients/ingredient-details/ingredient-details";
-import FeedOrderPrivate from "./components/feed-order-private/feed-order-private";
-import FeedOrderCommon from "./components/feed-order-common/feed-order-common";
+import MyOrderDetails from "./components/my-order-details/my-order-details";
+import CommonOrderDetails from "./components/feed-common-order-details/feed-common-order-details";
 
 export default function App() {
   const location = useLocation();
@@ -52,9 +51,9 @@ export default function App() {
             </Route>
 
           </Route>
-          <Route path="profile/orders/:id" element={<FeedOrderPrivate />} index={true}/>
+          <Route path="profile/orders/:id" element={<MyOrderDetails />} />
           <Route path="/feed" element={<Feed />} />
-          <Route path="/feed/:id" element={<FeedOrderCommon />} />
+          <Route path="/feed/:id" element={<CommonOrderDetails />} />
           <Route path="/ingredients/:id" element={<IngredientInfo />} />
         </Route>
         <Route path="*" element={<ErrorPage />} />
@@ -82,7 +81,7 @@ export default function App() {
             path="/feed/:id"
             element={
               <Modal>
-                <FeedOrderCommon />
+                <CommonOrderDetails />
               </Modal>
             }
           />
@@ -90,7 +89,7 @@ export default function App() {
             path="/profile/orders/:id"
             element={
               <Modal>
-                <FeedOrderPrivate />
+                <MyOrderDetails />
               </Modal>
             }
           />

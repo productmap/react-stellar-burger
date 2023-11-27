@@ -3,10 +3,19 @@ import AppHeader from "../app-header/app-header";
 import styles from "./app-wrapper.module.scss";
 import { ToastContainer } from "react-toastify";
 import { BurgerIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useGetIngredientsQuery } from "../../store/api/burgers.api";
+import {useGetIngredientsQuery, useGetUserQuery} from "../../store/api/burgers.api";
+import {useEffect} from "react";
+import {reAuthUser} from "../../store/user";
+import {useDispatch} from "react-redux";
 
 export default function AppWrapper() {
   const { isLoading } = useGetIngredientsQuery();
+  const { data: currentUser } = useGetUserQuery();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (currentUser) dispatch(reAuthUser(currentUser));
+  }, [currentUser, dispatch]);
 
   return (
     <div className={styles.app}>

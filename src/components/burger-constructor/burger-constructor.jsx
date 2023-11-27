@@ -16,7 +16,7 @@ import { BurgerIngredient } from "./burger-ingredient/burger-ingredient";
 import { useOrderBurgerMutation } from "../../store/api/burgers.api";
 import {toast} from "react-toastify";
 import OrderDetails from "../order-details/order-details";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function BurgerConstructor() {
   const dispatch = useDispatch();

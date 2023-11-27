@@ -13,7 +13,7 @@ Modal.propTypes = {
 export default function Modal({ ...props }) {
   const navigate = useNavigate();
   const title = props.title ? props.title : null;
-  const subTitle = props.modalClose ? props.modalClose : null;
+  const subTitle = props.subTitle ? props.subTitle : null;
 
   const modalClose = useMemo(() => {
     return props.modalClose

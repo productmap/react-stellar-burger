@@ -6,11 +6,7 @@ import {
   CurrencyIcon,
   FormattedDate,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from "prop-types";
-
-FeedOrderDetails.propTypes = {
-  order: PropTypes.any.isRequired,
-};
+import { orderPropType } from "../../utils/prop-types";
 
 export default function FeedOrderDetails({ order }) {
   const navigate = useNavigate();
@@ -24,7 +20,9 @@ export default function FeedOrderDetails({ order }) {
       const ingredientsList = order.ingredients.map((orderedIngredient) => {
         return ingredients.find((i) => i._id === orderedIngredient);
       });
+
       setTotalPrice(ingredientsList.reduce((acc, i) => acc + i.price, 0));
+
       const countedIngredients = [
         ...ingredientsList
           .reduce((order, item) => {
@@ -110,3 +108,7 @@ export default function FeedOrderDetails({ order }) {
     </>
   );
 }
+
+FeedOrderDetails.propTypes = {
+  order: orderPropType,
+};

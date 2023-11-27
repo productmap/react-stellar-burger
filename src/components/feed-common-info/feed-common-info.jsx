@@ -1,12 +1,12 @@
-import React from "react";
-import styles from "./feed-info.module.scss";
-import { useGetFeedQuery } from "../../store/api/burgers.api";
 import { Link, useLocation } from "react-router-dom";
+import { useGetFeedQuery } from "../../store/api/burgers.api";
+import styles from "./feed-common-info.module.scss";
 
-export default function FeedInfo() {
+export default function FeedCommonInfo() {
   const { data: feed = [] } = useGetFeedQuery();
   const location = useLocation();
   let total = feed.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+
   const totalToday = feed["totalToday"]
     .toString()
     .replace(/\B(?=(\d{3})+(?!\d))/g, " ");
@@ -14,6 +14,7 @@ export default function FeedInfo() {
   const readyOrders = feed["orders"]
     .slice(0, 10)
     .filter((order) => order.status === "done");
+
   const notReadyOrders = feed["orders"]
     .slice(0, 10)
     .filter((order) => order.status === "pending");
@@ -59,7 +60,9 @@ export default function FeedInfo() {
           </ul>
         </div>
       </div>
-      <p className="text text_type_main-medium pt-15">Выполнено за все время:</p>
+      <p className="text text_type_main-medium pt-15">
+        Выполнено за все время:
+      </p>
       <p className={`${styles.totalNum} text text_type_digits-large`}>
         {total}
       </p>

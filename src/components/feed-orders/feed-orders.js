@@ -5,13 +5,17 @@ import PropTypes from "prop-types";
 
 export default function FeedOrders({ feed }) {
   return (
-    <section className={styles.feedOrders}>
-      <ul className={`${styles.ordersList} scroll-theme`}>
-        {feed.map((order, idx) => {
-          return <OrderItem order={order} key={idx} />;
-        })}
-      </ul>
-    </section>
+    <>
+      {feed && (
+        <section className={styles.feedOrders}>
+          <ul className={`${styles.ordersList} scroll-theme`}>
+            {feed.map((order, idx) => {
+              return <OrderItem order={order} key={idx} />;
+            })}
+          </ul>
+        </section>
+      )}
+    </>
   );
 }
 

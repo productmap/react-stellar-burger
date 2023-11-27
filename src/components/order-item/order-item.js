@@ -1,4 +1,4 @@
-import {useEffect, useMemo} from "react";
+import { useMemo } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useGetIngredientsQuery } from "../../store/api/burgers.api";
 import {
@@ -6,14 +6,16 @@ import {
   FormattedDate,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./order-item.module.scss";
-import PropTypes from "prop-types";
 import clsx from "clsx";
+import {orderPropType} from "../../utils/prop-types";
 
 OrderItem.propTypes = {
-  order: PropTypes.object.isRequired,
+  order: orderPropType
 };
 
 export default function OrderItem({ order }) {
+
+
   const navigate = useNavigate();
   const location = useLocation();
   const { data: ingredients } = useGetIngredientsQuery();

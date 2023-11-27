@@ -3,14 +3,12 @@ import {logout} from "../user";
 
 const BASE_URL = "https://norma.nomoreparties.space/api";
 const WS_URL = "wss://norma.nomoreparties.space"
-const accessToken = localStorage.getItem("accessToken");
-const refreshToken = localStorage.getItem("refreshToken");
 
 const baseQuery = fetchBaseQuery({
   baseUrl: BASE_URL,
   prepareHeaders: (headers) => {
-    if (accessToken) {
-      headers.set("Authorization", accessToken);
+    if (localStorage.getItem("accessToken")) {
+      headers.set("authorization", localStorage.getItem("accessToken"));
     }
     return headers;
   },
@@ -19,25 +17,29 @@ const baseQuery = fetchBaseQuery({
 const baseQueryWithReAuth = async (args, api, extraOptions) => {
   let response = await baseQuery(args, api, extraOptions);
 
-  if (response?.error?.status === 403 || response?.error?.status === 401) {
-    if (refreshToken) {
+  if (response.error?.status === 401 || response.error?.status === 403) {
+    if (localStorage.getItem("refreshToken")) {
       const refreshResponse = await baseQuery(
-        { url: "/auth/token", method: "POST", body: { token: refreshToken } },
+        {
+          url: "/auth/token",
+          method: "POST",
+          body: { token: localStorage.getItem("refreshToken") },
+        },
         api,
         extraOptions
       );
 
       if (refreshResponse) {
-        // console.log(refreshResponse)
         localStorage.setItem("accessToken", refreshResponse.data.accessToken);
         localStorage.setItem("refreshToken", refreshResponse.data.refreshToken);
       } else {
-        localStorage.clear()
-        api.dispatch(logout())
+        localStorage.clear();
+        api.dispatch(logout());
       }
     }
   }
   return response;
+
 };
 
 export const burgersApi = createApi({
@@ -76,14 +78,14 @@ export const burgersApi = createApi({
       query: (payload) => ({
         url: `auth/token`,
         method: "POST",
-        body: { token: refreshToken },
+        body: { token: localStorage.getItem("refreshToken") },
       }),
     }),
     logout: builder.mutation({
       query: () => ({
         url: `/auth/logout`,
         method: "POST",
-        body: { token: refreshToken },
+        body: { token: localStorage.getItem("refreshToken") },
       }),
     }),
     getUser: builder.query({
@@ -106,7 +108,7 @@ export const burgersApi = createApi({
       query: (payload) => ({
         url: `/orders`,
         method: "POST",
-        body: { ingredients: payload, token: accessToken },
+        body: { ingredients: payload, token: localStorage.getItem("accessToken") },
       }),
     }),
     getFeed: builder.query({
@@ -122,9 +124,9 @@ export const burgersApi = createApi({
             const data = JSON.parse(event.data);
             // console.log(data)
 
-            updateCachedData(( draft) => {
-              draft.push(data)
-              console.log("update")
+            updateCachedData((draft) => {
+              draft.push(data);
+              console.log("update");
               // draft.push(data);
               // dispatch(updateData(data))
             });
@@ -138,14 +140,15 @@ export const burgersApi = createApi({
       },
     }),
     getUserFeed: builder.query({
-      query: () => `/orders`,
       async onCacheEntryAdded(
         arg,
         { updateCachedData, cacheDataLoaded, cacheEntryRemoved }
       ) {
-        console.log(accessToken)
+        // console.log("getUserFeed",accessToken)
         const ws = new WebSocket(
-          `${WS_URL}/orders?token=${accessToken.split(" ")[1]}`
+          `${WS_URL}/orders?token=${
+            localStorage.getItem("accessToken").split(" ")[1]
+          }`
         );
         try {
           await cacheDataLoaded;
@@ -162,6 +165,7 @@ export const burgersApi = createApi({
         await cacheEntryRemoved;
         ws.close();
       },
+      query: () => `/orders`,
       // transformResponse: (response) => response["orders"].reverse(),
     }),
   }),

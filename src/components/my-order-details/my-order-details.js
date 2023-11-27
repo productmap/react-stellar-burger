@@ -1,10 +1,10 @@
 import { useParams } from "react-router-dom";
-import { useGetFeedQuery } from "../../store/api/burgers.api";
+import { useGetUserFeedQuery } from "../../store/api/burgers.api";
 import FeedOrderDetails from "../feed-order-details/feed-order-details";
 
-export default function FeedOrderCommon({ order }) {
+export default function MyOrderDetails() {
   const { id } = useParams();
-  const { data: currentOrder } = useGetFeedQuery(undefined, {
+  const { data: currentOrder } = useGetUserFeedQuery(undefined, {
     selectFromResult: ({ data }) => ({
       data: data?.orders.find((i) => i.number === parseInt(id)),
     }),

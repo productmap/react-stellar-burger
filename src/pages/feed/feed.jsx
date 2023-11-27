@@ -1,7 +1,7 @@
 import { useGetFeedQuery } from "../../store/api/burgers.api";
-import FeedInfo from "../../components/feed-info/feed-info";
-import FeedOrders from "../../components/feed-orders/feed-orders";
+import FeedCommonInfo from "../../components/feed-common-info/feed-common-info";
 import styles from "./feed.module.scss";
+import FeedOrders from "../../components/feed-orders/feed-orders";
 
 export default function Feed() {
   const { data: feed = [], isLoading } = useGetFeedQuery();
@@ -16,7 +16,7 @@ export default function Feed() {
       ) : feed ? (
         <div className={styles.twoColumns}>
           <FeedOrders feed={feed["orders"]} />
-          <FeedInfo />
+          <FeedCommonInfo />
         </div>
       ) : (
         <>Нет заказов</>
