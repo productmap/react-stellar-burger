@@ -34,7 +34,7 @@ export default function FeedCommonInfo() {
           <p className="text text_type_main-medium">Готовы:</p>
           <ul className={styles.ordersList}>
             {readyOrders.length > 0 &&
-              readyOrders.map((order: IOrder) => {
+              readyOrders.map((order) => {
                 return (
                   <li key={order._id}>
                     <Link
@@ -54,7 +54,7 @@ export default function FeedCommonInfo() {
           <p className="text text_type_main-medium">В работе:</p>
           <ul className={styles.ordersList}>
             {notReadyOrders.length > 0 &&
-              notReadyOrders.map((order: IOrder) => {
+              notReadyOrders.map((order) => {
                 return (
                   <li key={order._id}>
                     <Link
