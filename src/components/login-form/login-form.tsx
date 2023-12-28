@@ -7,11 +7,11 @@ import {
 import styles from "./login-form.module.scss";
 import { useLoginMutation } from "../../store/api/burgers.api";
 import { setUser } from "../../store/user";
-import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { useForm } from "../../hooks/useForm";
 import {FormEvent, useEffect} from "react";
 import {CustomError} from "../../utils/types";
+import {useAppDispatch} from "../../hooks/hooks";
 
 const initialState = {
   email: "",
@@ -19,7 +19,7 @@ const initialState = {
 };
 
 export default function LoginForm() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const location = useLocation();
   const { formValues, handleChange } = useForm(initialState);
   const { email, password } = formValues;

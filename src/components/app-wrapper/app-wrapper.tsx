@@ -6,12 +6,12 @@ import { ToastContainer } from "react-toastify";
 import {useGetIngredientsQuery, useGetUserQuery} from "../../store/api/burgers.api";
 import {useEffect} from "react";
 import {reAuthUser} from "../../store/user";
-import {useDispatch} from "react-redux";
+import {useAppDispatch} from "../../hooks/hooks";
 
 export default function AppWrapper() {
   const { isLoading } = useGetIngredientsQuery(undefined);
   const { data: currentUser } = useGetUserQuery(undefined);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (currentUser) dispatch(reAuthUser(currentUser));

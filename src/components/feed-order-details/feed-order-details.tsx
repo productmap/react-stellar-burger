@@ -69,7 +69,7 @@ export default function FeedOrderDetails({ order }: { order: IOrder }) {
             Состав:
           </p>
           <ul className={`${styles.list} scroll-theme`}>
-            {orderIngredients.map((i: IIngredient, idx) => {
+            {orderIngredients.map((i, idx) => {
               return (
                 <li
                   className={styles.item}
