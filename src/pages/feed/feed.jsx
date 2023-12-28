@@ -4,7 +4,7 @@ import styles from "./feed.module.scss";
 import FeedOrders from "../../components/feed-orders/feed-orders";
 
 export default function Feed() {
-  const { data: feed = [], isLoading } = useGetFeedQuery();
+  const { data: feed, isLoading } = useGetFeedQuery("general");
 
   return (
     <section className={styles.feed}>
@@ -15,7 +15,7 @@ export default function Feed() {
         <>Загрузка...</>
       ) : feed ? (
         <div className={styles.twoColumns}>
-          <FeedOrders feed={feed["orders"]} />
+          <FeedOrders feed={feed.orders} />
           <FeedCommonInfo />
         </div>
       ) : (
