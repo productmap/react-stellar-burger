@@ -1,0 +1,20 @@
+.orderAccepted {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column nowrap;
+}
+
+.orderNumber {
+  color: #f2f2f3;
+  text-shadow: 0 0 16px rgba(51, 51, 255, 0.25), 0 0 8px rgba(51, 51, 255, 0.25),
+    0 4px 32px rgba(51, 51, 255, 0.5);
+}
+
+.statusIcon {
+  width: 120px;
+  height: 120px;
+  margin-top: 70px;
+  background: url("../../assets/images/orderAccepted.png") no-repeat;
+  background-size: contain;
+}

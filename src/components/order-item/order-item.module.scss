@@ -1,0 +1,103 @@
+.block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 856px;
+  padding: 32px;
+  box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.04), 0 0 2px 0 rgba(0, 0, 0, 0.06),
+    0 4px 8px 0 rgba(0, 0, 0, 0.04);
+  box-sizing: border-box;
+  background: var(--interface-modal-bg);
+  border: 1px solid transparent;
+  border-radius: 40px;
+  transition: all 0.2s ease;
+  gap: 24px;
+
+  &:hover {
+    //transform: scale(1.01);
+    position: relative;
+    z-index: 2;
+    box-shadow: 0 4px 32px 0 rgba(51, 51, 255, 0.1),
+      0 0 8px 8px rgba(51, 51, 255, 0.05), 0 0 16px 8px rgba(51, 51, 255, 0.05);
+    border: 1px solid var(--interface-modal-edge);
+    cursor: pointer;
+  }
+}
+
+.header {
+  display: inline-flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin: 0;
+}
+
+.orderDate {
+  width: 100%;
+  text-align: right;
+}
+
+.burgerName {
+  align-self: flex-start;
+  padding: 0;
+}
+
+.list {
+  position: relative;
+  display: inline-flex;
+  padding: 0;
+  margin: 0;
+}
+
+.item {
+  display: inline-flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &:not(:first-child) {
+    margin-left: -16px;
+  }
+
+  //@for $i from 1 through 6 {
+  //  &:nth-child(#{$i}) {
+  //    z-index: 10 - $i;
+  //  }
+  //}
+
+  &_additional {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 60px;
+    box-sizing: border-box;
+    background-color: rgba(19, 19, 22, 0.5);
+    border: 2px solid transparent;
+    border-radius: 100px;
+  }
+
+  &__image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 64px;
+    height: 64px;
+    padding: 4px;
+    box-sizing: border-box;
+    background: linear-gradient(#131316, #131316) padding-box,
+      linear-gradient(45deg, #801ab2, #4c4cff) border-box;
+    border: 2px solid transparent;
+    border-radius: 100px;
+    object-fit: cover;
+  }
+}
+
+.totalPrice {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}

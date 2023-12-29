@@ -1,0 +1,35 @@
+.menu {
+  display: flex;
+  max-width: 320px;
+  padding-top: 120px;
+  list-style: none;
+  flex-flow: column nowrap;
+
+  li {
+    display: flex;
+    align-items: center;
+    min-height: 64px;
+
+    &:last-child {
+      padding-top: 80px;
+      opacity: 0.4;
+    }
+  }
+}
+
+.link {
+  color: #8585AD;
+  text-decoration: none;
+  &:hover{
+    opacity: .8;
+  }
+
+  &_active {
+    color: #fff;
+    text-decoration: none;
+
+    &:hover {
+      opacity: .8;
+    }
+  }
+}

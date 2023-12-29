@@ -1,0 +1,37 @@
+.ingredient {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 272px;
+  flex-flow: column nowrap;
+  cursor: pointer;
+  //view-transition-name: ingredient;
+
+  &__image {
+    //view-transition-name: ingredient;
+  }
+
+  &__price {
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  &__description {
+    text-align: center;
+  }
+}
+
+.isDragging {
+  opacity: 0.3;
+}
+
+.dragging {
+  cursor: grabbing;
+}
+
+.isActive {
+  //cursor: pointer !important;
+  //outline: 1px dashed blueviolet;
+}

@@ -1,0 +1,24 @@
+.BurgerDetails {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px 0 0 0;
+  list-style: none;
+  flex-flow: row nowrap;
+  gap: 40px;
+
+  &__list {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 32px 0 0;
+    margin: 0;
+    list-style: none;
+    flex-flow: row;
+    gap: 20px;
+  }
+
+  &__item {
+    text-align: center;
+  }
+}

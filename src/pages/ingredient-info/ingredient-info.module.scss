@@ -1,0 +1,14 @@
+.section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: calc(100% - 94px);
+  margin: auto;
+  flex-flow: column;
+  background-color: var(--main-background);
+  position: absolute;
+  left: 0;
+  top: 94px;
+  z-index: 100;
+}

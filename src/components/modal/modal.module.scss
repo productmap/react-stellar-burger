@@ -1,0 +1,82 @@
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  z-index: 100;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  //animation: bounce-in 0.2s ease-in;
+  //transition: visibility 0.2s, opacity 0.2s ease;
+  overflow: auto;
+}
+
+.modal.open {
+  animation: bounce-in 0.2s ease-in;
+}
+
+.modal.close {
+  animation: bounce-out 0.2s ease-in;
+}
+
+@keyframes bounce-in {
+  0% {
+    opacity: 0;
+    //transform: scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    //transform: scale(1);
+  }
+}
+
+@keyframes bounce-out {
+  0% {
+    opacity: 1;
+    //transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    //transform: scale(0.5);
+  }
+}
+
+.container {
+  position: relative;
+  z-index: 5;
+  width: fit-content;
+  max-width: 720px;
+  min-width: 282px;
+  padding: 40px;
+  margin: 0 19px;
+  box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.04), 0 4px 8px 0 rgba(0, 0, 0, 0.04),
+    0 16px 24px 0 rgba(0, 0, 0, 0.04), 0 24px 32px 0 rgba(0, 0, 0, 0.04);
+  box-sizing: border-box;
+  background: var(--interface-modal-bg, #1c1c21);
+  border: 1px solid var(--interface-modal-edge, rgba(76, 76, 255, 0.2));
+  border-radius: 40px;
+  //animation: slideIn 0.3s;
+
+
+  &__header {
+    display: inline-flex;
+    justify-content: space-between;
+    width: 100%;
+    line-height: 64px;
+    align-items: center;
+  }
+
+  &__close {
+    margin-left: auto;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+
+    &:hover {
+      opacity: 0.6;
+    }
+  }
+}
