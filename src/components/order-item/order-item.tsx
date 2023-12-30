@@ -56,29 +56,27 @@ export default function OrderItem({ order }: TOrderItem) {
           </h3>
           <div className={`${styles.header} mt-10`}>
             <ul className={styles.list}>
-              {uniqueIngredients.slice(0, maxIngredients).map((i, idx) => {
-                return (
-                  <li className={styles.item} key={idx}>
-                    <img
-                      className={styles.item__image}
-                      src={i?.image}
-                      alt={i?.name}
-                      style={{ zIndex: uniqueIngredients.length - idx }}
-                    />
-                  </li>
-                );
-              })}
-              {uniqueIngredients.length > maxIngredients &&
-              uniqueIngredients.length - maxIngredients > 0 ? (
-                <li
-                  className={clsx(styles.item, styles.item_additional)}
-                  style={{
-                    zIndex: uniqueIngredients.length - maxIngredients + 1,
-                  }}
-                >
-                  <p>+{uniqueIngredients.length - maxIngredients}</p>
+              {uniqueIngredients.slice(0, maxIngredients).map((i, idx) => (
+                <li className={styles.item} key={idx}>
+                  <img
+                    className={styles.item__image}
+                    src={i?.image}
+                    alt={i?.name}
+                    style={{ zIndex: uniqueIngredients.length - idx }}
+                  />
                 </li>
-              ) : null}
+              ))}
+              {uniqueIngredients.length > maxIngredients &&
+                uniqueIngredients.length - maxIngredients > 0 && (
+                  <li
+                    className={clsx(styles.item, styles.item_additional)}
+                    style={{
+                      zIndex: uniqueIngredients.length - maxIngredients + 1,
+                    }}
+                  >
+                    <p>+{uniqueIngredients.length - maxIngredients}</p>
+                  </li>
+                )}
             </ul>
             <span
               className={`${styles.totalPrice} text text_type_digits-default`}

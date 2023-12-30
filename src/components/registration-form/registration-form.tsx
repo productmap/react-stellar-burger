@@ -31,7 +31,7 @@ export default function RegistrationForm() {
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
 
-    if (!name && !email && !password) {
+    if (!(name && email && password))  {
       toast("Заполните все поля");
       return;
     }
@@ -46,21 +46,21 @@ export default function RegistrationForm() {
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
       <Input
-        name={"name"}
-        placeholder={"Имя"}
+        name="name"
+        placeholder="Имя"
         onChange={(e) => handleChange(e)}
         value={name}
         extraClass="mb-6"
       />
       <EmailInput
-        name={"email"}
-        placeholder={"E-mail"}
+        name="email"
+        placeholder="E-mail"
         onChange={(e) => handleChange(e)}
         value={email}
         extraClass="mb-6"
       />
       <PasswordInput
-        name={"password"}
+        name="password"
         onChange={(e) => handleChange(e)}
         value={password}
         // error={false}
@@ -77,11 +77,11 @@ export default function RegistrationForm() {
       </Button>
       <p className="text text_type_main-default text_color_inactive mb-4">
         Уже зарегистрированы?{" "}
-        <Link to={"/login"} unstable_viewTransition className={styles.link}>
+        <Link to="/login" unstable_viewTransition className={styles.link}>
           Войти
         </Link>
       </p>
-      {isSuccess && <Navigate to={from} replace={true} />}
+      {isSuccess && <Navigate to={from} replace />}
     </form>
   );
 }

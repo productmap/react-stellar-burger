@@ -1,10 +1,6 @@
 import styles from "./order-details.module.scss";
 
-type TOrderNumber = {
-  orderNumber: number;
-};
-
-export default function OrderDetails({ orderNumber }: TOrderNumber) {
+export default function OrderDetails({ orderNumber }: { orderNumber: number }) {
   return (
     <div className={styles.orderAccepted}>
       <p className={`${styles.orderNumber} text text_type_digits-large pt-4`}>

@@ -15,10 +15,11 @@ const burgerSlice = createSlice({
   initialState: initialState,
   reducers: {
     addIngredient(state, action: { payload: IIngredient }) {
-      const ingredient: IBurgerIngredient = Object.assign(
-        { key: nanoid() },
-        action.payload
-      );
+      const ingredient: IBurgerIngredient = {
+        key: nanoid(),
+        ...action.payload
+      };
+
       if (action.payload.type === "bun") {
         state.burger.bun = ingredient;
       } else {

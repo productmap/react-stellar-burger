@@ -47,11 +47,11 @@ const baseQueryWithReAuth: BaseQueryFn<
         extraOptions
       );
 
-      const tokens = refreshResponse as {
-        data: { accessToken: string; refreshToken: string };
-      };
-
       if (refreshResponse) {
+        const tokens = refreshResponse as {
+          data: { accessToken: string; refreshToken: string };
+        };
+
         localStorage.setItem("accessToken", tokens.data.accessToken);
         localStorage.setItem("refreshToken", tokens.data.refreshToken);
       } else {
@@ -139,7 +139,7 @@ export const burgersApi = createApi({
     getFeed: builder.query<Feed, Channel>({
       query: () => `/orders/all`,
       async onCacheEntryAdded(
-        arg,
+        _arg,
         { updateCachedData, cacheDataLoaded, cacheEntryRemoved }
       ) {
         const ws = new WebSocket(WS_URL);
@@ -147,14 +147,11 @@ export const burgersApi = createApi({
           await cacheDataLoaded;
           const listener = (event: MessageEvent) => {
             const data = JSON.parse(event.data);
-            // console.log(data)
-            updateCachedData(() => {
-              return data;
-            });
+            updateCachedData(() => data);
           };
           ws.addEventListener("message", listener);
         } catch {
-          console.log("error");
+          console.log("ws error");
         }
         await cacheEntryRemoved;
         ws.close();
@@ -162,24 +159,18 @@ export const burgersApi = createApi({
     }),
     getUserFeed: builder.query<Feed, Channel>({
       async onCacheEntryAdded(
-        arg,
+        _arg,
         { updateCachedData, cacheDataLoaded, cacheEntryRemoved }
       ) {
         // console.log("getUserFeed",accessToken)
-        const ws = new WebSocket(
-          `${WS_URL}/orders?token=${
-            localStorage.getItem("accessToken")!.split(" ")[1]
-          }`
-        );
+        const accessToken = localStorage.getItem("accessToken")?.split(" ")[1];
+        const ws = new WebSocket(`${WS_URL}/orders?token=${accessToken}`);
         try {
           await cacheDataLoaded;
-          const listener = (event: MessageEvent) => {
+          ws.addEventListener("message", (event: MessageEvent) => {
             const data = JSON.parse(event.data);
-            updateCachedData(() => {
-              return data;
-            });
-          };
-          ws.addEventListener("message", listener);
+            updateCachedData(() => data);
+          });
         } catch {
           console.log("ws error");
         }

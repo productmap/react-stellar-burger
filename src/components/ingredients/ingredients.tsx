@@ -81,7 +81,7 @@ export default function Ingredients() {
               groupKey={key}
               groupName={ingredientsType}
               ingredients={ingredients}
-              {...{ refCallback }}
+              refCallback={refCallback}
             />
           );
         })}

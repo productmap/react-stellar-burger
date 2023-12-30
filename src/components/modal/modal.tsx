@@ -14,15 +14,11 @@ type TProps = {
 
 export default function Modal({ ...props }: TProps) {
   const navigate = useNavigate();
-  const title = props.title ? props.title : null;
-  const subTitle = props.subTitle ? props.subTitle : null;
+  const title = props.title || null;
+  const subTitle = props.subTitle || null;
 
   const modalClose = useMemo(() => {
-    return props.modalClose
-      ? props.modalClose
-      : () => {
-          navigate(-1);
-        };
+    return props.modalClose || (() => navigate(-1));
   }, [navigate, props.modalClose]);
 
   useEffect(() => {

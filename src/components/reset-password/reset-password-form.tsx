@@ -12,7 +12,7 @@ import {
 export default function ResetPasswordForm() {
   const navigate = useNavigate();
   const [password, setPassword] = useState("");
-  const [token, seToken] = useState("");
+  const [token, setToken] = useState("");
   const [resetPassword, { isLoading }] = useResetPasswordMutation();
 
   //  Ручка сброса пароля
@@ -50,7 +50,7 @@ export default function ResetPasswordForm() {
       <Input
         name="token"
         placeholder="Введите код из письма"
-        onChange={(e) => seToken(e.target.value)}
+        onChange={(e) => setToken(e.target.value)}
         value={token}
         extraClass="mb-6"
       />
@@ -65,7 +65,7 @@ export default function ResetPasswordForm() {
       </Button>
       <p className="text text_type_main-default text_color_inactive mb-4">
         Вспомнили пароль?{" "}
-        <Link to={"/login"} unstable_viewTransition className={styles.link}>
+        <Link to="/login" unstable_viewTransition className={styles.link}>
           Войти
         </Link>
       </p>

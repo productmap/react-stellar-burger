@@ -9,9 +9,9 @@ import { useLoginMutation } from "../../store/api/burgers.api";
 import { setUser } from "../../store/user";
 import { toast } from "react-toastify";
 import { useForm } from "../../hooks/useForm";
-import {FormEvent, useEffect} from "react";
-import {CustomError} from "../../utils/types";
-import {useAppDispatch} from "../../hooks/hooks";
+import { FormEvent, useEffect } from "react";
+import { CustomError } from "../../utils/types";
+import { useAppDispatch } from "../../hooks/hooks";
 
 const initialState = {
   email: "",
@@ -35,8 +35,10 @@ export default function LoginForm() {
     e.preventDefault();
 
     if (!email || !password) {
-      toast.info("Если забыли регистрационные данные, воспользуйтесь восстановлением.");
-      return
+      toast.info(
+        "Если забыли регистрационные данные, воспользуйтесь восстановлением."
+      );
+      return;
     }
 
     try {
@@ -74,17 +76,25 @@ export default function LoginForm() {
       </Button>
       <p className="text text_type_main-default text_color_inactive mb-4">
         Вы — новый пользователь?{" "}
-        <Link to={"/registration"} unstable_viewTransition className={styles.link}>
+        <Link
+          to={"/registration"}
+          unstable_viewTransition
+          className={styles.link}
+        >
           Зарегистрироваться
         </Link>
       </p>
       <p className="text text_type_main-default text_color_inactive">
         Забыли пароль?{" "}
-        <Link to={"/forgot-password"} unstable_viewTransition className={styles.link}>
+        <Link
+          to={"/forgot-password"}
+          unstable_viewTransition
+          className={styles.link}
+        >
           Восстановить пароль
         </Link>
       </p>
-      {isSuccess && <Navigate to={from} replace={true} />}
+      {isSuccess && <Navigate to={from} replace />}
     </form>
   );
 }
