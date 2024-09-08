@@ -1,4 +1,4 @@
-import styles from "./my-info.module.scss"
+import styles from "./my-info.module.scss";
 import {
   Button,
   Input,
@@ -74,35 +74,39 @@ export default function MyInfo() {
           value={name}
           placeholder="Имя"
           ref={nameRef}
-          // onChange={(e) => setName({ ...name, newName: e.target.value })}
-          onChange={(e) => handleChange(e)}
           error={false}
           icon="EditIcon"
           onIconClick={onIconClick}
+          onChange={(e) => handleChange(e)}
+          onPointerEnterCapture={() => {}}
+          onPointerLeaveCapture={() => {}}
           size="default"
           extraClass="mb-6"
         />
         <Input
           name={"email"}
           placeholder={"E-mail"}
-          // onChange={(e) => setEmail(e.target.value)}
-          onChange={(e) => handleChange(e)}
           value={email}
           icon={"EditIcon"}
           extraClass="mb-6"
           // ref={inputRef}
+          onChange={(e) => handleChange(e)}
           onIconClick={onIconClick}
+          onPointerEnterCapture={() => {}}
+          onPointerLeaveCapture={() => {}}
         />
         <Input
           name={"password"}
-          onChange={(e) => handleChange(e)}
           // onFocus={() => setFormValue({ ...formValues, password: "" })}
           value={password}
           error={false}
           icon={"EditIcon"}
           extraClass="mb-6"
           ref={inputRef}
+          onChange={(e) => handleChange(e)}
           onIconClick={onIconClick}
+          onPointerEnterCapture={() => {}}
+          onPointerLeaveCapture={() => {}}
         />
         <div
           className={styles.editForm}

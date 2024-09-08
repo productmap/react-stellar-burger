@@ -48,9 +48,11 @@ export default function RegistrationForm() {
       <Input
         name={"name"}
         placeholder={"Имя"}
-        onChange={(e) => handleChange(e)}
         value={name}
         extraClass="mb-6"
+        onChange={(e) => handleChange(e)}
+        onPointerEnterCapture={() => {}}
+        onPointerLeaveCapture={() => {}}
       />
       <EmailInput
         name={"email"}

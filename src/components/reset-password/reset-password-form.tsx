@@ -1,4 +1,4 @@
-import React, {FormEvent, useState} from "react";
+import React, { FormEvent, useState } from "react";
 import { useResetPasswordMutation } from "../../store/api/burgers.api";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -50,8 +50,10 @@ export default function ResetPasswordForm() {
       <Input
         name="token"
         placeholder="Введите код из письма"
-        onChange={(e) => seToken(e.target.value)}
         value={token}
+        onChange={(e) => seToken(e.target.value)}
+        onPointerEnterCapture={() => {}}
+        onPointerLeaveCapture={() => {}}
         extraClass="mb-6"
       />
       <Button
