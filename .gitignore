@@ -5,3 +5,4 @@ static
 .idea
 .gitattributes
 package-lock.json
+/yarn.lock

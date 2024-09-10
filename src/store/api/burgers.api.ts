@@ -121,10 +121,9 @@ export const burgersApi = createApi({
         body: payload,
       }),
     }),
-    getIngredients: builder.query({
+    getIngredients: builder.query<IIngredient[], void>({
       query: () => `/ingredients`,
-      transformResponse: (response: { data: ReadonlyArray<IIngredient> }) =>
-        response.data,
+      transformResponse: (response: { data: IIngredient[] }) => response.data,
     }),
     orderBurger: builder.mutation({
       query: (payload) => ({
@@ -139,7 +138,7 @@ export const burgersApi = createApi({
     getFeed: builder.query<Feed, Channel>({
       query: () => `/orders/all`,
       async onCacheEntryAdded(
-        arg,
+        _,
         { updateCachedData, cacheDataLoaded, cacheEntryRemoved }
       ) {
         const ws = new WebSocket(WS_URL);
@@ -162,7 +161,7 @@ export const burgersApi = createApi({
     }),
     getUserFeed: builder.query<Feed, Channel>({
       async onCacheEntryAdded(
-        arg,
+        _,
         { updateCachedData, cacheDataLoaded, cacheEntryRemoved }
       ) {
         // console.log("getUserFeed",accessToken)

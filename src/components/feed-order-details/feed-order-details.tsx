@@ -11,7 +11,7 @@ import { IIngredient, IOrder } from "../../utils/types";
 export default function FeedOrderDetails({ order }: { order: IOrder }) {
   const navigate = useNavigate();
   const location = useLocation();
-  const { data: ingredients } = useGetIngredientsQuery("general");
+  const { data: ingredients } = useGetIngredientsQuery();
   const [totalPrice, setTotalPrice] = useState(0);
   const [orderIngredients, setOrderIngredients] = useState<IIngredient[]>([]);
 
