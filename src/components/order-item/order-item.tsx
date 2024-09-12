@@ -16,7 +16,7 @@ type TOrderItem = {
 export default function OrderItem({ order }: TOrderItem) {
   const navigate = useNavigate();
   const location = useLocation();
-  const { data: ingredients = [] } = useGetIngredientsQuery(undefined);
+  const { data: ingredients = [] } = useGetIngredientsQuery();
 
   const ingredientsList = order.ingredients.map((orderedIngredient) => {
     return ingredients.find((i) => i._id === orderedIngredient);

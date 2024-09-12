@@ -6,7 +6,7 @@ import {
   FetchBaseQueryError,
 } from "@reduxjs/toolkit/query/react";
 import { logout } from "../user";
-import { IFeedOrder, IIngredient } from "../../utils/types";
+import { IFeedOrder, IIngredient, TUser } from "../../utils/types";
 
 const BASE_URL = "https://norma.nomoreparties.space/api";
 const WS_URL = "wss://norma.nomoreparties.space";
@@ -109,7 +109,7 @@ export const burgersApi = createApi({
         body: { token: localStorage.getItem("refreshToken") },
       }),
     }),
-    getUser: builder.query({
+    getUser: builder.query<TUser, void>({
       query: () => ({
         url: `/auth/user`,
       }),

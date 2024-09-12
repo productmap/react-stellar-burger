@@ -43,3 +43,8 @@ export interface CustomError extends Error {
     message: string;
   };
 }
+
+export type TUser = {
+  email: string;
+  name: string;
+};

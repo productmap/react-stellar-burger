@@ -18,7 +18,7 @@ export function PrivateRoute({ onlyUnAuth = false, component }: TPrivateRoute) {
   const { from } = location.state || { from: { pathname: "/" } };
 
   // Загрузка данных пользователя
-  const { isLoading } = useGetUserQuery(undefined);
+  const { isLoading } = useGetUserQuery();
 
   // useEffect(() => {
   //   if (currentUser) dispatch(reAuthUser(currentUser));
@@ -51,7 +51,7 @@ export function PrivateRoute({ onlyUnAuth = false, component }: TPrivateRoute) {
     return component;
   }
 
-  return null
+  return null;
 }
 
 export function OnlyUnAuth({ component }: TOnlyUnAuth): ReactElement {
